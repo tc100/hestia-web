@@ -1,0 +1,19 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+.navbar{
+  background-color: transparent !important;
+  border: none;
+}
+.logo-index{
+  margin-top: -5.2em;
+  padding: none;
+}
+
+.margin-right-1em{
+  margin-right: 1em;
+}
