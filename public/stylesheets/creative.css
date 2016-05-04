@@ -110,7 +110,7 @@ aside {
   }
   .navbar-default .navbar-header .navbar-brand:hover,
   .navbar-default .navbar-header .navbar-brand:focus {
-    color: white;
+    color: #C84C00;
   }
   .navbar-default .nav > li > a,
   .navbar-default .nav > li > a:focus {
@@ -118,7 +118,7 @@ aside {
   }
   .navbar-default .nav > li > a:hover,
   .navbar-default .nav > li > a:focus:hover {
-    color: white;
+    color: #C84C00;
   }
   .navbar-default.affix {
     background-color: white;
@@ -170,8 +170,8 @@ header .header-content .header-content-inner hr {
   margin: 30px auto;
 }
 header .header-content .header-content-inner p {
-  font-weight: 300;
-  color: rgba(255, 255, 255, 0.7);
+  font-weight: 100;
+  color: rgba(200, 200, 200, 1);
   font-size: 16px;
   margin-bottom: 50px;
 }
@@ -188,7 +188,7 @@ header .header-content .header-content-inner p {
     padding: 0 50px;
   }
   header .header-content .header-content-inner {
-    max-width: 1000px;
+    max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
   }
