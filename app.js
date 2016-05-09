@@ -14,7 +14,7 @@ var cadastro = require('./routes/cadastro');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '/views'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');;
 
@@ -29,7 +29,26 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/login', login);
-app.use('/cadastrar', cadastro);
+app.get('/cadastrar', function(req,res){
+  res.render('cadastrar', { title: 'Hestia - Cadastrar' });
+});
+
+app.get("/cadastrarEstabelecimento", function(req,res){
+  var options = {
+    port: 8080,
+    hostname: 'localhost',
+    method: "GET",
+    path: "/apihestia" + "/estabelecimento"
+  }
+  cadastro.cadastrarEstabelecimento(options, function(error, data){
+    if(error){
+      console.log("PASSOUUU");
+      return res.status(500).send(error);
+    }
+    console.log("funfou: " + data);
+    res.json(data);
+  });
+});
 
 
 // catch 404 and forward to error handler

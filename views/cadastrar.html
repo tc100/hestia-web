@@ -130,10 +130,26 @@
                         <br>
                     </div>
                     <div class="col-sm-2 col-sm-offset-10">
-                        <button type="input" class="btn btn-default">Cadastrar</button>
+                        <button type="button" class="btn btn-default" onclick="cadastrarEstabelecimento()">Cadastrar</button>
                     </div>
                 </form>
             </div>
         </div>
     </section>
-</body>
+
+    <!-- jQuery -->
+    <script src="/javascripts/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/javascripts/bootstrap.min.js"></script>
+    <script>
+        function cadastrarEstabelecimento(){
+          console.log("entrou");
+          $.get('/cadastrarEstabelecimento', function(data){
+            console.log("passou aqui: " + data);
+          });
+        }
+    </script>
+
+  </body>
+</html>
