@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var ejs = require('ejs');
+var http = require('http');
+var request = require('got');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -34,19 +36,14 @@ app.get('/cadastrar', function(req,res){
 });
 
 app.get("/cadastrarEstabelecimento", function(req,res){
-  var options = {
-    port: 8080,
-    hostname: 'localhost',
-    method: "GET",
-    path: "/apihestia" + "/estabelecimento"
-  }
-  cadastro.cadastrarEstabelecimento(options, function(error, data){
-    if(error){
-      console.log("PASSOUUU");
-      return res.status(500).send(error);
+  var request = require('request');
+  request('http://localhost:8080/apihestia/estabelecimento?nome=Danilo&idade=23', function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      console.log("Adicionado no banco:" + body); // Show the HTML for the Google homepage.
+      res.status(200).send("Adicionado");
+    }else{
+      console.log("Erro ao adicionar: " + error);
     }
-    console.log("funfou: " + data);
-    res.json(data);
   });
 });
 
@@ -62,6 +59,7 @@ app.use(function(req, res, next) {
 
 // development error handler
 // will print stacktrace
+/*
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
@@ -81,6 +79,8 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+*/
 
 
 module.exports = app;

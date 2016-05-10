@@ -144,9 +144,10 @@
     <script src="/javascripts/bootstrap.min.js"></script>
     <script>
         function cadastrarEstabelecimento(){
-          console.log("entrou");
           $.get('/cadastrarEstabelecimento', function(data){
-            console.log("passou aqui: " + data);
+            if(data== "Adicionado"){
+              document.location.href = '/login';
+            }
           });
         }
     </script>
