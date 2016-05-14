@@ -90,25 +90,25 @@
                             <h3 class="text-center">Dados Restaurante</h3>
                         </div>
                         <div class="form-group col-sm-12">
-                            <input type="text" class="form-control" id="nome-restaurante" placeholder="Nome do Restaurante"/>
+                            <input type="text" class="form-control" id="nome-restaurante" name="nomeRestaurante" placeholder="Nome do Restaurante"/>
                         </div>
                         <div class="form-group col-sm-12">
-                            <input type="text" class="form-control" id="cnpj-restaurante" placeholder="CNPJ"/>
+                            <input type="text" class="form-control" id="cnpj-restaurante" name="cnpj" placeholder="CNPJ"/>
                         </div>
                         <div class="form-group col-sm-8">
-                            <input type="text" class="form-control" id="email-restaurante" placeholder="E-Mail"/>
+                            <input type="text" class="form-control" id="email-restaurante" name="email" placeholder="E-Mail"/>
                         </div>
                         <div class="form-group col-sm-4">
-                            <input type="text" class="form-control" id="telefone-restaurante" placeholder="Telefone"/>
+                            <input type="text" class="form-control" id="telefone-restaurante" name="telefone" placeholder="Telefone"/>
                         </div>
                         <div class="form-group col-sm-12">
-                            <input type="text" class="form-control" id="endereco-restaurante" placeholder="Endereço Completo do Restaurante"/>
+                            <input type="text" class="form-control" id="endereco-restaurante" name="endereco" placeholder="Endereço Completo do Restaurante"/>
                         </div>
                         <div class="form-group col-sm-6">
-                            <input type="text" class="form-control" id="cidade-restaurante" placeholder="Cidade"/>
+                            <input type="text" class="form-control" id="cidade-restaurante" name="cidade"placeholder="Cidade"/>
                         </div>
                         <div class="form-group col-sm-6">
-                            <input type="text" class="form-control" id="estado-restaurante" placeholder="Estado"/>
+                            <input type="text" class="form-control" id="estado-restaurante" name="estado" placeholder="Estado"/>
                         </div>
                         <br>
                         <br>
@@ -118,13 +118,13 @@
                             <h3 class="text-center">Dados de Acesso</h3>
                         </div>
                         <div class="form-group col-sm-12">
-                            <input type="text" class="form-control" id="nome-dono" placeholder="Nome do Responsável pelo Restaurante"/>
+                            <input type="text" class="form-control" id="nome-dono" name="nomeDono" placeholder="Nome do Responsável pelo Restaurante"/>
                         </div>
                         <div class="form-group col-sm-12">
-                            <input type="text" class="form-control" id="login-dono" placeholder="Login"/>
+                            <input type="text" class="form-control" id="login-dono" name="login" placeholder="Login"/>
                         </div>
                         <div class="form-group col-sm-12">
-                            <input type="password" class="form-control" id="senha-dono" placeholder="Senha"/>
+                            <input type="password" class="form-control" id="senha-dono" name="senha" placeholder="Senha"/>
                         </div>
                         <br>
                         <br>
@@ -144,7 +144,13 @@
     <script src="/javascripts/bootstrap.min.js"></script>
     <script>
         function cadastrarEstabelecimento(){
-          $.get('/cadastrarEstabelecimento', function(data){
+          var nome = $("#nome-restaurante").val();
+          var cnpj = $("#cnpj-restaurante").val();
+          var cadastro = {
+            nome: nome,
+            cnpj: cnpj
+          };
+          $.get('/cadastrarEstabelecimento/' + JSON.stringify(cadastro), function(data){
             if(data== "Adicionado"){
               document.location.href = '/login';
             }
