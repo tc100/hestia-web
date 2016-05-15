@@ -35,13 +35,15 @@ app.get('/cadastrar', function(req,res){
   res.render('cadastrar', { title: 'Hestia - Cadastrar' });
 });
 
-app.get("/cadastrarEstabelecimento/:cadastro", function(req,res){
+app.get("/cadastrarEstabelecimento/:cadastro/:funcionario", function(req,res){
   var request = require('request');
-  console.log("body: " + req.params.cadastro);
+  console.log("cadastro: " + req.params.cadastro);
+  console.log("funcionario: " + req.params.funcionario);
   var cadastro = JSON.parse(req.params.cadastro);
+  var funcionario = JSON.parse(req.params.funcionario)
 
 
-  request('http://localhost:8080/apihestia/estabelecimento?cadastro=' + JSON.stringify(cadastro), function (error, response, body) {
+  request('http://localhost:8080/apihestia/estabelecimento?cadastro=' + JSON.stringify(cadastro) +'&funcionario='+JSON.stringify(funcionario), function (error, response, body) {
     if (!error && response.statusCode == 200) {
       console.log("Adicionado no banco:" + body); // Show the HTML for the Google homepage.
       res.status(200).send("Adicionado");

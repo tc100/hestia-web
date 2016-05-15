@@ -142,21 +142,7 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="/javascripts/bootstrap.min.js"></script>
-    <script>
-        function cadastrarEstabelecimento(){
-          var nome = $("#nome-restaurante").val();
-          var cnpj = $("#cnpj-restaurante").val();
-          var cadastro = {
-            nome: nome,
-            cnpj: cnpj
-          };
-          $.get('/cadastrarEstabelecimento/' + JSON.stringify(cadastro), function(data){
-            if(data== "Adicionado"){
-              document.location.href = '/login';
-            }
-          });
-        }
-    </script>
+    <script src="/javascripts/cadastrarEstabelecimento.js"></script>
 
   </body>
 </html>
