@@ -11,7 +11,7 @@ var request = require('got');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login');
-var cadastro = require('./routes/cadastro');
+var cadastrar = require('./routes/cadastrar');
 
 var app = express();
 
@@ -27,32 +27,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use('/', routes);
 app.use('/users', users);
 app.use('/login', login);
-app.get('/cadastrar', function(req,res){
-  res.render('cadastrar', { title: 'Hestia - Cadastrar' });
-});
-
-app.get("/cadastrarEstabelecimento/:cadastro/:funcionario", function(req,res){
-  var request = require('request');
-  console.log("cadastro: " + req.params.cadastro);
-  console.log("funcionario: " + req.params.funcionario);
-  var cadastro = JSON.parse(req.params.cadastro);
-  var funcionario = JSON.parse(req.params.funcionario)
-
-
-  request('http://localhost:8080/apihestia/estabelecimento?cadastro=' + JSON.stringify(cadastro) +'&funcionario='+JSON.stringify(funcionario), function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      console.log("Adicionado no banco:" + body); // Show the HTML for the Google homepage.
-      res.status(200).send("Adicionado");
-    }else{
-      console.log("Erro ao adicionar: " + error);
-    }
-  });
-});
-
+app.use('/cadastrar', cadastrar);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
