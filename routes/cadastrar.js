@@ -9,11 +9,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.get('/', function(req, res, next) {
   res.render('cadastrar', { title: 'Hestia - Cadastrar' });
 });
+
 /*POST dos dados cadastrais*/
 app.post("/", function (req, res, next) {
 	console.log(req.body);
   cadastro = req.body;
-  funcionario = {"x":"x"};
+  console.log("teste: " + req.body.nomeDono);
+  funcionario = {
+    "nome": req.body.nomeDono,
+    "login": req.body.login,
+    "senha": req.body.senha
+  };
   request('http://localhost:8080/apihestia/estabelecimento?cadastro=' + JSON.stringify(cadastro) +'&funcionario='+JSON.stringify(funcionario), function (error, response, body) {
     if (!error && response.statusCode == 200) {
       console.log("Adicionado no banco:" + body); // Show the HTML for the Google homepage.
