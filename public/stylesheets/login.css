@@ -30,6 +30,14 @@ a:hover,
 a:focus {
   color: #eb3812;
 }
+.panel-primary {
+  border-color: #C84C00;
+}
+.panel-primary > .panel-heading {
+  color: #fff;
+  background-color: #C84C00;
+  border-color: #C84C00;
+}
 h1,
 h2,
 h3,

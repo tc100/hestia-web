@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="Hestia Soluções">
 
-    <title>Hestia - Cadastrar</title>
+    <title>Hestia - Editar Funcionario</title>
 
     <!--link rel="shortcut icon" href = "/images/icone.icon"-->
     <link rel="icon" type="image/png" href="/images/icone.png" />
@@ -53,21 +53,23 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul class="nav navbar-nav navbar-right">
+              <ul class="nav navbar-nav navbar-left">
                   <li>
-                      <a class="page-scroll" href="#about">Sobre</a>
+                      <a class="page-scroll" href="#">Cadastros</a>
                   </li>
                   <li>
-                      <a class="page-scroll" href="#services">Restaurantes</a>
+                      <a class="page-scroll" href="#">Administrativo</a>
                   </li>
                   <li>
-                      <a class="page-scroll" href="#client">Você</a>
+                      <a class="page-scroll" href="#">B.I.</a>
                   </li>
                   <li>
-                      <a class="page-scroll" href="#contact">Contate-nos</a>
+                      <a class="page-scroll" href="#">Contate-nos</a>
                   </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
                   <li>
-                      <a class="page-scroll" href="/login">Entrar</a>
+                      <a class="page-scroll" href="/login">"NOME AQUI"</a>
                   </li>
               </ul>
             </div>
@@ -76,47 +78,15 @@
         <!-- /.container-fluid -->
     </nav>
 
-    <section id="about">
+    <section>
         <div class="container">
-            <h2 class="section-heading text-left">Cadastrar<br /><small>Faça já o cadastro do seu restaurante e comece a usar nossos serviços</small></h2>
-            <br/>
+            <h2 class="section-heading text-center">Funcionário<br /><small>Edição do cadastro de [nome do funcionario]</small></h2>
             <hr>
             <div class="row">
             </div>
             <div class="row">
                 <form method="post">
-                    <div class="col-sm-5 col-sm-offset-1">
-                        <div class="col-sm-10 col-sm-offset-1">
-                            <h3 class="text-center">Dados Restaurante</h3>
-                        </div>
-                        <div class="form-group col-sm-12">
-                            <input type="text" class="form-control" id="nome-restaurante" required  name="nomeRestaurante" placeholder="Nome do Restaurante"/>
-                        </div>
-                        <div class="form-group col-sm-12">
-                            <input type="text" class="form-control" id="cnpj-restaurante" required name="cnpj" placeholder="CNPJ"/>
-                        </div>
-                        <div class="form-group col-sm-8">
-                            <input type="text" class="form-control" id="email-restaurante" required name="email" placeholder="E-Mail"/>
-                        </div>
-                        <div class="form-group col-sm-4">
-                            <input type="text" class="form-control" id="telefone-restaurante" required name="telefone" placeholder="Telefone"/>
-                        </div>
-                        <div class="form-group col-sm-12">
-                            <input type="text" class="form-control" id="endereco-restaurante" required name="endereco" placeholder="Endereço Completo do Restaurante"/>
-                        </div>
-                        <div class="form-group col-sm-6">
-                            <input type="text" class="form-control" id="cidade-restaurante" required name="cidade"placeholder="Cidade"/>
-                        </div>
-                        <div class="form-group col-sm-6">
-                            <input type="text" class="form-control" id="estado-restaurante" required name="estado" placeholder="Estado"/>
-                        </div>
-                        <br>
-                        <br>
-                    </div>
-                    <div class="col-sm-4 col-sm-offset-1">
-                        <div class="col-sm-10 col-sm-offset-1">
-                            <h3 class="text-center">Dados de Acesso</h3>
-                        </div>
+                    <div class="col-sm-6 col-sm-offset-3">
                         <div class="form-group col-sm-12">
                             <input type="text" class="form-control" id="nome-dono" required name="nomeDono" placeholder="Nome do Responsável pelo Restaurante"/>
                         </div>
@@ -128,9 +98,12 @@
                         </div>
                         <br>
                         <br>
-                    </div>
-                    <div class="col-sm-2 col-sm-offset-10">
-                        <input type="submit" class="btn btn-default" value= "Cadastrar"/>
+                        <div class="col-sm-2">
+                            <a href="/funcionario" class="btn btn-default" >Voltar</a>
+                        </div>
+                        <div class="col-sm-2 col-sm-offset-7">
+                            <input type="submit" class="btn btn-default" value= "Salvar"/>
+                        </div>
                     </div>
                 </form>
             </div>
