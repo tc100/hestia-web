@@ -1,7 +1,8 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var request = require('got');
+var http = require('http');
+var querystring = require('querystring');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -12,23 +13,52 @@ app.get('/', function(req, res, next) {
 
 /*POST dos dados cadastrais*/
 app.post("/", function (req, res, next) {
-	console.log(req.body);
-  cadastro = req.body;
-  console.log("teste: " + req.body.nomeDono);
+  cadastro = {
+    "nome-restaurante": req.body.nomeRestaurante,
+    "cnpj": req.body.cnpj,
+    "email": req.body.email,
+    "telefone": req.body.telefone,
+    "endereco": req.body.endereco,
+    "cidade": req.body.cidade,
+    "estado": req.body.estado
+  };
   funcionario = {
     "nome": req.body.nomeDono,
     "login": req.body.login,
     "senha": req.body.senha
   };
-  request('http://localhost:8080/apihestia/estabelecimento?cadastro=' + JSON.stringify(cadastro) +'&funcionario='+JSON.stringify(funcionario), function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      console.log("Adicionado no banco:" + body); // Show the HTML for the Google homepage.
-      res.status(200).send("Adicionado");
-    }else{
-      console.log("Erro ao adicionar: " + error);
-    }
+  var data = querystring.stringify({
+    "cadastro": cadastro,
+    "funcionario": funcionario
   });
-  res.redirect("/login");
+
+  var options = {
+    host: 'localhost',
+    port: 8080,
+    path: '/apihestia/estabelecimento?cadastro='+JSON.stringify(cadastro)+'&funcionario='+JSON.stringify(funcionario),
+    method: 'POST',
+    params: data,
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(data)
+    }
+  };
+
+  var req = http.request(options, function(response) {
+      response.setEncoding('utf8');
+
+      response.on('data', function (chunk) {
+        if(chunk == "Cadastrado"){
+          console.log("Cadastrado");
+          res.redirect("/login?status=cadastrado");
+        }else{
+          console.log("fail: " + chunk);
+          res.redirect("/cadastrar?status=fail");
+        }
+      });
+  });
+  req.write(data);
+  req.end();
 });
 
 module.exports = app;
