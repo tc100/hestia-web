@@ -76,19 +76,19 @@
                 <div class="col-sm-4 col-sm-offset-2">
                     <h2 class="section-heading text-center">Login</h2>
                     <hr class="text-center">
-	                  <form role="form">
+	                  <form method="post">
   							      <div>
-  								        <input type="email" class="form-control" id="emailLogin" placeholder="Email">
-  							      </div>
+                          <input type="text" class="form-control" id="login" required name="login" placeholder="Login"/>
+                      </div>
   							      <div>
-  								        <input type="password" class="form-control" id="passwordLogin" placeholder="Senha">
+  								        <input type="password" class="form-control" required name="senha" id="senha" placeholder="Senha">
   							      </div>
   							      <div class = "text-center" >
           								<div class="checkbox">
           									  <label><input type="checkbox">Lembre-me</label>
           								</div>
         							</div>
-        							<button type="submit" class="btn btn-default col-xs-12">Entrar</button>
+                          <input type="submit" class="btn btn-default col-xs-12" value= "Entrar"/>
       						</form>
 				      </div>
           </div>
