@@ -27,15 +27,15 @@ app.post("/", function (req, res, next) {
     "login": req.body.login,
     "senha": req.body.senha
   };
+  console.log(querystring.escape(JSON.stringify(funcionario)));
   var data = querystring.stringify({
     "cadastro": cadastro,
     "funcionario": funcionario
   });
-
   var options = {
     host: 'localhost',
     port: 8080,
-    path: '/apihestia/estabelecimento?cadastro='+JSON.stringify(cadastro)+'&funcionario='+JSON.stringify(funcionario),
+    path: '/apihestia/estabelecimento?cadastro='+querystring.escape(JSON.stringify(cadastro))+'&funcionario='+querystring.escape(JSON.stringify(funcionario)),
     method: 'POST',
     params: data,
     headers: {
