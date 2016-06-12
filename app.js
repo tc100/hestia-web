@@ -37,15 +37,22 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/login', login);
 app.use('/cadastrar', cadastrar);
-app.use('/funcionario',funcionario);
+app.use('/funcionario',userValidation,funcionario);
 app.use('/autorizado/:user', function(req,res){
   console.log("redirecionado..");
   var user = JSON.parse(req.params.user);
   req.hestiasession.name = user.nome;
   req.hestiasession.restaurante = user.restaurante;
-
   res.redirect("/funcionario");
 });
+
+function userValidation(req,res,next){
+  if(!req.hestiasession.name){
+    res.redirect("/login");
+  }else{
+    next();
+  }
+}
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
