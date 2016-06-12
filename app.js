@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var ejs = require('ejs');
 var http = require('http');
-var request = require('got');
+var session = require('client-sessions');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -27,12 +27,25 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+  cookieName: 'hestiasession',
+  secret: 'teste',
+  duration: 7 * 24 * 60 * 60 * 1000
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/login', login);
 app.use('/cadastrar', cadastrar);
 app.use('/funcionario',funcionario);
+app.use('/autorizado/:user', function(req,res){
+  console.log("redirecionado..");
+  var user = JSON.parse(req.params.user);
+  req.hestiasession.name = user.nome;
+  req.hestiasession.restaurante = user.restaurante;
+
+  res.redirect("/funcionario");
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

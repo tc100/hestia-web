@@ -3,6 +3,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var http = require('http');
 var querystring = require('querystring');
+var session = require('express-session');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,7 +25,7 @@ app.post("/", function (req, res, next) {
   var options = {
     host: 'localhost',
     port: 8080,
-    path: '/apihestia/login?q='+JSON.stringify(login),
+    path: '/apihestia/login?login='+JSON.stringify(login),
     method: 'GET',
     params: data,
     headers: {
@@ -35,16 +36,14 @@ app.post("/", function (req, res, next) {
 
   var req = http.request(options, function(response) {
       response.setEncoding('utf8');
-
       response.on('data', function (chunk) {
-        if(chunk == "Found"){
-          console.log("Achou");
-          console.log("realizar aqui as validações de login");
-          console.log("Redirecionar para o home logado");
-          res.redirect("/funcionario?status=logado");
+        if(chunk == "NOTAUTHORIZED"){
+          res.redirect("/login?status=NOTAUTHORIZED");
+        }else if(chunk == "ERROR"){
+          res.redirect("/login?status=ERROR");
         }else{
-          console.log("fail: " + chunk);
-          res.redirect("/login?status=fail");
+          var user = JSON.parse(chunk);
+          res.redirect("/autorizado/"+JSON.stringify(user));
         }
       });
   });
