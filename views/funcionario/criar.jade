@@ -56,4 +56,34 @@ html(lang='pt-br')
           ul.nav.navbar-nav.navbar-right
             li
               a.page-scroll(href='/login') "NOME AQUI"
-    block content
+        // /.navbar-collapse
+      // /.container-fluid
+    section
+      .container
+        h2.section-heading.text-center
+          | Funcionário
+          br
+          small Cadastro de funcionários que irão utilizar o sistema
+        hr
+        .row
+        .row
+          form(method='post')
+            .col-sm-6.col-sm-offset-3
+              .form-group.col-sm-12
+                input#nome-dono.form-control(type='text', required='', name='nomeDono', placeholder='Nome do Responsável pelo Restaurante')
+              .form-group.col-sm-12
+                input#login-dono.form-control(type='text', required='', name='login', placeholder='Login')
+              .form-group.col-sm-12
+                input#senha-dono.form-control(type='password', required='', size='8', maxlength='12', name='senha', placeholder='Senha')
+              br
+              br
+              .col-sm-2
+                a.btn.btn-default(href='/funcionario') Voltar
+              .col-sm-2.col-sm-offset-7
+                input.btn.btn-default(type='submit', value='Cadastrar')
+    // jQuery
+    script(src='/javascripts/jquery.js')
+    // Bootstrap Core JavaScript
+    script(src='/javascripts/bootstrap.min.js')
+    script.
+    // script src="/javascripts/cadastrarEstabelecimento.js"></script
