@@ -19,11 +19,6 @@ html(lang='pt-br')
     link(rel='stylesheet', href='/stylesheets/animate.min.css', type='text/css')
     // Custom CSS
     link(rel='stylesheet', href='/stylesheets/login.css', type='text/css')
-    // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
-    // WARNING: Respond.js doesn't work if you view the page via file://
-    //if lt IE 9
-      script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
-      script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
   body#page-top
     nav#mainNav.navbar.navbar-default.navbar-fixed-top
       .container-fluid
@@ -70,11 +65,11 @@ html(lang='pt-br')
           form(method='post')
             .col-sm-6.col-sm-offset-3
               .form-group.col-sm-12
-                input#nome-dono.form-control(type='text', required='', name='nomeDono', placeholder='Nome do Responsável pelo Restaurante')
+                input#nome-funcionario.form-control(type='text', required='', name='nomeFuncionario', placeholder='Nome do Funcionário')
               .form-group.col-sm-12
-                input#login-dono.form-control(type='text', required='', name='login', placeholder='Login')
+                input#login-funcionario.form-control(type='text', required='', name='login', placeholder='Login')
               .form-group.col-sm-12
-                input#senha-dono.form-control(type='password', required='', pattern= '(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$', size='8', maxlength='12', name='senha', placeholder='Senha')
+                input#senha-funcionario.form-control(type='password', required='', pattern= '(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$', size='8', maxlength='12', name='senha', placeholder='Senha')
               br
               br
               .col-sm-2
