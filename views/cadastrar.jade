@@ -67,7 +67,7 @@ html(lang='pt-br')
               .form-group.col-sm-12
                 input#nome-restaurante.form-control(type='text', required='', name='nomeRestaurante', placeholder='Nome do Restaurante')
               .form-group.col-sm-12
-                input#cnpj-restaurante.form-control(type='text', pattern = '\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}-\\d{2}', title ='Ex.: 00.000.000/0001-00' required='', name='cnpj', placeholder='CNPJ')
+                input#cnpj-restaurante.form-control(type='text', pattern = '\\d{14}', title ='Ex.: 00.000.000/0001-00' required='', name='cnpj', placeholder='CNPJ')
               .form-group.col-sm-8
                 input#email-restaurante.form-control(type='email', required='', name='email', placeholder='E-Mail', pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")
               .form-group.col-sm-4
