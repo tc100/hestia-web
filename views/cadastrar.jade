@@ -67,11 +67,11 @@ html(lang='pt-br')
               .form-group.col-sm-12
                 input#nome-restaurante.form-control(type='text', required='', name='nomeRestaurante', placeholder='Nome do Restaurante')
               .form-group.col-sm-12
-                input#cnpj-restaurante.form-control(type='text', required='', name='cnpj', placeholder='CNPJ')
+                input#cnpj-restaurante.form-control(type='text', pattern = '\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}-\\d{2}', title ='Ex.: 00.000.000/0001-00' required='', name='cnpj', placeholder='CNPJ')
               .form-group.col-sm-8
-                input#email-restaurante.form-control(type='text', required='', name='email', placeholder='E-Mail')
+                input#email-restaurante.form-control(type='email', required='', name='email', placeholder='E-Mail', pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")
               .form-group.col-sm-4
-                input#telefone-restaurante.form-control(type='text', required='', name='telefone', placeholder='Telefone')
+                input#telefone-restaurante.form-control(type="tel", pattern="\\([0-9]{2}\\) [0-9]{4,6}-[0-9]{3,4}$", required='', maxlength="15", name='telefone', placeholder='Telefone', title = "Ex: (99) 99999-9999")
               .form-group.col-sm-12
                 input#endereco-restaurante.form-control(type='text', required='', name='endereco', placeholder='Endereço Completo do Restaurante')
               .form-group.col-sm-6
@@ -88,7 +88,7 @@ html(lang='pt-br')
               .form-group.col-sm-12
                 input#login-dono.form-control(type='text', required='', name='login', placeholder='Login')
               .form-group.col-sm-12
-                input#senha-dono.form-control(type='password', required='', size='8', maxlength='12', name='senha', placeholder='Senha')
+                input#senha-dono.form-control(type='password', required='', pattern= '(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$', name='senha', placeholder='Senha', title = "A Senha deve conter 3 dos seguintes:\nMaiúsculas, Minúsculas, Números ou Caracteres especiais. \nNo minimo 8 caracteres")
               br
               br
             .col-sm-2.col-sm-offset-10

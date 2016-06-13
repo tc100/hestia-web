@@ -74,7 +74,7 @@ html(lang='pt-br')
               .form-group.col-sm-12
                 input#login-dono.form-control(type='text', required='', name='login', placeholder='Login')
               .form-group.col-sm-12
-                input#senha-dono.form-control(type='password', required='', size='8', maxlength='12', name='senha', placeholder='Senha')
+                input#senha-dono.form-control(type='password', required='', pattern= '(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$' , size='8', maxlength='12', name='senha', placeholder='Senha')
               br
               br
               .col-sm-2
