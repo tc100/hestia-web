@@ -50,10 +50,34 @@ html(lang='pt-br')
             li
               a.page-scroll(href='#') Administrativo
             li
-              a.page-scroll(href='#') B.I.
+              a.page-scroll(href='#') Dados
             li
               a.page-scroll(href='#') Contate-nos
           ul.nav.navbar-nav.navbar-right
             li
               a.page-scroll(href='/login') "NOME AQUI"
-    block content
+        // /.navbar-collapse
+      // /.container-fluid
+    section
+      .col-sm-2.col-sm-offset-10
+        a.btn.btn-default.glyphicon.glyphicon-plus(href='/funcionario/criar')  Novo
+      .col-sm-8.col-sm-offset-2
+        table.table.table-striped
+          tr
+            th Nome
+            th Login
+            th Ações
+          tr
+            td [nome]
+            td [login]
+            td
+              a.btn.btn-default(href='/funcionario/editar')
+                i.fa.fa-pencil(aria-hidden='true')
+              a#detalhe.btn.btn-default(href='/funcionario/detalhes')
+                i.fa.fa-list(aria-hidden='true')
+    // jQuery
+    script(src='/javascripts/jquery.js')
+    // Bootstrap Core JavaScript
+    script(src='/javascripts/bootstrap.min.js')
+    script.
+    // script src="/javascripts/cadastrarEstabelecimento.js"></script

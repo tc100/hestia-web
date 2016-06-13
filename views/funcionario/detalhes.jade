@@ -6,7 +6,6 @@ html(lang='pt-br')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     meta(name='description', content='')
     meta(name='author', content='Hestia Soluções')
-    title Hestia - Adicionar Funcionario
     // link rel="shortcut icon" href = "/images/icone.icon"
     link(rel='icon', type='image/png', href='/images/icone.png')
     // Bootstrap Core CSS
@@ -24,36 +23,21 @@ html(lang='pt-br')
     //if lt IE 9
       script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
       script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
-  body#page-top
-    nav#mainNav.navbar.navbar-default.navbar-fixed-top
-      .container-fluid
-        // Brand and toggle get grouped for better mobile display
-        .navbar-header
-          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
-            span.sr-only Toggle navigation
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          a.navbar-brand.page-scroll(href='/') Hestia
-        // Collect the nav links, forms, and other content for toggling
-        #bs-example-navbar-collapse-1.collapse.navbar-collapse
-          ul.nav.navbar-nav.navbar-left
-            li
-              a.page-scroll.dropdown-toggle(data-toggle='dropdown', href='#')
-                | Cadastros
-                span.caret
-              ul.dropdown-menu
-                li
-                  a(href='/funcionario') Funcionarios
-                li
-                  a(href='#') Cardapio
-            li
-              a.page-scroll(href='#') Administrativo
-            li
-              a.page-scroll(href='#') B.I.
-            li
-              a.page-scroll(href='#') Contate-nos
-          ul.nav.navbar-nav.navbar-right
-            li
-              a.page-scroll(href='/login') "NOME AQUI"
-    block content
+  body
+    .panel.panel-primary
+      .panel-heading Detalhes
+      .panel-body
+        .col-sm-8.col-sm-offset-2
+          table.table.table-striped
+            tr
+              th Nome
+              td [nome]
+            tr
+              th Login
+              td [login]
+    // jQuery
+    script(src='/javascripts/jquery.js')
+    // Bootstrap Core JavaScript
+    script(src='/javascripts/bootstrap.min.js')
+    script.
+    // script src="/javascripts/cadastrarEstabelecimento.js"></script
