@@ -25,7 +25,8 @@ app.post("/", function (req, res, next) {
   funcionario = {
     "nome": req.body.nomeDono,
     "login": req.body.login,
-    "senha": req.body.senha
+    "senha": req.body.senha,
+    "restaurante": "placeholder"
   };
   console.log(querystring.escape(JSON.stringify(funcionario)));
   var data = querystring.stringify({
