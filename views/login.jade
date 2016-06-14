@@ -4,6 +4,11 @@ block title
 
 block content
     section#about
+      .alert.alert-success.alert-dismissible.fade.in(role='alert')
+        button.close(type='button', data-dismiss='alert', aria-label='Close')
+          span(aria-hidden='true') ×
+        strong Cadastrado!
+        |  Estabelecimento cadastrado com sucesso! Pronto para logar!
       .container
         center
           img.img-responsive(src='/images/logo/logo2-.png', width='200px', height='200px', alt='Hestia')
@@ -30,3 +35,11 @@ block content
                     input(type='checkbox')
                     | Lembre-me
               input.btn.btn-default.col-xs-12(type='submit', value='Entrar')
+block footer
+  script.
+    $('.alert').hide();
+    var url = window.location.href;
+    if(url.indexOf("?status=cadastrado") != -1)
+    {
+      $(".alert").show();
+    }

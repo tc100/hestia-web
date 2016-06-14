@@ -30,6 +30,12 @@ block content
         // /.navbar-collapse
       // /.container-fluid
     section#about
+      .alert.alert-warning.alert-dismissible.fade.in(role='alert')
+        button.close(type='button', data-dismiss='alert', aria-label='Close')
+          span(aria-hidden='true') ×
+        strong Erro!
+        |  Erro ao realizar o cadastro de restaurante
+        
       .container
         h2.section-heading.text-left
           | Cadastrar
@@ -77,4 +83,10 @@ block content
     // Bootstrap Core JavaScript
     script(src='/javascripts/bootstrap.min.js')
     script.
+      $('.alert').hide();
+      var url = window.location.href;
+      if(url.indexOf("?status=fail") != -1)
+      {
+        $(".alert").show();
+      }
     // script src="/javascripts/cadastrarEstabelecimento.js"></script
