@@ -5,6 +5,12 @@ block title
 
 block content
     section
+      .alert.alert-warning.alert-dismissible.fade(role='alert', hidden = '')
+        button.close(type='button', data-dismiss='alert', aria-label='Close')
+          span(aria-hidden='true') ×
+        strong Erro!
+        |  Erro ao realizar o cadastro de funcionário.
+        
       .container
         h2.section-heading.text-center
           | Funcionário
@@ -27,4 +33,7 @@ block content
                 a.btn.btn-default(href='/funcionario') Voltar
               .col-sm-2.col-sm-offset-7
                 input.btn.btn-default(type='submit', value='Cadastrar')
-    
+block footer
+  script.
+    debugger;
+    var x = window.location.href;
