@@ -26,3 +26,15 @@ block content
               a.btn.btn-default(href='/funcionario') Voltar
             .col-sm-2.col-sm-offset-7
               input.btn.btn-default(type='submit', value='Salvar')
+              
+block footer
+  script.
+    function urlParams(name){
+      var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+      return results[1] || 0;
+    }
+    $.get('http://localhost:3000/funcionario/getFuncionario/'+urlParams('id'),function(response){
+      $("#nome-funcionario").val(response.nome);
+      $("#login-funcionario").val(response.login);
+      $("#senha-funcionario").val(response.senha);          
+    });
