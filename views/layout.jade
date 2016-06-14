@@ -1,3 +1,5 @@
+- var userLogged = (user && user.name)?true:false;
+  
 doctype html
 html(lang='pt-br')
   head
@@ -6,7 +8,7 @@ html(lang='pt-br')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     meta(name='description', content='')
     meta(name='author', content='Hestia Soluções')
-    title Hestia - Adicionar Funcionario
+    block title
     // link rel="shortcut icon" href = "/images/icone.icon"
     link(rel='icon', type='image/png', href='/images/icone.png')
     // Bootstrap Core CSS
@@ -22,8 +24,9 @@ html(lang='pt-br')
     // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
     // WARNING: Respond.js doesn't work if you view the page via file://
     //if lt IE 9
-      script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
-      script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+    script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+    script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+     
   body#page-top
     nav#mainNav.navbar.navbar-default.navbar-fixed-top
       .container-fluid
@@ -35,25 +38,53 @@ html(lang='pt-br')
             span.icon-bar
             span.icon-bar
           a.navbar-brand.page-scroll(href='/') Hestia
-        // Collect the nav links, forms, and other content for toggling
-        #bs-example-navbar-collapse-1.collapse.navbar-collapse
-          ul.nav.navbar-nav.navbar-left
-            li
-              a.page-scroll.dropdown-toggle(data-toggle='dropdown', href='#')
-                | Cadastros
-                span.caret
-              ul.dropdown-menu
-                li
-                  a(href='/funcionario') Funcionarios
-                li
-                  a(href='#') Cardapio
-            li
-              a.page-scroll(href='#') Administrativo
-            li
-              a.page-scroll(href='#') B.I.
-            li
-              a.page-scroll(href='#') Contate-nos
-          ul.nav.navbar-nav.navbar-right
-            li
-              a.page-scroll(href='/login') "NOME AQUI"
+        - if(user.name != null)
+          // Collect the nav links, forms, and other content for toggling
+          #bs-example-navbar-collapse-1.collapse.navbar-collapse
+            ul.nav.navbar-nav.navbar-left
+              li
+                a.page-scroll.dropdown-toggle(data-toggle='dropdown', href="#")
+                  | Cadastros
+                  span.caret
+                ul.dropdown-menu
+                  li
+                    a(href='/funcionario') Funcionarios
+                  li
+                    a(href='#') Cardapio
+              li
+                a.page-scroll(href='#') Administrativo
+              li
+                a.page-scroll(href='#') B.I.
+              li
+                a.page-scroll(href='#') Contate-nos
+            ul.nav.navbar-nav.navbar-right
+              li
+                a.page-scroll.dropdown-toggle(data-toggle='dropdown', href="#")
+                  | #{user.name}
+                  span.caret
+                ul.dropdown-menu
+                  li
+                    a(href='funcionario') Area Logada
+                  li
+                    a(href='/logout') Logout
+        - if(user.name == null)  
+          #bs-example-navbar-collapse-1.collapse.navbar-collapse
+            ul.nav.navbar-nav.navbar-right
+              li
+                a.page-scroll(href='#about') Sobre
+              li
+                a.page-scroll(href='#services') Restaurantes
+              li
+                a.page-scroll(href='#client') Você
+              li
+                a.page-scroll(href='#contact') Contate-nos
+              li
+                a.page-scroll(href='/login') Entrar
     block content
+    
+    
+    div.footer
+      script(src='/javascripts/jquery.js')
+      // Bootstrap Core JavaScript
+      script(src='/javascripts/bootstrap.min.js')
+      block footer

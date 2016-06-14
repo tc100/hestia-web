@@ -46,6 +46,11 @@ app.use('/autorizado/:user', function(req,res){
   res.redirect("/funcionario");
 });
 
+app.use('/logout', function(req,res){
+  req.hestiasession.reset();
+  res.redirect('/login');
+})
+
 function userValidation(req,res,next){
   if(!req.hestiasession.name){
     res.redirect("/login");

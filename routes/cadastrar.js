@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 /* GET Pagina Cadastrar.*/
 app.get('/', function(req, res, next) {
-  res.render('cadastrar', { title: 'Hestia - Cadastrar' });
+  res.render('cadastrar', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
 });
 
 /*POST dos dados cadastrais*/

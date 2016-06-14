@@ -46,8 +46,20 @@ html(lang='pt-br')
               a.page-scroll(href='#client') Você
             li
               a.page-scroll(href='#contact') Contate-nos
-            li
-              a.page-scroll(href='/login') Entrar
+            - if(user.name == null)
+              li
+                a.page-scroll(href='/login') Entrar
+            - if(user.name != null)
+              ul.nav.navbar-nav.navbar-right
+                li
+                  a.page-scroll.dropdown-toggle(data-toggle='dropdown', href="#")
+                    | #{user.name}
+                    span.caret
+                  ul.dropdown-menu
+                    li
+                      a(href='/funcionario')  Area Logada
+                    li
+                      a(href='/logout') Logout
         // /.navbar-collapse
       // /.container-fluid
     header

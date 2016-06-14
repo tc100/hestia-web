@@ -8,11 +8,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 /* GET Pagina Cadastrar.*/
 app.get('/', function(req, res, next) {
-  res.render('funcionario/index', { title: 'Hestia - Funcionário' });
+  res.render('funcionario/index', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
 });
 /* GET Pagina Cadastrar.*/
 app.get('/criar', function(req, res, next) {
-  res.render('funcionario/criar', { title: 'Hestia - Adicionar Funcionário' });
+  res.render('funcionario/criar', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
 });
 
 app.post('/criar', function(req, res, next) {
@@ -54,11 +54,11 @@ app.post('/criar', function(req, res, next) {
 
 /* GET Pagina Cadastrar.*/
 app.get('/detalhes', function(req, res, next) {
-  res.render('funcionario/detalhes');
+  res.render('funcionario/detalhes',{user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
 });
 /* GET Pagina Cadastrar.*/
 app.get('/editar', function(req, res, next) {
-  res.render('funcionario/editar', { title: 'Hestia - Editar Funcionário' });
+  res.render('funcionario/editar',{user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
 });
 
 /*POST dos dados cadastrais*/

@@ -1,63 +1,9 @@
-doctype html
-html(lang='pt-br')
-  head
-    meta(charset='utf-8')
-    meta(http-equiv='X-UA-Compatible', content='IE=edge')
-    meta(name='viewport', content='width=device-width, initial-scale=1')
-    meta(name='description', content='')
-    meta(name='author', content='Hestia Soluções')
-    title Hestia - Adicionar Funcionario
-    // link rel="shortcut icon" href = "/images/icone.icon"
-    link(rel='icon', type='image/png', href='/images/icone.png')
-    // Bootstrap Core CSS
-    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css', type='text/css')
-    // Custom Fonts
-    link(href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800', rel='stylesheet', type='text/css')
-    link(href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic', rel='stylesheet', type='text/css')
-    link(rel='stylesheet', href='/font-awesome/css/font-awesome.min.css', type='text/css')
-    // Plugin CSS
-    link(rel='stylesheet', href='/stylesheets/animate.min.css', type='text/css')
-    // Custom CSS
-    link(rel='stylesheet', href='/stylesheets/login.css', type='text/css')
-    // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
-    // WARNING: Respond.js doesn't work if you view the page via file://
-    //if lt IE 9
-      script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
-      script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
-  body#page-top
-    nav#mainNav.navbar.navbar-default.navbar-fixed-top
-      .container-fluid
-        // Brand and toggle get grouped for better mobile display
-        .navbar-header
-          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
-            span.sr-only Toggle navigation
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          a.navbar-brand.page-scroll(href='/') Hestia
-        // Collect the nav links, forms, and other content for toggling
-        #bs-example-navbar-collapse-1.collapse.navbar-collapse
-          ul.nav.navbar-nav.navbar-left
-            li
-              a.page-scroll.dropdown-toggle(data-toggle='dropdown', href='#')
-                | Cadastros
-                span.caret
-              ul.dropdown-menu
-                li
-                  a(href='/funcionario') Funcionarios
-                li
-                  a(href='#') Cardapio
-            li
-              a.page-scroll(href='#') Administrativo
-            li
-              a.page-scroll(href='#') Dados
-            li
-              a.page-scroll(href='#') Contate-nos
-          ul.nav.navbar-nav.navbar-right
-            li
-              a.page-scroll(href='/login') "NOME AQUI"
-        // /.navbar-collapse
-      // /.container-fluid
+extends ../layout
+
+block title
+    title Hestia - Funcionarios
+
+block content
     section
       .col-sm-2.col-sm-offset-10
         a.btn.btn-default.glyphicon.glyphicon-plus(href='/funcionario/criar')  Novo
@@ -75,9 +21,4 @@ html(lang='pt-br')
                 i.fa.fa-pencil(aria-hidden='true')
               a#detalhe.btn.btn-default(href='/funcionario/detalhes')
                 i.fa.fa-list(aria-hidden='true')
-    // jQuery
-    script(src='/javascripts/jquery.js')
-    // Bootstrap Core JavaScript
-    script(src='/javascripts/bootstrap.min.js')
-    script.
-    // script src="/javascripts/cadastrarEstabelecimento.js"></script
+    

@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 /* GET Login. */
 app.get('/', function(req, res, next) {
-  res.render('login', { title: 'Hestia - Login' });
+  res.render('login', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
 });
 
 /*POST login*/
