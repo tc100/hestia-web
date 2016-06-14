@@ -7,13 +7,12 @@ block content
     section
       .col-sm-2.col-sm-offset-10
         a.btn.btn-default.glyphicon.glyphicon-plus(href='/funcionario/criar')  Novo
-      .col-sm-8.col-sm-offset-2
-        table.table.table-striped
+      div.col-sm-8.col-sm-offset-2
+        table.table.table-striped#lista-funcionarios
           tr
             th Nome
-            th Login
             th Ações
-          tr
+          tr.linha-tabela.hidden
             td [nome]
             td [login]
             td
@@ -21,4 +20,15 @@ block content
                 i.fa.fa-pencil(aria-hidden='true')
               a#detalhe.btn.btn-default(href='/funcionario/detalhes')
                 i.fa.fa-list(aria-hidden='true')
+block footer
+    script.
+        $.get('http://localhost:3000/funcionario/getFuncs',function(response){
+            for( x in response.funcionarios){
+                
+                var html = '<tr><td>'+response.funcionarios[x].nome+'</td>'+
+                            '<td><a class="btn btn-default" href="/funcionario/editar/'+ response.funcionarios[x].id+'"><i class="fa fa-pencil" aria-hidden="true"></i></a>'+
+                            '<a id="detalhe"class="btn btn-default" href="/funcionario/detalhes/'+ response.funcionarios[x].id+'"><i class="fa fa-list" aria-hidden="true"></i></a></td>';
+                $("#lista-funcionarios").append(html);
+            }
+        });
     

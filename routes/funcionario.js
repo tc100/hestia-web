@@ -7,6 +7,35 @@ var http = require('http');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 /* GET Pagina Cadastrar.*/
+
+app.get('/getFuncs', function (req,res){
+  var cnpj = req.hestiasession.restaurante;
+  console.log("cnpj: " + cnpj);
+  var options = {
+    host: 'localhost',
+    port: 8080,
+    path: '/apihestia/getFuncs?cnpj='+cnpj,
+    method: 'GET',
+    params: req.hestiasession.restaurante,
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(cnpj)
+    }
+  };
+  var request = http.request(options, function(response) {
+      response.setEncoding('utf8');
+      response.on('data', function (chunk) {
+        if(chunk == "ERROR"){
+          res.send("ERROR");
+        }else{
+          var funcionarios = JSON.parse(chunk);
+          res.send(funcionarios);
+        }
+      });
+  });
+  request.write(cnpj);
+  request.end();
+});
 app.get('/', function(req, res, next) {
   res.render('funcionario/index', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
 });
