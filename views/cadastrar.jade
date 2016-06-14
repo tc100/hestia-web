@@ -4,6 +4,12 @@ block title
 
 block content
     section#about
+      .alert.alert-warning.alert-dismissible.fade.in(role='alert')
+        button.close(type='button', data-dismiss='alert', aria-label='Close')
+          span(aria-hidden='true') ×
+        strong Erro!
+        |  Erro ao realizar o cadastro de restaurante
+        
       .container
         div.alert.alert-warning.fade.in.hidden(role='alert')
           button.close(type='button', data-dismiss='alert', aria-label='Close')
@@ -51,6 +57,7 @@ block content
               br
             .col-sm-2.col-sm-offset-10
               input.btn.btn-default(type='submit', value='Cadastrar')
+
 block footer
   script.
     function urlParams(name){
@@ -61,4 +68,3 @@ block footer
     if(status == "fail"){
       $(".alert").removeClass("hidden");
     }
-    

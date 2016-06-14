@@ -5,11 +5,11 @@ block title
 
 block content
     section
-      div.alert.alert-warning.fade.in.hidden(role='alert')
+      .alert.alert-warning.alert-dismissible.fade.in(role='alert')
         button.close(type='button', data-dismiss='alert', aria-label='Close')
           span(aria-hidden='true') ×
         strong Erro!
-        |  Erro ao realizar o cadastro de funcionário.
+        |  Erro ao realizar o cadastro de funcionário
         
       .container
         h2.section-heading.text-center
@@ -35,5 +35,9 @@ block content
                 input.btn.btn-default(type='submit', value='Cadastrar')
 block footer
   script.
-    debugger;
-    var x = window.location.href;
+    $('.alert').hide();
+    var url = window.location.href;
+    if(url.indexOf("?status=fail") != -1)
+    {
+      $(".alert").show();
+    }
