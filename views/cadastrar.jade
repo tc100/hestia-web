@@ -3,34 +3,13 @@ block title
   title Hestia - Cadastrar Estabelecimento
 
 block content
-  body#page-top
-    nav#mainNav.navbar.navbar-default.navbar-fixed-top
-      .container-fluid
-        // Brand and toggle get grouped for better mobile display
-        .navbar-header
-          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
-            span.sr-only Toggle navigation
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          a.navbar-brand.page-scroll(href='/') Hestia
-        // Collect the nav links, forms, and other content for toggling
-        #bs-example-navbar-collapse-1.collapse.navbar-collapse
-          ul.nav.navbar-nav.navbar-right
-            li
-              a.page-scroll(href='#about') Sobre
-            li
-              a.page-scroll(href='#services') Restaurantes
-            li
-              a.page-scroll(href='#client') Você
-            li
-              a.page-scroll(href='#contact') Contate-nos
-            li
-              a.page-scroll(href='/login') Entrar
-        // /.navbar-collapse
-      // /.container-fluid
     section#about
       .container
+        div.alert.alert-warning.fade.in.hidden(role='alert')
+          button.close(type='button', data-dismiss='alert', aria-label='Close')
+            span(aria-hidden='true') ×
+          strong Erro!
+          |  Erro ao realizar o cadastro de funcionário.
         h2.section-heading.text-left
           | Cadastrar
           br
@@ -72,9 +51,14 @@ block content
               br
             .col-sm-2.col-sm-offset-10
               input.btn.btn-default(type='submit', value='Cadastrar')
-    // jQuery
-    script(src='/javascripts/jquery.js')
-    // Bootstrap Core JavaScript
-    script(src='/javascripts/bootstrap.min.js')
-    script.
-    // script src="/javascripts/cadastrarEstabelecimento.js"></script
+block footer
+  script.
+    function urlParams(name){
+      var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+      return results[1] || 0;
+    };
+    var status = urlParams(status)
+    if(status == "fail"){
+      $(".alert").removeClass("hidden");
+    }
+    
