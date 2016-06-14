@@ -60,11 +60,9 @@ block content
 
 block footer
   script.
-    function urlParams(name){
-      var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-      return results[1] || 0;
-    };
-    var status = urlParams(status)
-    if(status == "fail"){
-      $(".alert").removeClass("hidden");
+    $('.alert').hide();
+    var url = window.location.href;
+    if(url.indexOf("?status=fail") != -1)
+    {
+      $(".alert").show();
     }

@@ -4,11 +4,26 @@ block title
 
 block content
     section#about
-      .alert.alert-success.alert-dismissible.fade.in(role='alert')
+      .alert.alert-success.alert-dismissible.fade.in.hidden#cadastrado(role='alert')
         button.close(type='button', data-dismiss='alert', aria-label='Close')
           span(aria-hidden='true') ×
         strong Cadastrado!
         |  Estabelecimento cadastrado com sucesso! Pronto para logar!
+      .alert.alert-info.alert-dismissible.fade.in.hidden#logout(role='alert')
+        button.close(type='button', data-dismiss='alert', aria-label='Close')
+          span(aria-hidden='true') ×
+        strong Volte sempre!
+        |  Você fez Logout !
+      .alert.alert-warning.alert-dismissible.fade.in.hidden#authorization(role='alert')
+        button.close(type='button', data-dismiss='alert', aria-label='Close')
+          span(aria-hidden='true') ×
+        strong Login necessário!
+        |  É necessário fazer o login para acessar esse conteúdo
+      .alert.alert-warning.alert-dismissible.fade.in.hidden#notauthorized(role='alert')
+        button.close(type='button', data-dismiss='alert', aria-label='Close')
+          span(aria-hidden='true') ×
+        strong Usuário não encontrado!
+        |  Tente novamente
       .container
         center
           img.img-responsive(src='/images/logo/logo2-.png', width='200px', height='200px', alt='Hestia')
@@ -37,9 +52,16 @@ block content
               input.btn.btn-default.col-xs-12(type='submit', value='Entrar')
 block footer
   script.
-    $('.alert').hide();
+    //$('.alert').hide();
     var url = window.location.href;
     if(url.indexOf("?status=cadastrado") != -1)
     {
-      $(".alert").show();
+      $("#cadastrado").removeClass("hidden");
+    }else if(url.indexOf("?status=logout") != -1){
+      $("#logout").removeClass("hidden");
+    }else if(url.indexOf("?status=sempermissao") != -1){
+      $("#authorization").removeClass("hidden");
+    }else if(url.indexOf("?status=NOTAUTHORIZED") != -1){
+      $("#notauthorized").removeClass("hidden");
     }
+    

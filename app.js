@@ -48,12 +48,12 @@ app.use('/autorizado/:user', function(req,res){
 
 app.use('/logout', function(req,res){
   req.hestiasession.reset();
-  res.redirect('/login');
+  res.redirect('/login?status=logout');
 })
 
 function userValidation(req,res,next){
   if(!req.hestiasession.name){
-    res.redirect("/login");
+    res.redirect("/login?status=sempermissao");
   }else{
     next();
   }
