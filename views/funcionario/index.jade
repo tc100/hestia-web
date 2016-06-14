@@ -26,8 +26,8 @@ block footer
             for( x in response.funcionarios){
                 
                 var html = '<tr><td>'+response.funcionarios[x].nome+'</td>'+
-                            '<td><a class="btn btn-default" href="/funcionario/editar/'+ response.funcionarios[x].id+'"><i class="fa fa-pencil" aria-hidden="true"></i></a>'+
-                            '<a id="detalhe"class="btn btn-default" href="/funcionario/detalhes/'+ response.funcionarios[x].id+'"><i class="fa fa-list" aria-hidden="true"></i></a></td>';
+                            '<td><a class="btn btn-default" href="/funcionario/editar?id='+ response.funcionarios[x].id+'"><i class="fa fa-pencil" aria-hidden="true"></i></a>'+
+                            '<a id="detalhe"class="btn btn-default" href="/funcionario/detalhes?id='+ response.funcionarios[x].id+'"><i class="fa fa-list" aria-hidden="true"></i></a></td>';
                 $("#lista-funcionarios").append(html);
             }
         });

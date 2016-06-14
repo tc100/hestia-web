@@ -8,9 +8,36 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 /* GET Pagina Cadastrar.*/
 
+app.get('/getFuncionario/:id', function(req,res){
+  var idFuncionario = req.params.id;
+  var options = {
+    host: 'localhost',
+    port: 8080,
+    path: '/apihestia/getFuncionario?id='+idFuncionario,
+    method: 'GET',
+    params: idFuncionario,
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(idFuncionario)
+    }
+  };
+  var request = http.request(options, function(response) {
+      response.setEncoding('utf8');
+      response.on('data', function (chunk) {
+        if(chunk == "ERROR"){
+          res.send("ERROR");
+        }else{
+          console.log("teste: " + chunk);
+          var funcionario = JSON.parse(chunk);
+          res.send(funcionario);
+        }
+      });
+  });
+  request.write(idFuncionario);
+  request.end();
+})
 app.get('/getFuncs', function (req,res){
   var cnpj = req.hestiasession.restaurante;
-  console.log("cnpj: " + cnpj);
   var options = {
     host: 'localhost',
     port: 8080,
