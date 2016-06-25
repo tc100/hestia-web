@@ -39,13 +39,11 @@ html(lang='pt-br')
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           ul.nav.navbar-nav.navbar-right
             li
-              a.page-scroll(href='#about') Sobre
+              a.page-scroll(href='/Sobre') Sobre
             li
-              a.page-scroll(href='#services') Restaurantes
+              a.page-scroll(href='#services') Serviços
             li
-              a.page-scroll(href='#client') Você
-            li
-              a.page-scroll(href='#contact') Contate-nos
+              a.page-scroll(href='#contact') Contato
             - if(user.name == null)
               li
                 a.page-scroll(href='/login') Entrar
@@ -67,99 +65,100 @@ html(lang='pt-br')
         .header-content-inner
           h1
             | Hestia
-            br
+          h2
             | O Restaurante em suas mãos
-          hr
-          p Hestia é um serviço de ... (terminar de escrever)
-          a.btn.btn-primary.btn-xl.page-scroll(href='#about') Entenda Melhor
-    section#about.bg-primary
+            hr
+          a.btn.btn-default.btn-xl.wow.tada(href='#services') Saiba mais
+    section#services.bg-primary
       .container
         .row
           .col-lg-8.col-lg-offset-2.text-center
-            h2.section-heading Nós Temos o que Você Precisa!
-            hr.light
-            p.text-faded (explicar sobre o sistema, as funcionalidades e foco)
-            a.page-scroll.btn.btn-default.btn-xl(href='#services') Saiba Mais
-    section#services
-      .container
-        .row
-          .col-lg-12.text-center
-            h2.section-heading Para o Seu Restaurante
+            h2.section-heading Para o Restaurante
             hr.primary
-      .container
-        .row
-          .col-lg-3.col-md-6.text-center
-            .service-box
-              i.fa.fa-4x.fa-bolt.wow.bounceIn.text-primary
-              h3 Agilidade
-              p.text-muted texto aqui.
-          .col-lg-3.col-md-6.text-center
-            .service-box
-              i.fa.fa-4x.fa-cogs.wow.bounceIn.text-primary(data-wow-delay='.1s')
-              h3 Tecnologia
-              p.text-muted texto aqui!
-          .col-lg-3.col-md-6.text-center
-            .service-box
-              i.fa.fa-4x.fa-pie-chart.wow.bounceIn.text-primary(data-wow-delay='.2s')
-              h3 B.I.
-              p.text-muted texto aqui.
-          .col-lg-3.col-md-6.text-center
-            .service-box
-              i.fa.fa-4x.fa-shield.wow.bounceIn.text-primary(data-wow-delay='.3s')
-              h3 Segurança
-              p.text-muted texto aqui!
-    section#client.bg-primary
-      .container
-        .row
-          .col-lg-12.text-center
-            h2.-heading Para Você
-            hr.light
       .bg-primary
         .row
-          .col-lg-3.col-md-6.text-center
+          .col-lg-4.col6.text-center
             .service-box
-              i.fa.fa-4x.fa-cutlery.wow.bounceIn
-              h3 Pratos Variados
-              p.text-secundary
-                | Nossos clientes são os melhores restaurantes da região, desde sushibar à bistros italianos.
-          .col-lg-3.col-md-6.text-center
+              i.fa.fa-4x.fa-bolt.wow.bounceIn.text-primary(data-wow-delay='.1s')
+              h3 Agilidade
+              p.text-muted Atendimento automatizado
+          .col-lg-4.col-md-6.text-center
+            .service-box
+              i.fa.fa-4x.fa-clock-o.wow.bounceIn.text-primary(data-wow-delay='.1s')
+              h3 Tempo
+              p.text-muted Menor tempo de espera
+          .col-lg-4.col-md-6.text-center
+            .service-box
+              i.fa.fa-4x.fa-money.wow.bounceIn.text-primary(data-wow-delay='.1s')
+              h3 Dinheiro
+              p.text-muted Redução custos e maior receita
+          .col-lg-4.col-md-6.text-center
+            .service-box
+              i.fa.fa-4x.fa-pie-chart.wow.bounceIn.text-primary(data-wow-delay='.1s')
+              h3 Business Intelligence
+              p.text-muted Dados estatísticos online
+          .col-lg-4.col-md-6.text-center
+             .service-box
+             i.fa.fa-4x.fa-ticket.wow.bounceIn(data-wow-delay='.1s')
+             h3 Fidelização
+             p.text-muted Presenteie o cliente com promoções
+          .col-lg-4.col-md-6.text-center
+            .service-box
+              i.fa.fa-4x.fa-shield.wow.bounceIn.text-primary(data-wow-delay='.1s')
+              h3 Segurança
+              p.text-muted Para você e para os seus clientes
+    section#services.bg-primary
+      .container
+        .row
+          .col-lg-8.col-lg-offset-2.text-center
+            h2.section-heading Para o Cliente
+            hr.primary
+      .bg-primary
+        .row
+          .col-lg-4.col-md-6.text-center
+            .service-box
+              i.fa.fa-4x.fa-mobile.wow.bounceIn.text-primary(data-wow-delay='.1s')
+              h3 Aplicativo Hestia
+              p.text-muted Liberdade e autonomia em mãos
+          .col-lg-4.col-md-6.text-center
             .service-box
               i.fa.fa-4x.fa-qrcode.wow.bounceIn(data-wow-delay='.1s')
               h3 QR Code
-              p.text-secundary
-                | É tudo muito simples, basta estar em um dos restaurantes cadastrados, realizar a leitura QR Code da mesa e pronto. Basta fazer seu pedido!
-          .col-lg-3.col-md-6.text-center
+              p.text-muted Identifica a mesa e valida o acesso após a leitura
+          .col-lg-4.col-md-6.text-center
             .service-box
-              i.fa.fa-4x.fa-clock-o.wow.bounceIn(data-wow-delay='.2s')
-              h3 Atendimento Rápido
-              p.text-secundary
-                | Com o nosso aplicativo o seu atendimento será automatizado, na ponta do seu dedo! Basta alguns clicks e seu pedido já estará a caminho
-          .col-lg-3.col-md-6.text-center
+              i.fa.fa-4x.fa-cutlery.wow.bounceIn(data-wow-delay='.1s')
+              h3 Cardápio no Celular
+              p.text-muted Faça o pedido e acompanhe em tempo real
+          .col-lg-4.col-md-6.text-center
             .service-box
-              i.fa.fa-4x.fa-credit-card.wow.bounceIn(data-wow-delay='.3s')
-              h3 Cartão de Crédito
-              p.text-secundary
-                | Está preocupado com a forma de pagamento? Cuidamos de tudo com segurança e eficiência! Com muita facilidade seu pedido será pago.
+              i.fa.fa-4x.fa-credit-card.wow.bounceIn(data-wow-delay='.1s')
+              h3 Pagamento
+              p.text-muted Feche a conta e pague via aplicativo
+          .col-lg-4.col-md-6.text-center
+              .service-box
+              i.fa.fa-4x.fa-comment.wow.bounceIn.text-primary(data-wow-delay='.1s')
+              h3 Feedback
+              p.text-muted A opinião do cliente faz a diferença
     aside.bg-dark
       .container.text-center
         .call-to-action
-          h2 Faça o Seu Cadastro Agora Mesmo!
-          a.btn.btn-default.btn-xl.wow.tada(href='/cadastrar') Registre-se!
+          h2 Se interessou? Cadastre-se agora!
+          a.btn.btn-default.btn-xl.wow.tada(href='/cadastrar') Registrar
     section#contact
       .container
         .row
           .col-lg-8.col-lg-offset-2.text-center
-            h2.section-heading Para Mais Informações Entre em Contato!
+            h2.section-heading Canais de Comunicação
             hr.primary
-            p
-              | Pronto para otimizar o atendimento de seu restaurante? Ótimo! Qualquer duvida ligue-nos ou nos envie um email!
+            p.text-muted Estamos sempre prontos para atender você seja por telefone ou email
           .col-lg-4.col-lg-offset-2.text-center
             i.fa.fa-phone.fa-3x.wow.bounceIn
-            p +55 (19) 9 9999 - 0000
+            p.text-muted 0800-728-7378
           .col-lg-4.text-center
             i.fa.fa-envelope-o.fa-3x.wow.bounceIn(data-wow-delay='.1s')
-            p
-              a(href='mailto:your-email@your-domain.com') feedback@hestiasolucoes.com.br
+            p.text-muted
+             a(href='mailto:your-email@your-domain.com') ajuda@hestia.com.br
     // jQuery
     script(src='/javascripts/jquery.js')
     // Bootstrap Core JavaScript
