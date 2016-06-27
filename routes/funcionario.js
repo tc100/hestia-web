@@ -117,6 +117,43 @@ app.get('/editar', function(req, res, next) {
   res.render('funcionario/editar',{user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
 });
 
+app.post('/editar',function(req,res,next){
+  console.log("teste2: " + JSON.stringify(req.body));
+  var funcionario = {
+    "id": req.body.idFunc,
+    "nome": req.body.nomeFunc,
+    "login":  req.body.login,
+    "senha":  req.body.senha,
+  };
+  var options = {
+    host: 'localhost',
+    port: 8080,
+    path: '/apihestia/funcionario/editar?dados='+querystring.escape(JSON.stringify(funcionario)),
+    method: 'PUT',
+    params: JSON.stringify(funcionario),
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(JSON.stringify(funcionario))
+    }
+  };
+
+  var req = http.request(options, function(response) {
+      response.setEncoding('utf8');
+
+      response.on('data', function (chunk) {
+        if(chunk == "Alterado"){
+          console.log("Alterado");
+          res.redirect("/funcionario/editar?status=editado");
+        }else{
+          console.log("fail: " + chunk);
+          res.redirect("/funcionario/editar?status=fail");
+        }
+      });
+  });
+  req.write(JSON.stringify(funcionario));
+  req.end();
+});
+
 /*POST dos dados cadastrais*/
 app.post("/", function (req, res, next) {
 	res.redirect("/funcionario/index");

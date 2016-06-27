@@ -8,14 +8,18 @@ block content
       h2.section-heading.text-center
         | Funcionário
         br
-        small Edição do cadastro de [nome do funcionario]
+        small Edição do cadastro de 
+          strong
+            span#nomeFuncSpan
       hr
       .row
       .row
         form(method='post')
           .col-sm-6.col-sm-offset-3
             .form-group.col-sm-12
-              input#nome-funcionario.form-control(type='text', required='', name='nomeFuncionário', placeholder='Nome do Funcionário')
+              input#id-funcionario.form-control.hidden(type='text', required='', name='idFunc')
+            .form-group.col-sm-12
+              input#nome-funcionario.form-control(type='text', required='', name='nomeFunc')  
             .form-group.col-sm-12
               input#login-funcionario.form-control(type='text', required='', name='login', placeholder='Login')
             .form-group.col-sm-12
@@ -33,8 +37,20 @@ block footer
       var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
       return results[1] || 0;
     }
-    $.get('http://localhost:3000/funcionario/getFuncionario/'+urlParams('id'),function(response){
-      $("#nome-funcionario").val(response.nome);
-      $("#login-funcionario").val(response.login);
-      $("#senha-funcionario").val(response.senha);          
-    });
+    function editFunc(){
+      var idFunc = $('#id-funcionario').val(urlParams('id'));
+      var nomeFunc = $("#nome-funcionario").val(response.nome);
+      var loginFunc = $("#login-funcionario").val(response.login);
+      var senhaFunc = $("#senha-funcionario").val(response.senha);    
+    }
+    if(urlParams('id') != false){
+      $.get('http://localhost:3000/funcionario/getFuncionario/'+urlParams('id'),function(response){
+        $('#id-funcionario').val(urlParams('id'));
+        $("#nome-funcionario").val(response.nome);
+        $("#login-funcionario").val(response.login);
+        $("#senha-funcionario").val(response.senha);
+        $("#nomeFuncSpan").text(response.nome);         
+      });
+    }
+    
+    
