@@ -1,17 +1,38 @@
 extends ../layout
 block title
-  title Hestia - Detalhes Funcionario
-
+  title Hestia - Detalhes Funcionario    
 block content
-  body
-    .panel.panel-primary
-      .panel-heading Detalhes
-      .panel-body
-        .col-sm-8.col-sm-offset-2
-          table.table.table-striped
-            tr
-              th Nome
-              td [nome]
-            tr
-              th Login
-              td [login]
+  section
+  .container
+    h2.section-heading.text-center#nomeFuncSpan
+    
+    hr
+    .row
+    .row
+      form(method='post')
+        .col-sm-6.col-sm-offset-3
+          .form-group.col-sm-12
+            input#id-funcionario.form-control.hidden(type='text', name='idFunc', disabled)
+          .form-group.col-sm-12
+            input#nome-funcionario.form-control(type='text', name='nomeFunc', disabled)  
+          .form-group.col-sm-12
+            input#login-funcionario.form-control(type='text', name='login', disabled)
+          br
+          br
+          .col-sm-2
+            a.btn.btn-default(href='/funcionario') Voltar
+            
+block footer
+  script.
+    function urlParams(name){
+      var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+      return results[1] || 0;
+    }
+    if(urlParams('id') != false){
+      $.get('http://localhost:3000/funcionario/getFuncionario/'+urlParams('id'),function(response){
+        $('#id-funcionario').val(urlParams('id'));
+        $("#nome-funcionario").val(response.nome);
+        $("#login-funcionario").val(response.login);
+        $("#nomeFuncSpan").text(response.nome);         
+      });
+    }
