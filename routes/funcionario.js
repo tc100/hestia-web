@@ -35,7 +35,7 @@ app.get('/getFuncionario/:id', function(req,res){
   });
   request.write(idFuncionario);
   request.end();
-})
+});
 app.get('/getFuncs', function (req,res){
   var cnpj = req.hestiasession.restaurante;
   var options = {
@@ -152,6 +152,34 @@ app.post('/editar',function(req,res,next){
   });
   req.write(JSON.stringify(funcionario));
   req.end();
+});
+
+app.get('/delete/:id', function(req,res){
+  var idFuncionario = req.params.id
+  var cnpj = req.hestiasession.restaurante;
+  var options = {
+    host: 'localhost',
+    port: 8080,
+    path: '/apihestia/funcionario/delete?id='+idFuncionario+'&cnpj='+cnpj,
+    method: 'DELETE',
+    params: idFuncionario,
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(idFuncionario)
+    }
+  };
+  var request = http.request(options, function(response) {
+      response.setEncoding('utf8');
+      response.on('data', function (chunk) {
+        if(chunk == "ERROR"){
+          res.send("ERROR");
+        }else{
+          res.send("desativado");
+        }
+      });
+  });
+  request.write(idFuncionario);
+  request.end();
 });
 
 /*POST dos dados cadastrais*/

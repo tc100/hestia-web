@@ -5,11 +5,13 @@ block content
   section
   .container
     h2.section-heading.text-center#nomeFuncSpan
-    
     hr
     .row
     .row
-      form(method='post')
+      div.pull-right  
+        button(onclick="desabilitarFuncionario()") Remover
+          span.fa.fa-times
+      form
         .col-sm-6.col-sm-offset-3
           .form-group.col-sm-12
             input#id-funcionario.form-control.hidden(type='text', name='idFunc', disabled)
@@ -34,5 +36,15 @@ block footer
         $("#nome-funcionario").val(response.nome);
         $("#login-funcionario").val(response.login);
         $("#nomeFuncSpan").text(response.nome);         
+      });
+    }
+    
+    function desabilitarFuncionario(){
+      $.get('http://localhost:3000/funcionario/delete/'+urlParams('id'),function(response){
+        if(response == 'desativado'){
+          console.log("deletado");
+        }else{
+          console.log("erro");
+        }
       });
     }
