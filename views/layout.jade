@@ -1,5 +1,5 @@
 - var userLogged = (user && user.name)?true:false;
-  
+
 doctype html
 html(lang='pt-br')
   head
@@ -26,7 +26,7 @@ html(lang='pt-br')
     //if lt IE 9
     script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
     script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
-     
+
   body#page-top
     nav#mainNav.navbar.navbar-default.navbar-fixed-top
       .container-fluid
@@ -67,22 +67,20 @@ html(lang='pt-br')
                     a(href='/funcionario') Area Logada
                   li
                     a(href='/logout') Logout
-        - if(user.name == null)  
+        - if(user.name == null)
           #bs-example-navbar-collapse-1.collapse.navbar-collapse
             ul.nav.navbar-nav.navbar-right
               li
-                a.page-scroll(href='#about') Sobre
+                a.page-scroll(href='/sobre') Sobre
               li
-                a.page-scroll(href='#services') Restaurantes
+                a.page-scroll(href='#services') Serviços
               li
-                a.page-scroll(href='#client') Você
-              li
-                a.page-scroll(href='#contact') Contate-nos
+                a.page-scroll(href='#contact') Contato
               li
                 a.page-scroll(href='/login') Entrar
     block content
-    
-    
+
+
     div.footer
       script(src='/javascripts/jquery.js')
       // Bootstrap Core JavaScript
