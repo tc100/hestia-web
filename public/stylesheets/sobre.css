@@ -1,0 +1,206 @@
+/*
+ * Title: Pure CSS3 Tabs
+ * Author: Clear
+ * Version: 1.0.1
+ * Create: 2015-05-31
+ * Update: 2015-06-05
+ */
+/* CSS Reset */
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+* {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	box-sizing: border-box;
+	outline: none;
+	text-transform: uppercase;
+	font-weight: 700;
+	font-size: 20px;
+}
+
+body {
+	background: transparent;
+	font-family: Arial,Helvetica Neue,Helvetica,sans-serif;
+}
+
+a {
+	color: #fff;
+	text-decoration: none;
+}
+
+header {
+	color: #fff;
+	text-align: center;
+	min-height: 140px;
+	margin-bottom: 60px;
+}
+
+header h1{
+	margin-top: 100px;
+	font-size: 50px;
+	margin-bottom: 20px;
+	font-weight: 100;
+}
+
+header a{
+	font-size: 18px;
+	margin-left: 20px;
+}
+
+/* Tabs Start */
+
+.ease {
+	-webkit-transition: all .5s;
+	   -moz-transition: all .5s;
+		 -o-transition: all .5s;
+			transition: all .5s;
+}
+
+.container {
+	width: 100%;
+	max-width: 1000px;
+	margin: 0 auto;
+}
+
+.tabs {
+  font-family: Arial,Helvetica Neue,Helvetica,sans-serif;
+	background: transparent; /*fundo de toda a aba + caixa de texto*/
+	position: relative;
+}
+
+.tabs > input,
+.tabs > span {
+	width: 20%;
+	height: 60px;
+	line-height: 60px;
+	position: absolute;
+	top: 0;
+}
+
+.tabs > input {
+	cursor: pointer;
+	filter: alpha(opacity=0);
+	opacity: 0;
+	position: absolute;
+	z-index: 99;
+}
+
+.tabs > span {
+	background: transparent;/*cor fundo da aba superior*/
+	text-align: center;
+	overflow: hidden;
+}
+
+.tabs > span i,
+.tabs > span {
+	-webkit-transition: all .5s;
+	   -moz-transition: all .5s;
+		 -o-transition: all .5s;
+			transition: all .5s;
+}
+
+.tabs > input:hover + span {
+	background: transparent; /*cor ao selecionar aba
+}
+
+.tabs > input:checked + span {
+	background: transparent; /*cor ao selecionar aba*/
+}
+
+.tabs > input:checked + span,
+.tabs > input:hover + span {
+	color: #C84C00; /*cor letra da aba*/
+}
+
+#tab-1, #tab-1 + span {
+	left: 0;
+}
+
+#tab-2, #tab-2 + span {
+	left: 20%;
+}
+
+#tab-3, #tab-3 + span {
+	left: 40%;
+}
+
+#tab-4, #tab-4 + span {
+	left: 60%;
+}
+
+#tab-5, #tab-5 + span {
+	left: 80%;
+}
+
+.tab-content {
+	padding: 80px 20px 20px;
+	width: 100%;
+	min-height: 340px;
+}
+
+.tab-content section {
+	width: 100%;
+	display: none;
+}
+
+.tab-content section h1 {
+	margin-top: 15px;
+	font-size: 50px;
+	font-weight: 100;
+	text-align: center;
+}
+
+#tab-1:checked ~ .tab-content #tab-item-1  {
+	display: block;
+}
+
+#tab-2:checked ~ .tab-content #tab-item-2  {
+	display: block;
+}
+
+#tab-3:checked ~ .tab-content #tab-item-3  {
+	display: block;
+}
+
+#tab-4:checked ~ .tab-content #tab-item-4  {
+	display: block;
+}
+
+#tab-5:checked ~ .tab-content #tab-item-5  {
+	display: block;
+}
+
+/* effect-3 */
+
+.effect-3 .line{
+	background: #C84C00;/*cor abaixo da linha*/
+	width: 20%;
+	height: 4px;
+	position: absolute;
+	top: 56px;
+}
+
+#tab-1:checked ~ .line {
+	left: 0;
+}
+
+#tab-2:checked ~ .line {
+	left: 20%;
+}
+
+#tab-3:checked ~ .line {
+	left: 40%;
+}
+
+#tab-4:checked ~ .line {
+	left: 60%;
+}
+
+#tab-5:checked ~ .line {
+	left: 80%;
+}
