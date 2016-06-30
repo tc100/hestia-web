@@ -1,171 +1,331 @@
-﻿doctype html
-html(lang='pt-br')
-  head
-    meta(charset='utf-8')
-    meta(http-equiv='X-UA-Compatible', content='IE=edge')
-    meta(name='viewport', content='width=device-width, initial-scale=1')
-    meta(name='description', content='')
-    meta(name='author', content='Hestia Soluções')
-    title Hestia - O Restaurante em suas mãos
-    // link rel="shortcut icon" href = "/images/icone.icon"
-    link(rel='icon', type='image/png', href='/images/icone.png')
-    // Bootstrap Core CSS
-    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css', type='text/css')
-    // Custom Fonts
-    link(href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800', rel='stylesheet', type='text/css')
-    link(href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic', rel='stylesheet', type='text/css')
-    link(rel='stylesheet', href='/font-awesome/css/font-awesome.min.css', type='text/css')
-    // Plugin CSS
-    link(rel='stylesheet', href='/stylesheets/animate.min.css', type='text/css')
-    // Custom CSS
-    link(rel='stylesheet', href='/stylesheets/creative.css', type='text/css')
-    // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
-    // WARNING: Respond.js doesn't work if you view the page via file://
-    //if lt IE 9
-      script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
-      script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
-  body#page-top
-    nav#mainNav.navbar.navbar-default.navbar-fixed-top
-      .container-fluid
-        // Brand and toggle get grouped for better mobile display
-        .navbar-header
-          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
-            span.sr-only Toggle navigation
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          a.navbar-brand.page-scroll(href='#page-top') Hestia
-        // Collect the nav links, forms, and other content for toggling
-        #bs-example-navbar-collapse-1.collapse.navbar-collapse
-          ul.nav.navbar-nav.navbar-right
-            li
-              a.page-scroll(href='/Sobre') Sobre
-            li
-              a.page-scroll(href='#services') Serviços
-            li
-              a.page-scroll(href='#contact') Contato
-            - if(user.name == null)
-              li
-                a.page-scroll(href='/login') Entrar
-            - if(user.name != null)
-              ul.nav.navbar-nav.navbar-right
-                li
-                  a.page-scroll.dropdown-toggle(data-toggle='dropdown', href="#")
-                    | #{user.name}
-                    span.caret
-                  ul.dropdown-menu
-                    li
-                      a(href='/funcionario')  Area Logada
-                    li
-                      a(href='/logout') Logout
-        // /.navbar-collapse
-      // /.container-fluid
-    header
-      .header-content
-        .header-content-inner
-          h1
-            | Hestia
-          h2
-            | O Restaurante em suas mãos
-            hr
-          a.btn.btn-default.btn-xl.wow.tada(href='#services') Saiba mais
-    section#services.bg-primary
-      .container
-        .row
-          .col-lg-8.col-lg-offset-2.text-center
-            h2.section-heading Para o Restaurante
-            hr.primary
-      .bg-primary
-        .row
-          .col-lg-4.col6.text-center
-            .service-box
-              i.fa.fa-4x.fa-bolt.wow.bounceIn.text-primary(data-wow-delay='.1s')
-              h3 Agilidade
-              p.text-muted Atendimento automatizado
-          .col-lg-4.col-md-6.text-center
-            .service-box
-              i.fa.fa-4x.fa-clock-o.wow.bounceIn.text-primary(data-wow-delay='.1s')
-              h3 Tempo
-              p.text-muted Menor tempo de espera
-          .col-lg-4.col-md-6.text-center
-            .service-box
-              i.fa.fa-4x.fa-money.wow.bounceIn.text-primary(data-wow-delay='.1s')
-              h3 Dinheiro
-              p.text-muted Redução custos e maior receita
-          .col-lg-4.col-md-6.text-center
-            .service-box
-              i.fa.fa-4x.fa-pie-chart.wow.bounceIn.text-primary(data-wow-delay='.1s')
-              h3 Business Intelligence
-              p.text-muted Dados estatísticos online
-          .col-lg-4.col-md-6.text-center
-             .service-box
-             i.fa.fa-4x.fa-ticket.wow.bounceIn(data-wow-delay='.1s')
-             h3 Fidelização
-             p.text-muted Presenteie o cliente com promoções
-          .col-lg-4.col-md-6.text-center
-            .service-box
-              i.fa.fa-4x.fa-shield.wow.bounceIn.text-primary(data-wow-delay='.1s')
-              h3 Segurança
-              p.text-muted Para você e para os seus clientes
-    section#services.bg-primary
-      .container
-        .row
-          .col-lg-8.col-lg-offset-2.text-center
-            h2.section-heading Para o Cliente
-            hr.primary
-      .bg-primary
-        .row
-          .col-lg-4.col-md-6.text-center
-            .service-box
-              i.fa.fa-4x.fa-mobile.wow.bounceIn.text-primary(data-wow-delay='.1s')
-              h3 Aplicativo Hestia
-              p.text-muted Liberdade e autonomia em mãos
-          .col-lg-4.col-md-6.text-center
-            .service-box
-              i.fa.fa-4x.fa-qrcode.wow.bounceIn(data-wow-delay='.1s')
-              h3 QR Code
-              p.text-muted Identifica a mesa e valida o acesso após a leitura
-          .col-lg-4.col-md-6.text-center
-            .service-box
-              i.fa.fa-4x.fa-cutlery.wow.bounceIn(data-wow-delay='.1s')
-              h3 Cardápio no Celular
-              p.text-muted Faça o pedido e acompanhe em tempo real
-          .col-lg-4.col-md-6.text-center
-            .service-box
-              i.fa.fa-4x.fa-credit-card.wow.bounceIn(data-wow-delay='.1s')
-              h3 Pagamento
-              p.text-muted Feche a conta e pague via aplicativo
-          .col-lg-4.col-md-6.text-center
-              .service-box
-              i.fa.fa-4x.fa-comment.wow.bounceIn.text-primary(data-wow-delay='.1s')
-              h3 Feedback
-              p.text-muted A opinião do cliente faz a diferença
-    aside.bg-dark
-      .container.text-center
-        .call-to-action
-          h2 Se interessou? Cadastre-se agora!
-          a.btn.btn-default.btn-xl.wow.tada(href='/cadastrar') Registrar
-    section#contact
-      .container
-        .row
-          .col-lg-8.col-lg-offset-2.text-center
-            h2.section-heading Canais de Comunicação
-            hr.primary
-            p.text-muted Estamos sempre prontos para atender você seja por telefone ou email
-          .col-lg-4.col-lg-offset-2.text-center
-            i.fa.fa-phone.fa-3x.wow.bounceIn
-            p.text-muted 0800-728-7378
-          .col-lg-4.text-center
-            i.fa.fa-envelope-o.fa-3x.wow.bounceIn(data-wow-delay='.1s')
-            p.text-muted
-             a(href='mailto:your-email@your-domain.com') ajuda@hestia.com.br
-    // jQuery
-    script(src='/javascripts/jquery.js')
-    // Bootstrap Core JavaScript
-    script(src='/javascripts/bootstrap.min.js')
-    // Plugin JavaScript
-    script(src='/javascripts/jquery.easing.min.js')
-    script(src='/javascripts/jquery.fittext.js')
-    script(src='/javascripts/wow.min.js')
-    // Custom Theme JavaScript
-    script(src='/javascripts/creative.js')
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Hestia Soluções">
+
+    <title>Hestia - O Restaurante em suas mãos</title>
+
+    <!--link rel="shortcut icon" href = "/images/icone.icon"-->
+    <link rel="icon" type="image/png" href="/images/icone.png" />
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css" type="text/css">
+
+    <!-- Custom Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css" type="text/css">
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="/stylesheets/animate.min.css" type="text/css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/stylesheets/creative.css" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="page-top">
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">Hestia</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="page-scroll" href="#about">Sobre</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#services">Restaurantes</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#client">Você</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#contact">Contate-nos</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="/login">Entrar</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <header>
+        <div class="header-content">
+            <div class="header-content-inner">
+                <h1>Hestia <br>O Restaurante em suas mãos</h1>
+                <hr>
+                <p>Hestia é um serviço de ... (terminar de escrever) </p>
+                <a href="#about" class="btn btn-primary btn-xl page-scroll">Entenda Melhor</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="bg-primary" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <h2 class="section-heading">Nós Temos o que Você Precisa!</h2>
+                    <hr class="light">
+                    <p class="text-faded">(explicar sobre o sistema, as funcionalidades e foco)</p>
+                    <a href="#services" class="page-scroll btn btn-default btn-xl">Saiba Mais</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Para o Seu Restaurante</h2>
+                    <hr class="primary">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-bolt wow bounceIn text-primary"></i>
+                        <h3>Agilidade</h3>
+                        <p class="text-muted">texto aqui.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-cogs wow bounceIn text-primary" data-wow-delay=".1s"></i>
+                        <h3>Tecnologia</h3>
+                        <p class="text-muted">texto aqui!</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-pie-chart wow bounceIn text-primary" data-wow-delay=".2s"></i>
+                        <h3>B.I.</h3>
+                        <p class="text-muted">texto aqui.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-shield wow bounceIn text-primary" data-wow-delay=".3s"></i>
+                        <h3>Segurança</h3>
+                        <p class="text-muted">texto aqui!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="bg-primary"  id="client">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="	-heading">Para Você</h2>
+                    <hr class="light">
+                </div>
+            </div>
+        </div>
+        <div class="bg-primary" class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-cutlery wow bounceIn"></i>
+                        <h3>Pratos Variados</h3>
+                        <p class="text-secundary">Nossos clientes são os melhores restaurantes da região, desde sushibar à bistros italianos.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-qrcode wow bounceIn" data-wow-delay=".1s"></i>
+                        <h3>QR Code</h3>
+                        <p class="text-secundary">É tudo muito simples, basta estar em um dos restaurantes cadastrados, realizar a leitura QR Code da mesa e pronto. Basta fazer seu pedido!</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-clock-o wow bounceIn" data-wow-delay=".2s"></i>
+                        <h3>Atendimento Rápido</h3>
+                        <p class="text-secundary">Com o nosso aplicativo o seu atendimento será automatizado, na ponta do seu dedo! Basta alguns clicks e seu pedido já estará a caminho</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-credit-card wow bounceIn" data-wow-delay=".3s"></i>
+                        <h3>Cartão de Crédito</h3>
+                        <p class="text-secundary">Está preocupado com a forma de pagamento? Cuidamos de tudo com segurança e eficiência! Com muita facilidade seu pedido será pago.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--section class="no-padding" id="portfolio">
+        <div class="container-fluid">
+            <div class="row no-gutter">
+                <div class="col-lg-4 col-sm-6">
+                    <a href="#" class="portfolio-box">
+                        <img src="/images/portfolio/1.jpg" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                            <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                    Category
+                                </div>
+                                <div class="project-name">
+                                    Project Name
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <a href="#" class="portfolio-box">
+                        <img src="/images/portfolio/2.jpg" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                            <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                    Category
+                                </div>
+                                <div class="project-name">
+                                    Project Name
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <a href="#" class="portfolio-box">
+                        <img src="/images/portfolio/3.jpg" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                            <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                    Category
+                                </div>
+                                <div class="project-name">
+                                    Project Name
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <a href="#" class="portfolio-box">
+                        <img src="/images/portfolio/4.jpg" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                            <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                    Category
+                                </div>
+                                <div class="project-name">
+                                    Project Name
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <a href="#" class="portfolio-box">
+                        <img src="/images/portfolio/5.jpg" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                            <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                    Category
+                                </div>
+                                <div class="project-name">
+                                    Project Name
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <a href="#" class="portfolio-box">
+                        <img src="/images/portfolio/6.jpg" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                            <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                    Category
+                                </div>
+                                <div class="project-name">
+                                    Project Name
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section-->
+
+    <aside class="bg-dark">
+        <div class="container text-center">
+            <div class="call-to-action">
+                <h2>Faça o Seu Cadastro Agora Mesmo!</h2>
+                <a href="/cadastrar" class="btn btn-default btn-xl wow tada">Registre-se!</a>
+            </div>
+        </div>
+    </aside>
+
+    <section id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <h2 class="section-heading">Para Mais Informações Entre em Contato!</h2>
+                    <hr class="primary">
+                    <p>Pronto para otimizar o atendimento de seu restaurante? Ótimo! Qualquer duvida ligue-nos ou nos envie um email!</p>
+                </div>
+                <div class="col-lg-4 col-lg-offset-2 text-center">
+                    <i class="fa fa-phone fa-3x wow bounceIn"></i>
+                    <p>+55 (19) 9 9999 - 0000</p>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <i class="fa fa-envelope-o fa-3x wow bounceIn" data-wow-delay=".1s"></i>
+                    <p><a href="mailto:your-email@your-domain.com">feedback@hestiasolucoes.com.br</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- jQuery -->
+    <script src="/javascripts/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/javascripts/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="/javascripts/jquery.easing.min.js"></script>
+    <script src="/javascripts/jquery.fittext.js"></script>
+    <script src="/javascripts/wow.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/javascripts/creative.js"></script>
+
+</body>
+
+</html>
