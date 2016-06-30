@@ -12,9 +12,9 @@ body {
 
 body {
   font-family: 'Merriweather', 'Helvetica Neue', Arial, sans-serif;
-    overflow-x: hidden;
-  color: #C84C00;/*cor icones telefone e email*/
-  background-color: #FFFFFF; /*fundo "servico" e "contato"*/
+  overflow-x: hidden;
+  color: #C84C00;//cor icones telefone e email
+  background-color: #FFFFFF; //fundo "serviço" e "contato"
 }
 hr {
   border-color: #C84C00;
@@ -28,11 +28,11 @@ a {
   -webkit-transition: all 0.35s;
   -moz-transition: all 0.35s;
   transition: all 0.35s;
-  color: gray; /*cor letra do email*/
+  color: gray; //cor letra do email
 }
 a:hover,
 a:focus {
-  color: #C84C00; /*Cor letra do email ao selecionar*/
+  color: #C84C00; //cor letra do email ao selecionar
 }
 h1,
 h2,
@@ -83,7 +83,7 @@ aside {
 }
 .navbar-default .navbar-header .navbar-brand:hover,
 .navbar-default .navbar-header .navbar-brand:focus {
-  color: #C84C00;
+  color: red;
 }
 .navbar-default .nav > li > a,
 .navbar-default .nav > li > a:focus {
@@ -99,7 +99,7 @@ aside {
 .navbar-default .nav > li.active > a,
 .navbar-default .nav > li.active > a:focus {
   color: #C84C00;
-  background-color: transparent; /*manter assim*/
+  background-color: transparent; //manter assim
 }
 .navbar-default .nav > li.active > a:hover,
 .navbar-default .nav > li.active > a:focus:hover {
@@ -107,42 +107,43 @@ aside {
 }
 @media (min-width: 768px) {
   .navbar-default {
-    background-color: #FFFFFF;/*barra superior*/
+    background-color: #FFFFFF;//barra superior
     border-color: black;
   }
   .navbar-default .navbar-header .navbar-brand {
-    color: #C84C00;/*cor do HESTIA superior*/
+    color: #C84C00;//cor do HESTIA superior
   }
   .navbar-default .navbar-header .navbar-brand:hover,
   .navbar-default .navbar-header .navbar-brand:focus {
-    color: black;/*cor ao selecionar o HESTIA*/
+    color: gray;//cor ao selecionar o HESTIA
   }
   .navbar-default .nav > li > a,
   .navbar-default .nav > li > a:focus {
-    color: #C84C00;/*cor itens do menu*/
+    color: #C84C00;//cor itens do menu
   }
   .navbar-default .nav > li > a:hover,
   .navbar-default .nav > li > a:focus:hover {
-    color: black;/*Cor ao selecionar itens do menu*/
+    color: gray;//cor ao selecionar itens do menu
   }
   .navbar-default.affix {
-    background-color: #FFFFFF;/*barra inferior*/
+    background-color: #FFFFFF;//barra inferior
     border-color: black;
   }
   .navbar-default.affix .navbar-header .navbar-brand {
-    color: #C84C00;/*cor do HESTIA inferior*/
+    color: #C84C00;//cor do HESTIA inferior
+    font-size: 16px;
   }
   .navbar-default.affix .navbar-header .navbar-brand:hover,
   .navbar-default.affix .navbar-header .navbar-brand:focus {
-    color: black;/*cor ao selecionar o HESTIA inferior*/
+    color: gray;//cor ao selecionar o HESTIA inferior
   }
   .navbar-default.affix .nav > li > a,
   .navbar-default.affix .nav > li > a:focus {
-    color: #C84C00;/*cor itens do menu inferior*/
+    color: #C84C00;//cor itens do menu inferior
   }
   .navbar-default.affix .nav > li > a:hover,
   .navbar-default.affix .nav > li > a:focus:hover {
-    color: black;/*cor ao selecionar itens do menu*/
+    color: gray;//cor ao selecionar itens do menu
   }
 }
 header {
@@ -156,7 +157,7 @@ header {
   background-position: center;
   background-image: url('/images/Slide1.jpg');
   text-align: center;
-  color: white; /*Titulo do plano de fundo*/
+  color: white; //Título do plano de fundo
 }
 header .header-content {
   position: relative;
@@ -273,7 +274,7 @@ header .header-content .header-content-inner p {
   margin: 0 auto 20px;
 }
 .text-primary {
-  color: #C84C00; /*cor dos itens "servico"*/
+  color: #C84C00; //cor dos intens "serviço"
 }
 .text-secundary {
   color: #D1934E;
@@ -283,9 +284,9 @@ header .header-content .header-content-inner p {
   padding-left: 0;
 }
 .btn-default {
-  color: #C84C00;/*cor da letra do botao*/
-  background-color: white;
-  border-color: black;
+  color: #C84C00;//cor da letra do botão
+  background-color: gray;
+  border-color: gray;
   -webkit-transition: all 0.35s;
   -moz-transition: all 0.35s;
   transition: all 0.35s;
@@ -296,9 +297,9 @@ header .header-content .header-content-inner p {
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
-  color: black;/*cor da letra do botao ao selecionar*/
-  background-color: silver; /*cor do fundo do botao ao selecionar*/
-  border-color: black;
+  color: #222222;//cor da letra do botão ao selecionar
+  background-color: #D3D3D3; //cor do fundo do botão ao selecionar
+  border-color: gray;
 }
 .btn-default:active,
 .btn-default.active,
@@ -345,7 +346,7 @@ fieldset[disabled] .btn-default.active {
 .btn-primary.active,
 .open > .dropdown-toggle.btn-primary {
   color: #ffffff;
-  background-color: #C84C00; /*cor ao clicar no botao Entenda Melhor*/
+  background-color: #C84C00; //cor ao clicar no botão Entenda Melhor
   border-color: #ed431f;
 }
 .btn-primary:active,
@@ -402,7 +403,7 @@ img::selection {
   color: white;
   background: transparent;
 }
-img::-moz-selection {
+img::-moz-selection { 
   color: white;
   background: transparent;
 }

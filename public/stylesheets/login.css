@@ -1,4 +1,4 @@
-//!
+/*!
  * Creative v1.0.3 (http://startbootstrap.com/template-overviews/creative)
  * Copyright 2013-2016 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
@@ -11,8 +11,6 @@ body {
 }
 body {
   font-family: 'Merriweather', 'Helvetica Neue', Arial, sans-serif;
-  overflow-x: hidden;
-  color: gray; /*cor do lembre-me*/
 }
 hr {
   border-color: #C84C00;
@@ -47,13 +45,11 @@ h4,
 h5,
 h6 {
   font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
-  color: #C84C00; /*Cor titulos*/
 }
 p {
   font-size: 16px;
   line-height: 1.5;
   margin-bottom: 20px;
-  color: gray; /*cor descricao cadastrar*/
 }
 .bg-primary {
   background-color: #C84C00;
@@ -76,7 +72,7 @@ aside {
 }
 .navbar-default {
   background-color: #C84C00;
-  border-color: transparent;
+  border-color: rgba(34, 34, 34, 0.05);
   font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
   -webkit-transition: all 0.35s;
   -moz-transition: all 0.35s;
@@ -90,18 +86,18 @@ aside {
 }
 .navbar-default .navbar-header .navbar-brand:hover,
 .navbar-default .navbar-header .navbar-brand:focus {
-  color: 	black; /*cor hestia ao clicar*/
+  color: #D1934E;
 }
 .navbar-default .nav > li > a,
 .navbar-default .nav > li > a:focus {
   text-transform: uppercase;
   font-weight: 700;
-  font-size: 16px;
-  color: #ffffff; /*cor itens do menu*/
+  font-size: 13px;
+  color: #ffffff;
 }
 .navbar-default .nav > li > a:hover,
 .navbar-default .nav > li > a:focus:hover {
-  color: black;
+  color: #D1934E;
 }
 header {
   position: relative;
@@ -241,9 +237,9 @@ header .header-content .header-content-inner p {
   padding-left: 0;
 }
 .btn-default {
-  color: #FFFFFF; /*Cor da letra do botão*/
-  background-color: gray;
-  border-color: black;
+  color: #eeeeee;
+  background-color: #C84C00;
+  border-color: #C84C00;
   -webkit-transition: all 0.35s;
   -moz-transition: all 0.35s;
   transition: all 0.35s;
@@ -254,9 +250,9 @@ header .header-content .header-content-inner p {
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
-  color: black; /*cor letra ao selecionar botão*/
-  background-color: silver; /*cor fundo ao selecionar botao*/
-  border-color: black;
+  color: #222222;
+  background-color: #D1934E;
+  border-color: #D1934E;
 }
 .btn-default:active,
 .btn-default.active,
@@ -282,15 +278,15 @@ fieldset[disabled] .btn-default:active,
 .btn-default[disabled].active,
 fieldset[disabled] .btn-default.active {
   background-color: #ffffff;
-  border-color: black;
+  border-color: #ffffff;
 }
 .btn-default .badge {
   color: #ffffff;
-  background-color: black;
+  background-color: #222222;
 }
 .btn-primary {
   color: #ffffff;
-  background-color: #FFFFFF;
+  background-color: #C84C00;
   border-color: #C84C00;
   -webkit-transition: all 0.35s;
   -moz-transition: all 0.35s;
@@ -302,9 +298,9 @@ fieldset[disabled] .btn-default.active {
 .btn-primary:active,
 .btn-primary.active,
 .open > .dropdown-toggle.btn-primary {
-  color: #ffffff; /*cor letra do botao*/
-  background-color: #C84C00; /*cor fundo do botao*/
-  border-color: black;;
+  color: #ffffff;
+  background-color: #C84C00;
+  border-color: #ed431f;
 }
 .btn-primary:active,
 .btn-primary.active,
@@ -342,8 +338,6 @@ fieldset[disabled] .btn-primary.active {
   border-radius: 300px;
   font-weight: 700;
   text-transform: uppercase;
-  background-color: #C84C00; /*fundo do botão*/
-  color: #FFFFFF; /*cor da letra*/
 }
 .btn-xl {
   padding: 15px 30px;
