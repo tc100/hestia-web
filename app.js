@@ -13,7 +13,6 @@ var users = require('./routes/users');
 var login = require('./routes/login');
 var cadastrar = require('./routes/cadastrar');
 var funcionario = require('./routes/funcionario');
-var sobre = require('./routes/sobre');
 
 var app = express();
 
@@ -38,7 +37,6 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/login', login);
 app.use('/cadastrar', cadastrar);
-app.use('/sobre', sobre);
 app.use('/funcionario',userValidation,funcionario);
 app.use('/autorizado/:user', function(req,res){
   console.log("redirecionado..");
@@ -51,7 +49,7 @@ app.use('/autorizado/:user', function(req,res){
 app.use('/logout', function(req,res){
   req.hestiasession.reset();
   res.redirect('/login?status=logout');
-});
+})
 
 function userValidation(req,res,next){
   if(!req.hestiasession.name){
