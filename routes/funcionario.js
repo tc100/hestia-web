@@ -143,10 +143,10 @@ app.post('/editar',function(req,res,next){
       response.on('data', function (chunk) {
         if(chunk == "Alterado"){
           console.log("Alterado");
-          res.redirect("/funcionario/editar?status=editado");
+          res.redirect("/funcionario?status=editado");
         }else{
           console.log("fail: " + chunk);
-          res.redirect("/funcionario/editar?status=fail");
+          res.redirect("/funcionario/editar?id="+req.body.idFunc+"&status=fail");
         }
       });
   });

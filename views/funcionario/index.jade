@@ -5,12 +5,16 @@ block title
  
 block content
     section
-      .alert.alert-success.alert-dismissible.fade.in(role='alert')
+      .alert.alert-success.alert-dismissible.fade.in.hidden#cadastrado(role='alert')
         button.close(type='button', data-dismiss='alert', aria-label='Close')
           span(aria-hidden='true') ×
         strong Cadastrado!
         |  Funcionário cadastrado com sucesso!
-      
+      .alert.alert-success.alert-dismissible.fade.in.hidden#editado(role='alert')
+        button.close(type='button', data-dismiss='alert', aria-label='Close')
+          span(aria-hidden='true') ×
+        strong Editado!
+        |  Funcionário editado com sucesso!
       .col-sm-2.col-sm-offset-10
         a.btn.btn-default.glyphicon.glyphicon-plus(href='/funcionario/criar')  Novo
       div.col-sm-8.col-sm-offset-2
@@ -37,10 +41,11 @@ block footer
                 $("#lista-funcionarios").append(html);
             }
         });
-        $('.alert').hide();
         var url = window.location.href;
-        if(url.indexOf("?status=cadastrado") != -1)
-        {
-          $(".alert").show();
+        if(url.indexOf("?status=cadastrado") != -1){
+          $("#cadastrado").removeClass("hidden");
+        }else if(url.indexOf("?status=editado") != -1){
+          debugger;
+          $("#editado").removeClass("hidden");
         }
-    
+     

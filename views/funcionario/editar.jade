@@ -3,7 +3,12 @@ block title
     title Hestia - Editar Funcionario
     
 block content
-  section 
+  section   
+    .alert.alert-warning.alert-dismissible.fade.in.hidden#fail(role='alert')
+      button.close(type='button', data-dismiss='alert', aria-label='Close')
+        span(aria-hidden='true') ×
+      strong Erro!
+      |  Falha ao editar Funcionário!
     .container
       h2.section-heading.text-center
         | Funcionário
@@ -51,6 +56,9 @@ block footer
         $("#senha-funcionario").val(response.senha);
         $("#nomeFuncSpan").text(response.nome);         
       });
+    }
+    if(url.indexOf("&status=fail") != -1){
+      $("#fail").removeClass("hidden");
     }
     
     
