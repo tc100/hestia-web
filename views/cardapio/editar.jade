@@ -1,0 +1,58 @@
+extends ../layout
+block title
+    title Hestia - Editar Cardapio
+    link(rel='stylesheet', href='/stylesheets/cardapio.css', type='text/css')
+
+    
+block content
+    hr
+    div.row#wrapper
+        div.col.col-sm-2#sidebar-wrapper
+          ul.sidebar-nav
+            li.sidebar-brand
+                a(href='#') ACOMPANHAMENTOS
+            li
+                a#addAcompanhamento(href='#') Adicionar acompanhamento
+                form.hidden.form-inline#inputAcompanhamento(role="form")
+                    div
+                        label.sr-only(for='novoAcompanhamento') Acompanhamento
+                        input#novoAcompanhamento(type="text")
+                        button.btn.btn-default#addNovoAcompanhamento(type="submit") Ok
+            li
+                a(href='#') Batata frita
+        div.col.col-sm-10#principal
+            ul.nav.nav-tabs
+                li.active
+                    a(href="#") Pratos Principais
+                li
+                    a(href="#") +
+            div.col.col-sm-4#form
+                h2 Adicionar novo
+                form(role="form")
+                    div.form-group
+                        label(for="nome") Nome:
+                        input.form-control(type="text")#txtNome
+                    div.form-group
+                        label(for="Preco") Preço:
+                        input.form-control(type="text")#txtPreco
+                    div.form-group
+                        label(for="descricao") Breve descrição:
+                        textarea.form-control(rows="3")#txtDescricao
+                    button.btn.btn-default(type="submit") Salvar
+            div.col.col-sm-8#visualizar
+                    
+      
+block footer
+    script.
+        $("#wrapper").height( $(window).height() - 50); 
+        $("#principal").width( $("#principal").width() + 16.5);
+        $("#addAcompanhamento").click(function(){
+            $("#inputAcompanhamento").removeClass("hidden");
+            $("#addAcompanhamento").addClass("hidden");
+        });
+        $("#addNovoAcompanhamento").click(function(){
+            var acompanhamento = document.getElementById('novoAcompanhamento').value;
+            console.log('acompanhamento: ' + acompanhamento);
+            var html = '<li><a href="#">' + acompanhamento + '</a></li>';
+            $(".sidebar-nav").append(html);
+        });
