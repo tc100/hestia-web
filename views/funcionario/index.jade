@@ -43,14 +43,19 @@ block footer
     script.
         $.get('http://localhost:3000/funcionario/getFuncs',function(response){
             for( x in response.funcionarios){
-                
+              debugger;
+              var ativo = response.funcionarios[x].ativo;
+              if(response.funcionarios[x].ativo){
                 var html = '<tr><td>'+response.funcionarios[x].nome+'</td>'+
                             '<td>'+
                               '<a class="btn btn-default" href="/funcionario/editar?id='+ response.funcionarios[x].id+'"><i class="fa fa-pencil" aria-hidden="true"></i></a>'+
                               '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-id="'+ response.funcionarios[x].id+'"><i class="fa fa-list" aria-hidden="true"></i></button>'+
-                              '<button type="button" onClick="deletar('+"'"+response.funcionarios[x].id+"'"+')" class="btn btn-default"><i class="fa fa-trash" aria-hidden="true"></i></button>'+
+                              '<button type="button" onClick="deletar('+"'"+response.funcionarios[x].id+"'"+')" class="btn btn-default"><i class="fa fa-times" aria-hidden="true"></i></button>'+
                             '</td>';
-                $("#lista-funcionarios").append(html);
+              }else{
+                var html = '';
+              }
+              $("#lista-funcionarios").append(html);
             }
         });
         var url = window.location.href;
@@ -75,9 +80,7 @@ block footer
         });
         function deletar(idUsuario){
           debugger;
-          id = idUsuario;
-          alert(id);
-          $.get('http://localhost:3000/funcionario/delete/'+id,function(response){
+          $.get('http://localhost:3000/funcionario/delete/'+idUsuario,function(response){
           });
         }
         
