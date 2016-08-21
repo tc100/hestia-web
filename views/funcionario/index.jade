@@ -5,6 +5,15 @@ block title
  
 block content
     section
+      // Modal
+      #myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+        .modal-dialog(role='document')
+          .modal-content
+            .modal-header
+              button.close(type='button', data-dismiss='modal', aria-label='Close')
+                span(aria-hidden='true') ×
+              h4#myModalLabel.modal-title Detalhes
+            #modalConteudo.modal-body
       .alert.alert-success.alert-dismissible.fade.in.hidden#cadastrado(role='alert')
         button.close(type='button', data-dismiss='alert', aria-label='Close')
           span(aria-hidden='true') ×
@@ -22,14 +31,14 @@ block content
           tr
             th Nome
             th Ações
-          tr.linha-tabela.hidden
-            td [nome]
-            td [login]
-            td
-              a.btn.btn-default(href='/funcionario/editar')
-                i.fa.fa-pencil(aria-hidden='true')
-              a#detalhe.btn.btn-default(href='/funcionario/detalhes')
-                i.fa.fa-list(aria-hidden='true')
+          //tr.linha-tabela.hidden
+            //td [nome]
+            //td [login]
+            //td
+            //  a.btn.btn-default(href='/funcionario/editar')
+            //    i.fa.fa-pencil(aria-hidden='true')
+            //  button#detalhe.btn.btn-default
+            //    i.fa.fa-list(aria-hidden='true')
 block footer
     script.
         $.get('http://localhost:3000/funcionario/getFuncs',function(response){
@@ -37,15 +46,28 @@ block footer
                 
                 var html = '<tr><td>'+response.funcionarios[x].nome+'</td>'+
                             '<td><a class="btn btn-default" href="/funcionario/editar?id='+ response.funcionarios[x].id+'"><i class="fa fa-pencil" aria-hidden="true"></i></a>'+
-                            '<a id="detalhe"class="btn btn-default" href="/funcionario/detalhes?id='+ response.funcionarios[x].id+'"><i class="fa fa-list" aria-hidden="true"></i></a></td>';
+                            '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-id="'+ response.funcionarios[x].id+'"><i class="fa fa-list" aria-hidden="true"></i></button></td>';
                 $("#lista-funcionarios").append(html);
             }
         });
         var url = window.location.href;
+        var id = 'x';
         if(url.indexOf("?status=cadastrado") != -1){
           $("#cadastrado").removeClass("hidden");
         }else if(url.indexOf("?status=editado") != -1){
           debugger;
           $("#editado").removeClass("hidden");
         }
+        $('#myModal').on('show.bs.modal', function (event) {
+          debugger;
+          var button = $(event.relatedTarget) // Button that triggered the modal
+          id = button.data('id') // Extract info from data-* attributes
+          // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+          // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+          var modal = $(this)
+          $('#modalConteudo').load('/funcionario/detalhes?id='+id);
+        })
+        
+        
+        
      
