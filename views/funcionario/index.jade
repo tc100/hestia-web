@@ -29,8 +29,8 @@ block content
       div.col-sm-8.col-sm-offset-2
         table.table.table-striped#lista-funcionarios
           tr
-            th Nome
-            th Ações
+            th.col-sm-9 Nome
+            th.col-sm-4 Ações
           //tr.linha-tabela.hidden
             //td [nome]
             //td [login]
@@ -45,8 +45,11 @@ block footer
             for( x in response.funcionarios){
                 
                 var html = '<tr><td>'+response.funcionarios[x].nome+'</td>'+
-                            '<td><a class="btn btn-default" href="/funcionario/editar?id='+ response.funcionarios[x].id+'"><i class="fa fa-pencil" aria-hidden="true"></i></a>'+
-                            '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-id="'+ response.funcionarios[x].id+'"><i class="fa fa-list" aria-hidden="true"></i></button></td>';
+                            '<td>'+
+                              '<a class="btn btn-default" href="/funcionario/editar?id='+ response.funcionarios[x].id+'"><i class="fa fa-pencil" aria-hidden="true"></i></a>'+
+                              '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-id="'+ response.funcionarios[x].id+'"><i class="fa fa-list" aria-hidden="true"></i></button>'+
+                              '<button id="deletar" onClick="deletar()" class="btn btn-default" data-id="'+ response.funcionarios[x].id+'"><i class="fa fa-trash" aria-hidden="true"></i></button>'+
+                            '<td>';
                 $("#lista-funcionarios").append(html);
             }
         });
@@ -67,6 +70,13 @@ block footer
           var modal = $(this)
           $('#modalConteudo').load('/funcionario/detalhes?id='+id);
         })
+        function deletar(){
+          id = $('#deletar').data('id');
+          
+          $.delete('http://localhost:3000/funcionario/delete'+id,function(response){
+            //não sei como proceder aqui  
+          });
+        }
         
         
         
