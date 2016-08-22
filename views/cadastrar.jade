@@ -8,8 +8,8 @@ block content
         button.close(type='button', data-dismiss='alert', aria-label='Close')
           span(aria-hidden='true') ×
         strong Erro!
-        |  Erro ao realizar o cadastro de restaurante 
-        
+        |  Erro ao realizar o cadastro de restaurante
+
       .container
         div.alert.alert-warning.fade.in.hidden(role='alert')
           button.close(type='button', data-dismiss='alert', aria-label='Close')
@@ -30,18 +30,46 @@ block content
                 h3.text-center Dados Restaurante
               .form-group.col-sm-12
                 input#nome-restaurante.form-control(type='text', required='', name='nomeRestaurante', placeholder='Nome do Restaurante')
-              .form-group.col-sm-12
-                input#cnpj-restaurante.form-control(type='text', pattern = '\\d{14}', title ='Ex.: 00.000.000/0001-00' required='', name='cnpj', placeholder='CNPJ')
-              .form-group.col-sm-8
-                input#email-restaurante.form-control(type='email', required='', name='email', placeholder='E-Mail', pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")
-              .form-group.col-sm-4
+              .form-group.col-sm-5
+                input#cnpj-restaurante.form-control(type='text', pattern = '\\d{14}', title ='Ex.: 00.000.000/0001-00', required='', maxlength="14", name='cnpj', placeholder='CNPJ')
+              .form-group.col-sm-7
+                input#email-restaurante.form-control(type='email', required='', name='email', placeholder='E-Mail', pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$", title ='Ex.: exemplo@email.com')
+              .form-group.col-sm-5
+                input#CEP-restaurante.form-control(type="text", pattern="\\d{8}", required='', maxlength="9", name='CEP', placeholder='CEP', title = "Ex: 11111-111")
+              .form-group.col-sm-7
                 input#telefone-restaurante.form-control(type="tel", pattern="\\([0-9]{2}\\) [0-9]{4,6}-[0-9]{3,4}$", required='', maxlength="15", name='telefone', placeholder='Telefone', title = "Ex: (99) 99999-9999")
-              .form-group.col-sm-12
-                input#endereco-restaurante.form-control(type='text', required='', name='endereco', placeholder='Endereço Completo do Restaurante')
-              .form-group.col-sm-6
+              .form-group.col-sm-9
                 input#cidade-restaurante.form-control(type='text', required='', name='cidade', placeholder='Cidade')
-              .form-group.col-sm-6
-                input#estado-restaurante.form-control(type='text', required='', name='estado', placeholder='Estado')
+              .form-group.col-sm-3
+               select#estado-restaurante.form-control(title = "Estado")
+                option AL
+                option AP
+                option AM
+                option BA
+                option CE
+                option DF
+                option ES
+                option GO
+                option MA
+                option MT
+                option MS
+                option MG
+                option PA
+                option PB
+                option PR
+                option PE
+                option PI
+                option RJ
+                option RN
+                option RS
+                option RO
+                option RR
+                option SC
+                option SP
+                option SE
+                option TO
+              .form-group.col-sm-12
+                input#endereco-restaurante.form-control(type='text', required='', name='endereco', placeholder='Endereço Completo')
               br
               br
             .col-sm-4.col-sm-offset-1
@@ -53,11 +81,8 @@ block content
                 input#login-dono.form-control(type='text', required='', name='login', placeholder='Login')
               .form-group.col-sm-12
                 input#senha-dono.form-control(type='password', required='', pattern= '(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$', name='senha', placeholder='Senha', title = "A Senha deve conter 3 dos seguintes:\nMaiúsculas, Minúsculas, Números ou Caracteres especiais. \nNo minimo 8 caracteres")
-              br
-              br
-            .col-sm-2.col-sm-offset-10
-              input.btn.btn-default(type='submit', value='Cadastrar')
-
+              .col-sm-2.col-sm-offset-4
+                input.btn.btn-default(type='submit', value='Cadastrar')
 block footer
   script.
     $('.alert').hide();

@@ -66,6 +66,9 @@ app.get('/getFuncs', function (req,res){
 app.get('/', function(req, res, next) {
   res.render('funcionario/index', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
 });
+app.get('/inativos', function(req, res, next) {
+  res.render('funcionario/reativar', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
+});
 /* GET Pagina Cadastrar.*/
 app.get('/criar', function(req, res, next) {
   res.render('funcionario/criar', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
