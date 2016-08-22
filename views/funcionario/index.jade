@@ -45,7 +45,7 @@ block footer
             for( x in response.funcionarios){
               debugger;
               var ativo = response.funcionarios[x].ativo;
-              if(response.funcionarios[x].ativo){
+              if(ativo == undefined|| ativo){
                 var html = '<tr><td>'+response.funcionarios[x].nome+'</td>'+
                             '<td>'+
                               '<a class="btn btn-default" href="/funcionario/editar?id='+ response.funcionarios[x].id+'"><i class="fa fa-pencil" aria-hidden="true"></i></a>'+
