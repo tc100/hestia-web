@@ -8,35 +8,90 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 /* GET Pagina Cadastrar.*/
 app.get('/', function(req, res, next) {
-  res.render('cardapio/editar', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
+  var idRestaurante = req.hestiasession.restaurante;
+  var nome = req.hestiasession.name;
+  var options = {
+    host: 'localhost',
+    port: 8080,
+    path: '/apihestia/cardapios?restaurante='+idRestaurante,
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(idRestaurante)
+    }
+  };
+
+  var req = http.request(options, function(response) {
+      response.setEncoding('utf8');
+
+      response.on('data', function (chunk) {
+        if(chunk == "Fail"){
+          console.log("fail: " + chunk);
+          res.render('cardapio/index', {user:{ name: nome, restaurante: idRestaurante}, error: "erro ao conectar com o BD"});
+        }else{
+          res.render('cardapio/index', {user:{ name: nome, restaurante: idRestaurante}, lista_cardapio: chunk});
+        }
+      });
+  });
+  req.write(idRestaurante);
+  req.end();
 });
 
-/*POST dos dados cadastrais*/
-app.post("/", function (req, res, next) {
-  cadastro = {
-    "nome-restaurante": req.body.nomeRestaurante,
-    "cnpj": req.body.cnpj,
-    "email": req.body.email,
-    "telefone": req.body.telefone,
-    "endereco": req.body.endereco,
-    "cidade": req.body.cidade,
-    "estado": req.body.estado
-  };
-  funcionario = {
-    "nome": req.body.nomeDono,
-    "login": req.body.login,
-    "senha": req.body.senha,
-    "restaurante": "placeholder"
-  };
-  console.log(querystring.escape(JSON.stringify(funcionario)));
+app.get('/editar', function(req, res, next) {
+    res.redirect("/cardapio");
+});
+
+app.get('/editar/:nome_cardapio', function(req, res, next) {
+  var idRestaurante = req.hestiasession.restaurante;
+  var nome = req.hestiasession.name;
+  if(req.params.nome_cardapio == null || typeof req.params.nome_cardapio == "undefined")
+    res.redirect("cardapio/index", {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
+  else{
+    var nome_cardapio = req.nome_cardapio;
+    var data = querystring.stringify({
+      "restaurante":  idRestaurante,
+      "cardapio": nome_cardapio
+    });
+    var options = {
+      host: 'localhost',
+      port: 8080,
+      path: '/apihestia/cardapio?restaurante='+idRestaurante+'&cardapio='+ encodeURIComponent(nome_cardapio),
+      method: 'GET',
+      params: data,
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Length': Buffer.byteLength(data)
+      }
+    };
+
+    var req = http.request(options, function(response) {
+        response.setEncoding('utf8');
+
+        response.on('data', function (chunk) {
+          if(chunk == "Fail"){
+            console.log("fail: " + chunk);
+            res.redirect("/cardapio");
+          }else{
+            res.render('cardapio/editar', {user:{ name: nome, restaurante: idRestaurante}, cardapio: chunk});
+          }
+        });
+    });
+    req.write(data);
+    req.end();
+
+  }
+});
+
+app.post("/novo", function(req,res,next){
+  var nome_restaurante = req.body.nome;
   var data = querystring.stringify({
-    "cadastro": cadastro,
-    "funcionario": funcionario
+    "restaurante":  req.hestiasession.restaurante,
+    "cardapio": nome_restaurante
   });
   var options = {
     host: 'localhost',
     port: 8080,
-    path: '/apihestia/estabelecimento?cadastro='+querystring.escape(JSON.stringify(cadastro))+'&funcionario='+querystring.escape(JSON.stringify(funcionario)),
+    path: '/apihestia/cardapio/novo?restaurante='+req.hestiasession.restaurante+'&cardapio='+encodeURIComponent(nome_restaurante),
     method: 'POST',
     params: data,
     headers: {
@@ -50,8 +105,8 @@ app.post("/", function (req, res, next) {
 
       response.on('data', function (chunk) {
         if(chunk == "Cadastrado"){
-          console.log("Cadastrado");
-          res.redirect("/login?status=cadastrado");
+          console.log("Cardapio cadastrado");
+          res.send({"nome": nome_restaurante, "pratos": []});
         }else{
           console.log("fail: " + chunk);
           res.redirect("/cadastrar?status=fail");
@@ -60,6 +115,44 @@ app.post("/", function (req, res, next) {
   });
   req.write(data);
   req.end();
+
+});
+
+app.post("/acompanhamento", function (req, res, next){
+  console.log("chegou");
+  var nome_cardapio = req.body.nome_cardapio;
+  var data = querystring.stringify({
+    "restaurante":  req.hestiasession.restaurante,
+    "cardapio": nome_cardapio
+  });
+  var options = {
+    host: 'localhost',
+    port: 8080,
+    path: '/apihestia/acompanhamento?restaurante='+req.hestiasession.restaurante+'&cardapio='+encodeURIComponent(nome_cardapio)+'&acompanhamento='+req.body.acompanhamento,
+    method: 'POST',
+    params: data,
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(data)
+    }
+  };
+
+  var req = http.request(options, function(response) {
+      response.setEncoding('utf8');
+
+      response.on('data', function (chunk) {
+        if(chunk == "Cadastrado"){
+          console.log("Acompanhamento cadastrado");
+          res.send("cadastrado");
+        }else{
+          console.log("fail: " + chunk);
+          res.send("fail");
+        }
+      });
+  });
+  req.write(data);
+  req.end();
+
 });
 
 module.exports = app;

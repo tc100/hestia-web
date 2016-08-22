@@ -1,0 +1,51 @@
+extends ../layout
+block title
+    title Hestia - Cardapios
+    link(rel='stylesheet', href='/stylesheets/cardapio.css', type='text/css')
+
+
+block content
+    section#about
+        h2.section-heading.text-left Cardapios
+            br
+            small Organize seus cardapios.
+        div.row
+            div.col-xs-10.col-sm-8.col-md-5.col-lg-4
+                div.form-group
+                    input.form-control#inputNovoCardapio(type="text" placeholder="Nome do novo cardapio")
+            div.col-xs-2.col-sm-4.col-md-4.col-lg-3
+                button.btn.btn-default#btnNewCardapio(type="button") Adicionar
+        div#container-cardapio
+
+block footer
+    script.
+        $(document).ready(function(){
+            var cardapios = !{lista_cardapio};
+            for(x in cardapios){
+                addCardapio(cardapios[x]);
+            }
+        });
+        $("#btnNewCardapio").click(function(){
+            $.post("/cardapio/novo",{"nome": $("#inputNovoCardapio").val()}).then(function(data){
+                addCardapio(data);
+                $("#inputNovoCardapio").val("");
+            });
+        });
+        $(document).on('mouseover', '.panel-hestia', function(e) {
+            $(this).find(".btn-group-cardapio").removeClass('hidden');
+        });
+        $(document).on('mouseout', '.panel-hestia', function(e) {
+            $(this).find(".btn-group-cardapio").addClass('hidden');  
+        });
+        $("#container-cardapio").on('click', '.panel-hestia', function(){
+            location.href="/cardapio/editar/" + $(this).find(".panel-body").text();
+        });
+        function addCardapio(cardapio){
+            var html = "<div class='col-xs-12 col-sm-6 col-md-3 col-lg-3'><div class='panel panel-hestia'>";
+            html += "<div class='panel-body'>" + cardapio.nome + "</div>";
+            html += "<div class='panel-footer'>Pratos cadastrados: " + cardapio.pratos.length+ "</div>";
+            html += "<div class='btn-group btn-group-cardapio hidden' role='group'>";
+            html += "<button class='btn btn-default' type='button'>Deletar</button>";
+            html += "<button class='btn btn-default' type='button'>Duplicar</button></div></div></div>";
+            $("#container-cardapio").append(html);
+        }

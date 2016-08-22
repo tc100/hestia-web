@@ -59,3 +59,35 @@
     background: none;
     cursor: default;
 }
+
+#about{
+  padding: 5em 2em;
+}
+#container-cardapio{
+  padding-top: 1em;
+}
+
+.panel-hestia{
+  text-align: center;
+  padding-top: 2em;
+  border: 1px solid #C84C00 !important;
+  font-size: 1.2em;
+}
+
+.panel-hestia:hover{
+  box-shadow: 5px 5px 3px rgba(200, 76, 0, 0.5);
+  border: 2px solid #C84C00 !important;
+  cursor: pointer;
+}
+
+.panel-hestia .panel-footer{
+  background-color: white !important;
+  margin-top:2em;
+  font-size: 0.8em;
+}
+
+.btn-group-cardapio{
+  position:absolute;
+  margin-bottom:-3.3em !important;
+  right: -3.3em;
+}

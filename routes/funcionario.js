@@ -37,16 +37,16 @@ app.get('/getFuncionario/:id', function(req,res){
   request.end();
 });
 app.get('/getFuncs', function (req,res){
-  var cnpj = req.hestiasession.restaurante;
+  var id = req.hestiasession.restaurante;
   var options = {
     host: 'localhost',
     port: 8080,
-    path: '/apihestia/getFuncs?cnpj='+cnpj,
+    path: '/apihestia/getFuncs?id='+id,
     method: 'GET',
     params: req.hestiasession.restaurante,
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Content-Length': Buffer.byteLength(cnpj)
+        'Content-Length': Buffer.byteLength(id)
     }
   };
   var request = http.request(options, function(response) {
@@ -60,7 +60,7 @@ app.get('/getFuncs', function (req,res){
         }
       });
   });
-  request.write(cnpj);
+  request.write(id);
   request.end();
 });
 app.get('/', function(req, res, next) {

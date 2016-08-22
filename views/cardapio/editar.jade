@@ -7,9 +7,9 @@ block title
 block content
     hr
     div.row#wrapper
-        div.col.col-sm-2#sidebar-wrapper
+        div.col-sm-12.col-md-4.col-lg-3#sidebar-wrapper
           ul.sidebar-nav
-            li.sidebar-brand
+            li.sidebar-brand(text-align="center")
                 a(href='#') ACOMPANHAMENTOS
             li
                 a#addAcompanhamento(href='#') Adicionar acompanhamento
@@ -18,13 +18,9 @@ block content
                         label.sr-only(for='novoAcompanhamento') Acompanhamento
                         input#novoAcompanhamento(type="text")
                         button.btn.btn-default#addNovoAcompanhamento(type="submit") Ok
-            li
-                a(href='#') Batata frita
-        div.col.col-sm-10#principal
+        div.col-sm-12.col-md-8.col-lg-9#principal
             ul.nav.nav-tabs
                 li.active
-                    a(href="#") Pratos Principais
-                li
                     a(href="#") +
             div.col.col-sm-4#form
                 h2 Adicionar novo
@@ -44,6 +40,13 @@ block content
       
 block footer
     script.
+        var cardapio;
+        $(document).ready(function(){
+            cardapio = !{cardapio};
+            for(x in cardapio.acompanhamentos){
+                addAcompanhamento(cardapio.acompanhamentos[x]);
+            }
+        });
         $("#wrapper").height( $(window).height() - 50); 
         $("#principal").width( $("#principal").width() + 16.5);
         $("#addAcompanhamento").click(function(){
@@ -52,7 +55,14 @@ block footer
         });
         $("#addNovoAcompanhamento").click(function(){
             var acompanhamento = document.getElementById('novoAcompanhamento').value;
-            console.log('acompanhamento: ' + acompanhamento);
+            $.post("/cardapio/acompanhamento", {acompanhamento: acompanhamento, nome_cardapio: cardapio.nome}).then(function(data){
+                if(data == "cadastrado"){
+                    cardapio.acompanhamentos.push(acompanhamento);
+                    addAcompanhamento(acompanhamento);
+                }
+            });
+        });
+        function addAcompanhamento(acompanhamento){
             var html = '<li><a href="#">' + acompanhamento + '</a></li>';
             $(".sidebar-nav").append(html);
-        });
+        }
