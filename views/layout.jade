@@ -85,7 +85,15 @@ html(lang='pt-br')
     
     
     div.footer
+      script.
+        var msg = undefined;
+        config = {};
       script(src='/javascripts/jquery.js')
       // Bootstrap Core JavaScript
       script(src='/javascripts/bootstrap.min.js')
+      // Bootstrap Growl-Jquery
+      script(src='/javascripts/jquery.bootstrap-growl.min.js')
+        
       block footer
+      script.
+        if(msg != undefined){$.bootstrapGrowl(msg, config);}

@@ -102,7 +102,7 @@ app.post('/criar', function(req, res, next) {
           res.redirect("/funcionario?status=cadastrado");
         }else{
           console.log("fail: " + chunk);
-          res.redirect("/funcionario/criar?status=fail");
+          res.send("/funcionario/criar?status=fail");
         }
       });
   });
