@@ -14,6 +14,7 @@ var login = require('./routes/login');
 var cadastrar = require('./routes/cadastrar');
 var funcionario = require('./routes/funcionario');
 var cardapio = require('./routes/cardapio');
+var perfil = require('./routes/perfil');
 
 var app = express();
 
@@ -38,6 +39,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/login', login);
 app.use('/cadastrar', cadastrar);
+app.use('/perfil', perfil);
 app.use('/funcionario',userValidation,funcionario);
 app.use('/cardapio', cardapio);
 app.use('/autorizado/:user', function(req,res){
