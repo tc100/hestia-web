@@ -44,7 +44,7 @@ app.post('/',function(req,res,next){
   console.log("teste2: " + JSON.stringify(req.body));
   var restaurante = {
     "id": req.hestiasession.restaurante,
-    "nomerestaurante": req.body.nomeRestaurante,
+    "nomerestaurante": req.body.nomerestaurante,
     "cnpj": req.body.cnpj,
     "email": req.body.email,
     "telefone": req.body.telefone,
@@ -56,7 +56,7 @@ app.post('/',function(req,res,next){
   var options = {
     host: 'localhost',
     port: 8080,
-    path: '/apihestia/restaurante/?dados='+querystring.escape(JSON.stringfy(restaurante)),
+    path: '/apihestia/restaurante/editar?dados='+querystring.escape(JSON.stringify(restaurante)),
     method: 'PUT',
     params: JSON.stringify(restaurante),
     headers: {
