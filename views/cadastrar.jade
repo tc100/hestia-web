@@ -29,19 +29,19 @@ block content
               .col-sm-10.col-sm-offset-1
                 h3.text-center Dados Restaurante
               .form-group.col-sm-12
-                input#nome-restaurante.form-control(type='text', required='', placeholder='Nome do Restaurante')
+                input#nome-restaurante.form-control(type='text', name = 'nomerestaurante', required='', placeholder='Nome do Restaurante', disabled='')
               .form-group.col-sm-5
-                input#cnpj-restaurante.form-control(type='text', pattern = '\\d{14}', title ='Ex.: 00.000.000/0001-00', required='', maxlength="14", placeholder='CNPJ')
+                input#cnpj-restaurante.form-control(type='text', name = 'cnpj', pattern = '\\d{14}', title ='Ex.: 00.000.000/0001-00', required='', maxlength="14", placeholder='CNPJ')
               .form-group.col-sm-7
-                input#email-restaurante.form-control(type='email', required='', placeholder='E-Mail', pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$", title ='Ex.: exemplo@email.com')
+                input#email-restaurante.form-control(type='email', name = 'email', required='', placeholder='E-Mail', pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$", title ='Ex.: exemplo@email.com')
               .form-group.col-sm-5
-                input#cep-restaurante.form-control(type="text", pattern="\\d{8}", required='', maxlength="9", placeholder='CEP', title = "Ex: 11111-111")
+                input#cep-restaurante.form-control(type="text", name = 'cep', pattern="\\d{8}", required='', maxlength="9", placeholder='CEP', title = "Ex: 11111-111")
               .form-group.col-sm-7
-                input#telefone-restaurante.form-control(type="tel", pattern="\\([0-9]{2}\\) [0-9]{4,6}-[0-9]{3,4}$", required='', maxlength="15", placeholder='Telefone', title = "Ex: (99) 99999-9999")
+                input#telefone-restaurante.form-control(type="tel", name = 'telefone', pattern="\\([0-9]{2}\\) [0-9]{4,6}-[0-9]{3,4}$", required='', maxlength="15", placeholder='Telefone', title = "Ex: (99) 99999-9999")
               .form-group.col-sm-9
-                input#cidade-restaurante.form-control(type='text', required='', placeholder='Cidade')
+                input#cidade-restaurante.form-control(type='text', name = 'cidade', required='', placeholder='Cidade')
               .form-group.col-sm-3
-              select#estado-restaurante.form-control(title = "Estado")
+              select#estado-restaurante.form-control(title = "Estado", name = 'estado',)
                option(value='AL') AL
                option(value='AP') AP
                option(value='AM') AM
@@ -69,7 +69,7 @@ block content
                option(value='SE') SE
                option(value='TO') TO     
               .form-group.col-sm-12
-                input#endereco-restaurante.form-control(type='text', required='', placeholder='Endereço Completo')
+                input#endereco-restaurante.form-control(type='text', name = 'endereco', required='', placeholder='Endereço Completo')
               br
               br
             .col-sm-4.col-sm-offset-1
