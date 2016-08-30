@@ -19,9 +19,9 @@ block content
                         input#novoAcompanhamento(type="text")
                         button.btn.btn-default#addNovoAcompanhamento(type="submit") Ok
         div.col-sm-12.col-md-8.col-lg-9#principal
-            ul.nav.nav-tabs
+            ul.nav.nav-tabs#categorias
                 li.active
-                    a(href="#") +
+                    a(onclick="newAcompanhamento()" id="btnNewAcompanhamento") +
             div.col.col-sm-4#form
                 h2 Adicionar novo
                 form(role="form")
@@ -46,6 +46,9 @@ block footer
             for(x in cardapio.acompanhamentos){
                 addAcompanhamento(cardapio.acompanhamentos[x]);
             }
+            for(x in cardapio.categorias){
+                addCategoria(cardapio.categorias[x].nome);
+            }
         });
         $("#wrapper").height( $(window).height() - 50); 
         $("#principal").width( $("#principal").width() + 16.5);
@@ -62,6 +65,13 @@ block footer
                 }
             });
         });
+        function newAcompanhamento(){
+            
+        }; 
+        function addCategoria(categoria){
+            var html = '<li><a href="#">' +categoria + '</a></li>';
+            $('#categorias').append(html);
+        }
         function addAcompanhamento(acompanhamento){
             var html = '<li><a href="#">' + acompanhamento + '</a></li>';
             $(".sidebar-nav").append(html);

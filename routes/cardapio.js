@@ -47,11 +47,12 @@ app.get('/editar/:nome_cardapio', function(req, res, next) {
   if(req.params.nome_cardapio == null || typeof req.params.nome_cardapio == "undefined")
     res.redirect("cardapio/index", {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
   else{
-    var nome_cardapio = req.nome_cardapio;
+    var nome_cardapio = req.params.nome_cardapio;
     var data = querystring.stringify({
       "restaurante":  idRestaurante,
       "cardapio": nome_cardapio
     });
+    console.log("cardapio: " + nome_cardapio);
     var options = {
       host: 'localhost',
       port: 8080,
@@ -119,12 +120,12 @@ app.post("/novo", function(req,res,next){
 });
 
 app.post("/acompanhamento", function (req, res, next){
-  console.log("chegou");
   var nome_cardapio = req.body.nome_cardapio;
   var data = querystring.stringify({
     "restaurante":  req.hestiasession.restaurante,
     "cardapio": nome_cardapio
   });
+  console.log("acompanhamento: " + req.body.acompanhamento);
   var options = {
     host: 'localhost',
     port: 8080,
