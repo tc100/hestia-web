@@ -1,0 +1,94 @@
+extends ../layout
+
+block title
+    title Hestia - Restaurante
+
+block content
+    section
+        form(method='post')
+          .col-sm-6.col-sm-offset-3
+            .col-sm-10.col-sm-offset-1
+              h2.section-heading.text-center
+                | Dados Restaurante  
+                br
+                small Atualize as informações do seu restaurante
+                hr
+            label.col-sm-12 Nome do Restaurante
+            .form-group.col-sm-12
+              input#nome-restaurante.form-control(type='text', required='', placeholder='Nome do Restaurante', disabled='')
+            label.col-sm-5 CNPJ
+            label.col-sm-7 Email
+            .form-group.col-sm-5
+              input#cnpj-restaurante.form-control(type='text', pattern = '\\d{14}', title ='Ex.: 00.000.000/0001-00', required='', maxlength="14", placeholder='CNPJ', disabled='')
+            .form-group.col-sm-7
+              input#email-restaurante.form-control(type='email', required='', placeholder='E-Mail', pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$", title ='Ex.: exemplo@email.com', disabled='')
+            label.col-sm-5 CEP
+            label.col-sm-7 telefone
+            .form-group.col-sm-5
+              input#cep-restaurante.form-control(type="text", pattern="\\d{8}", required='', maxlength="9", placeholder='CEP', title = "Ex: 11111-111", disabled='')
+            .form-group.col-sm-7
+              input#telefone-restaurante.form-control(type="tel", pattern="\\([0-9]{2}\\) [0-9]{4,6}-[0-9]{3,4}$", required='', maxlength="15", placeholder='Telefone', title = "Ex: (99) 99999-9999", disabled='')
+            label.col-sm-10 Cidade
+            label.col-sm-2 Estado
+            .form-group.col-sm-10
+              input#cidade-restaurante.form-control(type='text', required='', placeholder='cidade', disabled='')
+            .form-group.col-sm-2
+             select#estado-restaurante.form-control(title = "Estado", disabled='')
+              option(value='AL') AL
+              option(value='AP') AP
+              option(value='AM') AM
+              option(value='BA') BA
+              option(value='CE') CE
+              option(value='DF') DF
+              option(value='ES') ES
+              option(value='GO') GO
+              option(value='MA') MA
+              option(value='MT') MT
+              option(value='MS') MS
+              option(value='MG') MG
+              option(value='PA') PA
+              option(value='PB') PB
+              option(value='PR') PR
+              option(value='PE') PE
+              option(value='PI') PI
+              option(value='RJ') RJ
+              option(value='RN') RN
+              option(value='RS') RS
+              option(value='RO') RO
+              option(value='RR') RR
+              option(value='SC') SC
+              option(value='SP') SP
+              option(value='SE') SE
+              option(value='TO') TO           
+            label.col-sm-12(for='endereco') Endereço
+            .form-group.col-sm-12
+              input#endereco-restaurante.form-control(type='text', required='', placeholder='Endereço Completo', disabled='')
+            .col-sm-2.col-sm-offset-10
+              input.btn.btn-default(type='button', onClick='habilitar()', value='Atualizar')
+block footer
+    script.
+          $(document).ready(function(){
+                      var restaurante = !{restaurante};
+                      $("#nome-restaurante").val(restaurante.nomerestaurante);
+                      $("#cnpj-restaurante").val(restaurante.cnpj);
+                      $("#email-restaurante").val(restaurante.email);
+                      $("#telefone-restaurante").val(restaurante.telefone);
+                      $("#cep-restaurante").val(restaurante.cep);
+                      $("#endereco-restaurante").val(restaurante.endereco);
+                      $("#cidade-restaurante").val(restaurante.cidade);
+                      $("#estado-restaurante").val(restaurante.estado);
+                  });
+                  
+          function habilitar(){
+            if ($("#nome-restaurante").attr('disabled')) {
+              
+                $("#nome-restaurante").removeAttr('disabled');
+                $("#cnpj-restaurante").removeAttr('disabled');
+                $("#email-restaurante").removeAttr('disabled');
+                $("#telefone-restaurante").removeAttr('disabled');
+                $("#cep-restaurante").removeAttr('disabled');
+                $("#endereco-restaurante").removeAttr('disabled');
+                $("#cidade-restaurante").removeAttr('disabled');
+                $("#estado-restaurante").removeAttr('disabled');
+              }
+          }

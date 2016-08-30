@@ -15,6 +15,7 @@ var cadastrar = require('./routes/cadastrar');
 var funcionario = require('./routes/funcionario');
 var cardapio = require('./routes/cardapio');
 var perfil = require('./routes/perfil');
+var restaurante = require('./routes/restaurante');
 
 var app = express();
 
@@ -42,6 +43,7 @@ app.use('/cadastrar', cadastrar);
 app.use('/perfil', perfil);
 app.use('/funcionario',userValidation,funcionario);
 app.use('/cardapio', cardapio);
+app.use('/restaurante', restaurante);
 app.use('/autorizado/:user', function(req,res){
   console.log("redirecionado..");
   var user = JSON.parse(req.params.user);

@@ -1,5 +1,5 @@
 - var userLogged = (user && user.name)?true:false;
-  
+
 doctype html
 html(lang='pt-br')
   head
@@ -26,10 +26,10 @@ html(lang='pt-br')
     //if lt IE 9
     script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
     script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
-     
+
   body#page-top
     div.container-fluid
-  
+
       nav#mainNav.navbar.navbar-default.navbar-fixed-top
         // Brand and toggle get grouped for better mobile display
         div.navbar-header
@@ -51,9 +51,14 @@ html(lang='pt-br')
                   li
                     a(href='/funcionario') Funcionarios
                   li
-                    a(href='#') Cardapio
+                    a(href='/cardapio') Cardapio
               li
-                a.page-scroll(href='#') Administrativo
+               a.page-scroll.dropdown-toggle(data-toggle='dropdown', href="#")
+                  | Administrativo
+                  span.caret
+               ul.dropdown-menu
+                  li
+                    a(href='/restaurante') Restaurante
               li
                 a.page-scroll(href='#') B.I.
               li
@@ -68,7 +73,7 @@ html(lang='pt-br')
                     a(href='/funcionario') Area Logada
                   li
                     a(href='/logout') Logout
-        - if(user.name == null)  
+        - if(user.name == null)
           #bs-example-navbar-collapse-1.collapse.navbar-collapse
             ul.nav.navbar-nav.navbar-right
               li
@@ -82,8 +87,8 @@ html(lang='pt-br')
               li
                 a.page-scroll(href='/login') Entrar
       block content
-    
-    
+
+
     div.footer
       script.
         var msg = undefined;
@@ -93,7 +98,7 @@ html(lang='pt-br')
       script(src='/javascripts/bootstrap.min.js')
       // Bootstrap Growl-Jquery
       script(src='/javascripts/jquery.bootstrap-growl.min.js')
-        
+
       block footer
       script.
         if(msg != undefined){$.bootstrapGrowl(msg, config);}
