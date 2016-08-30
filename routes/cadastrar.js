@@ -14,10 +14,11 @@ app.get('/', function(req, res, next) {
 /*POST dos dados cadastrais*/
 app.post("/", function (req, res, next) {
   cadastro = {
-    "nome-restaurante": req.body.nomeRestaurante,
+    "nomerestaurante": req.body.nomeRestaurante,
     "cnpj": req.body.cnpj,
     "email": req.body.email,
     "telefone": req.body.telefone,
+    "cep": req.body.cep,
     "endereco": req.body.endereco,
     "cidade": req.body.cidade,
     "estado": req.body.estado

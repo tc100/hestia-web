@@ -39,4 +39,47 @@ app.get('/', function(req,res){
   request.end();
 });
 
+//Editar restaurante
+app.post('/',function(req,res,next){
+  console.log("teste2: " + JSON.stringify(req.body));
+  var restaurante = {
+    "id": req.hestiasession.restaurante,
+    "nomerestaurante": req.body.nomeRestaurante,
+    "cnpj": req.body.cnpj,
+    "email": req.body.email,
+    "telefone": req.body.telefone,
+    "cep": req.body.cep,
+    "endereco": req.body.endereco,
+    "cidade": req.body.cidade,
+    "estado": req.body.estado
+  };
+  var options = {
+    host: 'localhost',
+    port: 8080,
+    path: '/apihestia/restaurante/?dados='+querystring.escape(JSON.stringfy(restaurante)),
+    method: 'PUT',
+    params: JSON.stringify(restaurante),
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(JSON.stringify(restaurante))
+    }
+  };
+
+  var req = http.request(options, function(response) {
+      response.setEncoding('utf8');
+
+      response.on('data', function (chunk) {
+        if(chunk == "Alterado"){
+          console.log("Alterado");
+          res.redirect("/restaurante?status=editado");
+        }else{
+          console.log("fail: " + chunk);
+          res.redirect("/restaurante?status=fail");
+        }
+      });
+  });
+  req.write(JSON.stringify(restaurante));
+  req.end();
+});
+
 module.exports = app  ;

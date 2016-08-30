@@ -63,8 +63,9 @@ block content
             label.col-sm-12(for='endereco') Endereço
             .form-group.col-sm-12
               input#endereco-restaurante.form-control(type='text', required='', placeholder='Endereço Completo', disabled='')
-            .col-sm-2.col-sm-offset-10
-              input.btn.btn-default(type='button', onClick='habilitar()', value='Atualizar')
+            p.tpbutton.btn-toolbar.text-center
+              input.btn.btn-default.pull-right(type='submit', value='salvar', disabled='', id='salvar')
+              input.btn.btn-default.pull-left(type='button', onClick='editar()', value='editar')
 block footer
     script.
           $(document).ready(function(){
@@ -79,7 +80,7 @@ block footer
                       $("#estado-restaurante").val(restaurante.estado);
                   });
                   
-          function habilitar(){
+          function editar(){
             if ($("#nome-restaurante").attr('disabled')) {
               
                 $("#nome-restaurante").removeAttr('disabled');
@@ -90,5 +91,6 @@ block footer
                 $("#endereco-restaurante").removeAttr('disabled');
                 $("#cidade-restaurante").removeAttr('disabled');
                 $("#estado-restaurante").removeAttr('disabled');
+                $("#salvar").removeAttr('disabled');
               }
           }
