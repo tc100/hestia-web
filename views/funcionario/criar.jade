@@ -37,7 +37,10 @@ block footer
   script.
     $('.alert').hide();
     var url = window.location.href;
-    if(url.indexOf("?status=fail") != -1)
+    if(alerta.typeMsg=="danger")
     {
-      $(".alert").show();
+      var funcionario = !{funcionario};
+      var nomeFunc = $("#nome-funcionario").val(funcionario.nome);
+      var loginFunc = $("#login-funcionario").val(funcionario.login);
+      var senhaFunc = $("#senha-funcionario").val(funcionario.senha);   
     }

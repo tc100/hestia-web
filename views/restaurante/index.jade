@@ -69,16 +69,16 @@ block content
 block footer
     script.
           $(document).ready(function(){
-                      var restaurante = !{restaurante};
-                      $("#nome-restaurante").val(restaurante.nomerestaurante);
-                      $("#cnpj-restaurante").val(restaurante.cnpj);
-                      $("#email-restaurante").val(restaurante.email);
-                      $("#telefone-restaurante").val(restaurante.telefone);
-                      $("#cep-restaurante").val(restaurante.cep);
-                      $("#endereco-restaurante").val(restaurante.endereco);
-                      $("#cidade-restaurante").val(restaurante.cidade);
-                      $("#estado-restaurante").val(restaurante.estado);
-                  });
+            var restaurante = !{restaurante};
+            $("#nome-restaurante").val(restaurante.nomerestaurante);
+            $("#cnpj-restaurante").val(restaurante.cnpj);
+            $("#email-restaurante").val(restaurante.email);
+            $("#telefone-restaurante").val(restaurante.telefone);
+            $("#cep-restaurante").val(restaurante.cep);
+            $("#endereco-restaurante").val(restaurante.endereco);
+            $("#cidade-restaurante").val(restaurante.cidade);
+            $("#estado-restaurante").val(restaurante.estado);
+          });
                   
           function editar(){
             if ($("#nome-restaurante").attr('disabled')) {
@@ -94,3 +94,4 @@ block footer
                 $("#salvar").removeAttr('disabled');
               }
           }
+            

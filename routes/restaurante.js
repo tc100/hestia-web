@@ -31,7 +31,8 @@ app.get('/', function(req,res){
         }else{
           console.log("teste: " + chunk);
           var restaurante = JSON.parse(chunk);
-          res.render('restaurante/index', {user:{ name: nome, restaurante: id}, restaurante: chunk});
+          var alertX = JSON.stringify({"msg": "null", "typeMsg": "null"});
+          res.render('restaurante/index', {user:{ name: nome, restaurante: id}, restaurante: chunk, alert: alertX});
         }
       });
   });
@@ -42,6 +43,9 @@ app.get('/', function(req,res){
 //Editar restaurante
 app.post('/',function(req,res,next){
   console.log("teste2: " + JSON.stringify(req.body));
+
+  var id = req.hestiasession.restaurante;
+  var nome = req.hestiasession.name;
   var restaurante = {
     "id": req.hestiasession.restaurante,
     "nomerestaurante": req.body.nomerestaurante,
@@ -67,14 +71,16 @@ app.post('/',function(req,res,next){
 
   var req = http.request(options, function(response) {
       response.setEncoding('utf8');
-
+      var restauranteX = JSON.stringify(restaurante);
       response.on('data', function (chunk) {
         if(chunk == "Alterado"){
           console.log("Alterado");
-          res.redirect("/restaurante?status=editado");
+          var alertX = JSON.stringify({"msg": "<b>Restaurante</b> alterado com <b>Sucesso", "typeMsg": "success"});
+          res.render('restaurante/index', {user:{ name: nome, restaurante: id}, restaurante: restauranteX, alert: alertX});
         }else{
           console.log("fail: " + chunk);
-          res.redirect("/restaurante?status=fail");
+          var alertX = JSON.stringify({"msg": "<b>Erro</b> ao editar <b>Restaurente", "typeMsg": "danger"});
+          res.render('restaurante/index', {user:{ name: nome, restaurante: id}, restaurante: restauranteX, alert: alertX});
         }
       });
   });

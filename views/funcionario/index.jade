@@ -14,16 +14,6 @@ block content
                 span(aria-hidden='true') ×
               h4#myModalLabel.modal-title Detalhes
             #modalConteudo.modal-body
-      .alert.alert-success.alert-dismissible.fade.in.hidden#cadastrado(role='alert')
-        button.close(type='button', data-dismiss='alert', aria-label='Close')
-          span(aria-hidden='true') ×
-        strong Cadastrado!
-        |  Funcionário cadastrado com sucesso!
-      .alert.alert-success.alert-dismissible.fade.in.hidden#editado(role='alert')
-        button.close(type='button', data-dismiss='alert', aria-label='Close')
-          span(aria-hidden='true') ×
-        strong Editado!
-        |  Funcionário editado com sucesso!
       .col-sm-2.col-sm-offset-10
         a.btn.btn-default.glyphicon.glyphicon-plus(href='/funcionario/criar')  Novo
       div.col-sm-8.col-sm-offset-2
@@ -54,7 +44,6 @@ block footer
                     };
         $.get('http://localhost:3000/funcionario/getFuncs',function(response){
             for( x in response.funcionarios){
-              debugger;
               var ativo = response.funcionarios[x].ativo;
               if(ativo == undefined|| ativo){
                 var html = '<tr><td>'+response.funcionarios[x].nome+'</td>'+
@@ -71,12 +60,6 @@ block footer
         });
         var url = window.location.href;
         var id = 'x';
-        if(url.indexOf("?status=cadastrado") != -1){
-          $("#cadastrado").removeClass("hidden");
-        }else if(url.indexOf("?status=editado") != -1){
-          debugger;
-          $("#editado").removeClass("hidden");
-        }
         $('#myModal').on('show.bs.modal', function (event) {
           debugger;
           var button = $(event.relatedTarget) // Button that triggered the modal
@@ -90,7 +73,6 @@ block footer
             alert("The paragraph was clicked.");
         });
         function deletar(idUsuario){
-          debugger;
           $.get('http://localhost:3000/funcionario/delete/'+idUsuario,function(response){
           });
         }

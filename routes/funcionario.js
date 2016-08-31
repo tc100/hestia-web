@@ -64,17 +64,20 @@ app.get('/getFuncs', function (req,res){
   request.end();
 });
 app.get('/', function(req, res, next) {
-  res.render('funcionario/index', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
-});
-app.get('/inativos', function(req, res, next) {
-  res.render('funcionario/reativar', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
+  var alertX = JSON.stringify({"msg": "null", "typeMsg": "null"});
+  res.render('funcionario/index', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}, alert: alertX});
+  // res.render('funcionario/index', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
 });
 /* GET Pagina Cadastrar.*/
 app.get('/criar', function(req, res, next) {
-  res.render('funcionario/criar', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
+  var alertX = JSON.stringify({"msg": "null", "typeMsg": "null"});
+  res.render('funcionario/criar', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}, alert: alertX});
+  // res.render('funcionario/criar', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
 });
 
 app.post('/criar', function(req, res, next) {
+  var idRestaurante = req.hestiasession.restaurante;
+  var nome = req.hestiasession.name;
   var funcionario = {
     "nome": req.body.nomeFunc,
     "login":  req.body.login,
@@ -99,10 +102,14 @@ app.post('/criar', function(req, res, next) {
       response.on('data', function (chunk) {
         if(chunk == "Cadastrado"){
           console.log("Cadastrado");
-          res.redirect("/funcionario?status=cadastrado");
+          // res.redirect("/funcionario?status=editado");
+          var alertX = JSON.stringify({"msg": "<b>Funcionário</b> cadastrado com <b>Sucesso</b>", "typeMsg": "success"});
+          res.render('funcionario/index', {user:{ name: nome, restaurante: idRestaurante}, alert: alertX});
         }else{
           console.log("fail: " + chunk);
-          res.send("/funcionario/criar?status=fail");
+            var alertX = JSON.stringify({"msg": "<b>Erro</b> ao cadastrar o <b>Funcionário</b>", "typeMsg": "danger"});
+            res.render('funcionario/criar', {user:{ name: nome, restaurante: idRestaurante}, alert: alertX, funcionario: funcionario2});
+          // res.redirect("/funcionario/editar?id="+req.body.idFunc+"&status=fail");
         }
       });
   });
@@ -113,11 +120,15 @@ app.post('/criar', function(req, res, next) {
 
 /* GET Pagina Cadastrar.*/
 app.get('/detalhes', function(req, res, next) {
-  res.render('funcionario/detalhes',{user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
+  var alertX = JSON.stringify({"msg": "null", "typeMsg": "null"});
+  res.render('funcionario/detalhes', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}, alert: alertX});
+  // res.render('funcionario/detalhes',{user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
 });
 /* GET Pagina Cadastrar.*/
 app.get('/editar', function(req, res, next) {
-  res.render('funcionario/editar',{user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
+  var alertX = JSON.stringify({"msg": "null", "typeMsg": "null"});
+  res.render('funcionario/editar', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}, alert: alertX});
+  // res.render('funcionario/editar',{user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
 });
 
 app.post('/editar',function(req,res,next){
@@ -146,10 +157,14 @@ app.post('/editar',function(req,res,next){
       response.on('data', function (chunk) {
         if(chunk == "Alterado"){
           console.log("Alterado");
-          res.redirect("/funcionario?status=editado");
+          // res.redirect("/funcionario?status=editado");
+          var alertX = JSON.stringify({"msg": "<b>Funcionário</b> alterado com <b>Sucesso</b>", "typeMsg": "success"});
+          res.render('funcionario/index', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}, alert: alertX});
         }else{
           console.log("fail: " + chunk);
-          res.redirect("/funcionario/editar?id="+req.body.idFunc+"&status=fail");
+            var alertX = JSON.stringify({"msg": "<b>Erro</b> ao alterar o <b>Funcionário</b>", "typeMsg": "danger"});
+            res.render('funcionario/editar', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}, alert: alertX});
+          // res.redirect("/funcionario/editar?id="+req.body.idFunc+"&status=fail");
         }
       });
   });
