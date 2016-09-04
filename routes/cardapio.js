@@ -29,6 +29,7 @@ app.get('/', function(req, res, next) {
           console.log("fail: " + chunk);
           res.render('cardapio/index', {user:{ name: nome, restaurante: idRestaurante}, error: "erro ao conectar com o BD"});
         }else{
+          console.log("cardapios: " + JSON.stringify(chunk));
           res.render('cardapio/index', {user:{ name: nome, restaurante: idRestaurante}, lista_cardapio: chunk});
         }
       });
@@ -129,7 +130,7 @@ app.post("/acompanhamento", function (req, res, next){
   var options = {
     host: 'localhost',
     port: 8080,
-    path: '/apihestia/acompanhamento?restaurante='+req.hestiasession.restaurante+'&cardapio='+encodeURIComponent(nome_cardapio)+'&acompanhamento='+req.body.acompanhamento,
+    path: '/apihestia/acompanhamento?restaurante='+req.hestiasession.restaurante+'&cardapio='+encodeURIComponent(nome_cardapio)+'&acompanhamento='+encodeURIComponent(req.body.acompanhamento),
     method: 'POST',
     params: data,
     headers: {
@@ -144,6 +145,42 @@ app.post("/acompanhamento", function (req, res, next){
       response.on('data', function (chunk) {
         if(chunk == "Cadastrado"){
           console.log("Acompanhamento cadastrado");
+          res.send("cadastrado");
+        }else{
+          console.log("fail: " + chunk);
+          res.send("fail");
+        }
+      });
+  });
+  req.write(data);
+  req.end();
+
+});
+
+app.post("/categoria", function (req, res, next){
+  var nome_cardapio = req.body.nome_cardapio;
+  var data = querystring.stringify({
+    "restaurante":  req.hestiasession.restaurante,
+    "cardapio": nome_cardapio
+  });
+  var options = {
+    host: 'localhost',
+    port: 8080,
+    path: '/apihestia/categoria?restaurante='+req.hestiasession.restaurante+'&cardapio='+encodeURIComponent(nome_cardapio)+'&categoria='+encodeURIComponent(req.body.categoria),
+    method: 'POST',
+    params: data,
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(data)
+    }
+  };
+
+  var req = http.request(options, function(response) {
+      response.setEncoding('utf8');
+
+      response.on('data', function (chunk) {
+        if(chunk == "Cadastrado"){
+          console.log("Categoria cadastrada");
           res.send("cadastrado");
         }else{
           console.log("fail: " + chunk);

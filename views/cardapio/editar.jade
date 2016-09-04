@@ -6,6 +6,19 @@ block title
     
 block content
     hr
+    div.modal.fade#modalNewCategoria(role="dialog")
+        div.modal-dialog.modal-sm
+            div.modal-content
+                div.modal-header
+                    button.close(type="button" data-dismiss="modal") &times;
+                    h4.modal-title Nova Categoria
+                div.modal-body
+                    form(role="form")
+                        div.form-group
+                            label(for="nome") Nome:
+                            input.form-control(type="text")#txtNovaCategoria
+                        button.btn.btn-default(type="button" data-dismiss="modal" onclick="newCategoria()") Adicionar
+        
     div.row#wrapper
         div.col-sm-12.col-md-4.col-lg-3#sidebar-wrapper
           ul.sidebar-nav
@@ -20,8 +33,8 @@ block content
                         button.btn.btn-default#addNovoAcompanhamento(type="submit") Ok
         div.col-sm-12.col-md-8.col-lg-9#principal
             ul.nav.nav-tabs#categorias
-                li.active
-                    a(onclick="newAcompanhamento()" id="btnNewAcompanhamento") +
+                li
+                    a(id="btnNewCategoria" data-toggle="modal" data-target="#modalNewCategoria") +
             div.col.col-sm-4#form
                 h2 Adicionar novo
                 form(role="form")
@@ -36,11 +49,10 @@ block content
                         textarea.form-control(rows="3")#txtDescricao
                     button.btn.btn-default(type="submit") Salvar
             div.col.col-sm-8#visualizar
-                    
       
 block footer
     script.
-        var cardapio;
+        var cardapio = {};
         $(document).ready(function(){
             cardapio = !{cardapio};
             for(x in cardapio.acompanhamentos){
@@ -49,7 +61,13 @@ block footer
             for(x in cardapio.categorias){
                 addCategoria(cardapio.categorias[x].nome);
             }
+            
         });
+        $('#categorias').on('click','.categoria',function(e){
+            $('.categoria').removeClass("active");
+            $(this).addClass("active");
+        });
+        
         $("#wrapper").height( $(window).height() - 50); 
         $("#principal").width( $("#principal").width() + 16.5);
         $("#addAcompanhamento").click(function(){
@@ -65,11 +83,24 @@ block footer
                 }
             });
         });
-        function newAcompanhamento(){
-            
-        }; 
+        function newCategoria(){
+            var categoria = $('#txtNovaCategoria').val();
+            $.post("/cardapio/categoria", {categoria: categoria, nome_cardapio: cardapio.nome}).then(function(data){
+                if(data == "cadastrado"){
+                    cardapio.categorias.push(categoria);
+                    addCategoria(categoria);
+                }
+            });
+        };
+        
+        //to add in UI
         function addCategoria(categoria){
-            var html = '<li><a href="#">' +categoria + '</a></li>';
+            var html = '';
+            if($('#categorias li').length == 1){
+                html = '<li class="active categoria"><a href="#">' +categoria + '</a></li>';
+            }else{
+                html = '<li class="categoria"><a href="#">' +categoria + '</a></li>';
+            }
             $('#categorias').append(html);
         }
         function addAcompanhamento(acompanhamento){
