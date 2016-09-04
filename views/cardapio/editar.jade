@@ -18,37 +18,61 @@ block content
                             label(for="nome") Nome:
                             input.form-control(type="text")#txtNovaCategoria
                         button.btn.btn-default(type="button" data-dismiss="modal" onclick="newCategoria()") Adicionar
+    div.modal.fade#modalNewAcompanhamento(role="dialog")
+        div.modal-dialog.modal-sm
+            div.modal-content
+                div.modal-header
+                    button.close(type="button" data-dismiss="modal") &times;
+                    h4.modal-title Novo Acompanhamento
+                div.modal-body
+                    form(role="form")
+                        div.form-group
+                            label(for="nome") Nome:
+                            input.form-control(type="text")#novoAcompanhamento
+                        button.btn.btn-default#addNovoAcompanhamento(type="button" data-dismiss="modal") Adicionar
         
     div.row#wrapper
         div.col-sm-12.col-md-4.col-lg-3#sidebar-wrapper
-          ul.sidebar-nav
+          ul.sidebar-nav#acompanhamentos
             li.sidebar-brand(text-align="center")
                 a(href='#') ACOMPANHAMENTOS
             li
-                a#addAcompanhamento(href='#') Adicionar acompanhamento
-                form.hidden.form-inline#inputAcompanhamento(role="form")
-                    div
-                        label.sr-only(for='novoAcompanhamento') Acompanhamento
-                        input#novoAcompanhamento(type="text")
-                        button.btn.btn-default#addNovoAcompanhamento(type="submit") Ok
+                a#addAcompanhamento(href='#' data-toggle="modal" data-target="#modalNewAcompanhamento") Adicionar acompanhamento
+                
         div.col-sm-12.col-md-8.col-lg-9#principal
             ul.nav.nav-tabs#categorias
                 li
-                    a(id="btnNewCategoria" data-toggle="modal" data-target="#modalNewCategoria") +
-            div.col.col-sm-4#form
+                    a#btnNewCategoria(data-toggle="modal" data-target="#modalNewCategoria") +
+            div.col.col-sm-8#form
                 h2 Adicionar novo
                 form(role="form")
-                    div.form-group
-                        label(for="nome") Nome:
-                        input.form-control(type="text")#txtNome
-                    div.form-group
-                        label(for="Preco") Preço:
-                        input.form-control(type="text")#txtPreco
-                    div.form-group
-                        label(for="descricao") Breve descrição:
-                        textarea.form-control(rows="3")#txtDescricao
-                    button.btn.btn-default(type="submit") Salvar
-            div.col.col-sm-8#visualizar
+                    div.col.col-sm-6
+                        div.form-group
+                            label(for="nome") Nome:
+                            input.form-control(type="text" required)#txtNome
+                        div.form-group
+                            label(for="Preco") Preço:
+                            input.form-control(type="text" required)#txtPreco
+                        div.form-group
+                            label(for="descricao") Breve descrição:
+                            textarea.form-control(rows="3")#txtDescricao
+                    div.col.col-sm-6
+                        div.form-group
+                            label(for="numeroDeAcompanhamentos") Acompanhamentos inclusos:
+                            select.form-control#numeroDeAcompanhamentos
+                                  option(value="0") 0
+                                  option(value="1") 1
+                                  option(value="2") 2
+                                  option(value="3") 3
+                                  option(value="4") 4
+                                  option(value="5") 5
+                                  option(value="6") 6
+                        div.form-group
+                            label(for="numeroDeAcompanhamentos") Acompanhamentos Disponiveis:
+                            select.form-control#acompanhamentosDisponiveis(multiple="true" size="7")
+                            p
+                     button.btn.btn-default#btnSalvarPrato(type="submit") Salvar
+            div.col.col-sm-4#visualizar
       
 block footer
     script.
@@ -61,19 +85,82 @@ block footer
             for(x in cardapio.categorias){
                 addCategoria(cardapio.categorias[x].nome);
             }
+            if($("#acompanhamentosDisponiveis option").length == 0){
+                $("#acompanhamentosDisponiveis").append("<option class='removerInutil'>Clique nos acompanhamentos</option>");
+                $("#acompanhamentosDisponiveis").append("<option class='removerInutil'>na lateral esquerda para adicionar</option>");
+                $("#acompanhamentosDisponiveis").append("<option class='removerInutil'>na lista</option>");
+            }
             
         });
+        //add pratos
+        $('#btnSalvarPrato').click(function(){
+            if($('#txtNome').val() == '' || $('#txtPreco').val() ==''){
+                console.log("Missing parameters");
+            }else{
+                if($('.removerInutil').length >0){
+                    $("#acompanhamentosDisponiveis").empty();
+                }
+                var prato = {
+                    'nome': $('#txtNome').val(),
+                    'preco': $('#txtPreco').val(),
+                    'descricao': $('#txtDescricao').val(),
+                    'numeroDeAcompanhamentos': $('#numeroDeAcompanhamentos').val(),
+                    'acompanhamentos':[]
+                }
+                $("#acompanhamentosDisponiveis option").each(function(aux){
+                    prato.acompanhamentos.push($(this).text());
+                });
+                var auxCategoria = $('#categorias .active').find('a').text();
+                
+                $.post("/cardapio/prato", {prato: JSON.stringify(prato), nome_categoria: auxCategoria, nome_cardapio: cardapio.nome}).then(function(data){
+                    if(data == "cadastrado"){
+                        resetForm();
+                    }else{
+                        //apontar erro
+                    }
+                });
+            }
+        });
+        
+        function resetForm(){
+                $('#txtNome').val('');
+                $('#txtPreco').val('');
+                $('#txtDescricao').val('');
+                $('#numeroDeAcompanhamentos').val('');
+                $("#acompanhamentosDisponiveis").empty();
+                $("#acompanhamentosDisponiveis").append("<option class='removerInutil'>Clique nos acompanhamentos</option>");
+                $("#acompanhamentosDisponiveis").append("<option class='removerInutil'>na lateral esquerda para adicionar</option>");
+                $("#acompanhamentosDisponiveis").append("<option class='removerInutil'>na lista</option>");
+        }
+        //trocar de categoria
         $('#categorias').on('click','.categoria',function(e){
             $('.categoria').removeClass("active");
             $(this).addClass("active");
+            resetForm();
+        });
+        
+        //adicionar acompanhamento no prato
+        $("#acompanhamentos").on('click','.acompanhamento', function(e){
+            var flag = false;
+            var auxAcompanhamento = $(this).text();
+            if($('.removerInutil').length >0){
+                $("#acompanhamentosDisponiveis").empty();
+            }
+            if($('.acompanhamento-disponivel').length > 0){
+                $('.acompanhamento-disponivel').each(function() {
+                    if($(this).text() == auxAcompanhamento){
+                        flag = true;
+                    }
+                });
+            }
+            if(!flag)
+                $("#acompanhamentosDisponiveis").append("<option class='acompanhamento-disponivel'>"+ auxAcompanhamento +"</option>");    
         });
         
         $("#wrapper").height( $(window).height() - 50); 
         $("#principal").width( $("#principal").width() + 16.5);
-        $("#addAcompanhamento").click(function(){
-            $("#inputAcompanhamento").removeClass("hidden");
-            $("#addAcompanhamento").addClass("hidden");
-        });
+        
+        //adicionar no db novo acompanhamento
         $("#addNovoAcompanhamento").click(function(){
             var acompanhamento = document.getElementById('novoAcompanhamento').value;
             $.post("/cardapio/acompanhamento", {acompanhamento: acompanhamento, nome_cardapio: cardapio.nome}).then(function(data){
@@ -97,13 +184,13 @@ block footer
         function addCategoria(categoria){
             var html = '';
             if($('#categorias li').length == 1){
-                html = '<li class="active categoria"><a href="#">' +categoria + '</a></li>';
+                html = '<li class="categoria active"><a href="#">' +categoria + '</a></li>';
             }else{
                 html = '<li class="categoria"><a href="#">' +categoria + '</a></li>';
             }
             $('#categorias').append(html);
         }
         function addAcompanhamento(acompanhamento){
-            var html = '<li><a href="#">' + acompanhamento + '</a></li>';
+            var html = '<li class="acompanhamento"><a href="#">' + acompanhamento + '</a></li>';
             $(".sidebar-nav").append(html);
         }

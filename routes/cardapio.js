@@ -193,4 +193,41 @@ app.post("/categoria", function (req, res, next){
 
 });
 
+app.post("/prato", function (req, res, next){
+  var nome_cardapio = req.body.nome_cardapio;
+  var data = querystring.stringify({
+    "restaurante":  req.hestiasession.restaurante,
+    "cardapio": nome_cardapio
+  });
+
+  var options = {
+    host: 'localhost',
+    port: 8080,
+    path: '/apihestia/prato?restaurante='+req.hestiasession.restaurante+'&cardapio='+encodeURIComponent(nome_cardapio)+'&prato='+encodeURIComponent(req.body.prato)+'&categoria='+encodeURIComponent(req.body.nome_categoria),
+    method: 'POST',
+    params: data,
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(data)
+    }
+  };
+
+  var req = http.request(options, function(response) {
+      response.setEncoding('utf8');
+
+      response.on('data', function (chunk) {
+        if(chunk == "Cadastrado"){
+          console.log("Categoria cadastrada");
+          res.send("cadastrado");
+        }else{
+          console.log("fail: " + chunk);
+          res.send("fail");
+        }
+      });
+  });
+  req.write(data);
+  req.end();
+
+});
+
 module.exports = app;
