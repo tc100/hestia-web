@@ -108,7 +108,7 @@ app.post("/novo", function(req,res,next){
       response.on('data', function (chunk) {
         if(chunk == "Cadastrado"){
           console.log("Cardapio cadastrado");
-          res.send({"nome": nome_restaurante, "pratos": []});
+          res.send({"nome": nome_restaurante, "categorias": []});
         }else{
           console.log("fail: " + chunk);
           res.redirect("/cadastrar?status=fail");
