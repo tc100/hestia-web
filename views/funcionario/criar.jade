@@ -27,6 +27,12 @@ block content
                 input#login-funcionario.form-control(type='text', required='', name='login', placeholder='Login')
               .form-group.col-sm-12
                 input#senha-funcionario.form-control(type='password', required='', pattern= '(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$', size='8', maxlength='12', name='senha', placeholder='Senha')
+              .form-group.col-sm-12
+                select.col-sm-12.selectpicker.form-control(multiple='')
+                  option(data-content="<span class='label label-success'>Administrativo</span>") Administrativo
+                  option(data-content="<span class='label label-info'>Cardápio</span>") Cardápio
+                  option(data-content="<span class='label label-warning'>Funcionário</span>") Funcionário
+                  option(data-content="<span class='label label-danger'>Cozinha</span>") Cozinha
               br
               br
               .col-sm-2
