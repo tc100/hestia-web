@@ -53,7 +53,7 @@ app.get('/editar/:nome_cardapio', function(req, res, next) {
       "restaurante":  idRestaurante,
       "cardapio": nome_cardapio
     });
-    console.log("cardapio: " + nome_cardapio);
+
     var options = {
       host: 'localhost',
       port: 8080,
@@ -203,7 +203,7 @@ app.post("/prato", function (req, res, next){
   var options = {
     host: 'localhost',
     port: 8080,
-    path: '/apihestia/prato?restaurante='+req.hestiasession.restaurante+'&cardapio='+encodeURIComponent(nome_cardapio)+'&prato='+encodeURIComponent(req.body.prato)+'&categoria='+encodeURIComponent(req.body.nome_categoria),
+    path: '/apihestia/prato?restaurante='+req.hestiasession.restaurante+'&cardapio='+encodeURIComponent(nome_cardapio)+'&prato='+encodeURIComponent(req.body.prato)+'&categoria='+encodeURIComponent(req.body.nome_categoria)+"&editar="+encodeURIComponent(req.body.editar_prato),
     method: 'POST',
     params: data,
     headers: {
