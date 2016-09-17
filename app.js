@@ -16,6 +16,7 @@ var funcionario = require('./routes/funcionario');
 var cardapio = require('./routes/cardapio');
 var perfil = require('./routes/perfil');
 var restaurante = require('./routes/restaurante');
+var home = require('./routes/home');
 
 var app = express();
 
@@ -39,6 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/login', login);
+app.use('/home', userValidation,home);
 app.use('/cadastrar', cadastrar);
 app.use('/perfil', perfil);
 app.use('/funcionario',userValidation,funcionario);
@@ -49,6 +51,7 @@ app.use('/autorizado/:user', function(req,res){
   var user = JSON.parse(req.params.user);
   req.hestiasession.name = user.nome;
   req.hestiasession.restaurante = user.restaurante;
+  req.hestiasession.privilegio = user.privilegio;
   res.redirect("/funcionario");
 });
 

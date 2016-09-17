@@ -42,6 +42,7 @@ app.post("/", function (req, res, next) {
           res.redirect("/login?status=ERROR");
         }else{
           var user = JSON.parse(chunk);
+          console.log("privilegio: " + JSON.stringify(user));
           res.redirect("/autorizado/"+JSON.stringify(user));
         }
       });
