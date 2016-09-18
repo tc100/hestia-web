@@ -32,18 +32,31 @@ block content
 
 block footer
     script.
+        var cardapios;
         $(document).ready(function(){
-            var cardapios = !{lista_cardapio};
+            cardapios = !{lista_cardapio};
             
             for(x in cardapios){
                 addCardapio(cardapios[x]);
             }
         });
         $("#btnNewCardapio").click(function(){
-            $.post("/cardapio/novo",{"nome": $("#inputNovoCardapio").val()}).then(function(data){
-                addCardapio(data);
-                $("#inputNovoCardapio").val("");
-            })
+            var flag = true;
+            for(x in cardapios){
+                if(cardapios[x].nome == $("#inputNovoCardapio").val()){
+                    //TROCA PELO ALERT
+                    alert("Nome duplicado !");
+                   flag = false;
+                   break;
+                }
+            }
+            if(flag){
+                $.post("/cardapio/novo",{"nome": $("#inputNovoCardapio").val()}).then(function(data){
+                    cardapios.push(data);
+                    addCardapio(data);
+                    $("#inputNovoCardapio").val("");
+                })
+            }
         });
         $(document).on('mouseover', '.panel-hestia', function(e) {
             $(this).find("#btnDuplicar").removeClass('hidden');
@@ -65,11 +78,22 @@ block footer
         });
         
         function clonarCardapio(){
-            $.post("/cardapio/clonar",{"nome_clonar": $("#txtCardapioClone").val(), "novo_cardapio": $("#txtNovoCardapio").val()}).then(function(data){
-                console.log("resp: " + data);
-                addCardapio(data);
-                $("#txtNovoCardapio").val("");
-            });
+            var flag = true;
+            for(x in cardapios){
+                if(cardapios[x].nome == $("#txtNovoCardapio").val()){
+                    //TROCA PELO ALERT
+                    alert("Nome duplicado !");
+                   flag = false;
+                   break;
+                }
+            }
+            if(flag){
+                $.post("/cardapio/clonar",{"nome_clonar": $("#txtCardapioClone").val(), "novo_cardapio": $("#txtNovoCardapio").val()}).then(function(data){
+                    cardapios.push(data);
+                    addCardapio(data);
+                    $("#txtNovoCardapio").val("");
+                });
+            }
         }
         
         function addCardapio(cardapio){
