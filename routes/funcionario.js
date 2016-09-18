@@ -81,13 +81,14 @@ app.get('/criar', function(req, res, next) {
     res.render('home', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante, privilegio: privilegio}, alert: alertX});
   }
   var alertX = JSON.stringify({"msg": "null", "typeMsg": "null"});
-  res.render('funcionario/criar', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante, privilegio: req.hestiasession.privilegio}, alert: alertX});
+  res.render('funcionario/criar', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante, privilegio: privilegio}, alert: alertX});
   // res.render('funcionario/criar', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
 });
 
 app.post('/criar', function(req, res, next) {
   var idRestaurante = req.hestiasession.restaurante;
   var nome = req.hestiasession.name;
+  var privilegio = req.hestiasession.privilegio;
   var funcionario = {
     "nome": req.body.nomeFunc,
     "login":  req.body.login,
@@ -116,11 +117,11 @@ app.post('/criar', function(req, res, next) {
           console.log("Cadastrado");
           // res.redirect("/funcionario?status=editado");
           var alertX = JSON.stringify({"msg": "<b>Funcionário</b> cadastrado com <b>Sucesso</b>", "typeMsg": "success"});
-          res.render('funcionario/index', {user:{ name: nome, restaurante: idRestaurante, privilegio: req.hestiasession.privilegio}, alert: alertX});
+          res.render('funcionario/index', {user:{ name: nome, restaurante: idRestaurante, privilegio: privilegio}, alert: alertX});
         }else{
           console.log("fail: " + chunk);
             var alertX = JSON.stringify({"msg": "<b>Erro</b> ao cadastrar o <b>Funcionário</b>", "typeMsg": "danger"});
-            res.render('funcionario/criar', {user:{ name: nome, restaurante: idRestaurante, privilegio: req.hestiasession.privilegio}, alert: alertX, funcionario: funcionario2});
+            res.render('funcionario/criar', {user:{ name: nome, restaurante: idRestaurante, privilegio: privilegio}, alert: alertX, funcionario: funcionario2});
           // res.redirect("/funcionario/editar?id="+req.body.idFunc+"&status=fail");
         }
       });
@@ -154,13 +155,17 @@ app.get('/editar', function(req, res, next) {
 });
 
 app.post('/editar',function(req,res,next){
+  var idRestaurante = req.hestiasession.restaurante;
+  var nome = req.hestiasession.name;
+  var privilegio = req.hestiasession.privilegio;
   console.log("teste2: " + JSON.stringify(req.body));
+  console.log("privilegio "+ req.body.privilegio);
   var funcionario = {
     "id": req.body.idFunc,
     "nome": req.body.nomeFunc,
     "login":  req.body.login,
     "senha":  req.body.senha,
-    "privilegio": req.body.privilegio
+    "privilegio" : req.body.privilegio
   };
   var options = {
     host: 'localhost',
@@ -182,11 +187,11 @@ app.post('/editar',function(req,res,next){
           console.log("Alterado");
           // res.redirect("/funcionario?status=editado");
           var alertX = JSON.stringify({"msg": "<b>Funcionário</b> alterado com <b>Sucesso</b>", "typeMsg": "success"});
-          res.render('funcionario/index', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante, privilegio: req.hestiasession.privilegio}, alert: alertX});
+          res.render('funcionario/index', {user:{ name: nome, restaurante: idRestaurante, privilegio: privilegio}, alert: alertX});
         }else{
           console.log("fail: " + chunk);
             var alertX = JSON.stringify({"msg": "<b>Erro</b> ao alterar o <b>Funcionário</b>", "typeMsg": "danger"});
-            res.render('funcionario/editar', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante, privilegio: req.hestiasession.privilegio}, alert: alertX});
+            res.render('funcionario/editar', {user:{ name: nome, restaurante: idRestaurante, privilegio: privilegio}, alert: alertX});
           // res.redirect("/funcionario/editar?id="+req.body.idFunc+"&status=fail");
         }
       });
