@@ -28,6 +28,7 @@ app.post("/", function (req, res, next) {
     "login": req.body.login,
     "senha": req.body.senha,
     "restaurante": "placeholder"
+    "privilegio" : ["Administrativo","Cardápio","Funcionário","Cozinha"]
   };
   console.log(querystring.escape(JSON.stringify(funcionario)));
   var data = querystring.stringify({

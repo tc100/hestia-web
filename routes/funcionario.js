@@ -159,7 +159,6 @@ app.post('/editar',function(req,res,next){
   var nome = req.hestiasession.name;
   var privilegio = req.hestiasession.privilegio;
   console.log("teste2: " + JSON.stringify(req.body));
-  console.log("privilegio "+ req.body.privilegio);
   var funcionario = {
     "id": req.body.idFunc,
     "nome": req.body.nomeFunc,
