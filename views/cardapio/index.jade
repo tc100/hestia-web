@@ -19,7 +19,7 @@ block content
                                 input.form-control(type="text")#txtNovoCardapio
                                 input.form-control.hidden(type="text")#txtCardapioClone
                             button.btn.btn-default(type="button" data-dismiss="modal" onclick="clonarCardapio()") Clonar
-        h2.section-heading.text-left Cardapios
+        h2.section-heading.text-left Cardapios 
             br
             small Organize seus cardapios.
         div.row
@@ -60,7 +60,7 @@ block footer
                   $.bootstrapGrowl(msg, config);
                 }
                 if (alerta.typeMsg == "success")
-                    addCardapio(data.cardapio);
+                    addCardapio(data);
             })
         });
         $(document).on('mouseover', '.panel-hestia', function(e) {
