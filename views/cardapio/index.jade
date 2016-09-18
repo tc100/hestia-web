@@ -19,7 +19,7 @@ block content
                                 input.form-control(type="text")#txtNovoCardapio
                                 input.form-control.hidden(type="text")#txtCardapioClone
                             button.btn.btn-default(type="button" data-dismiss="modal" onclick="clonarCardapio()") Clonar
-        h2.section-heading.text-left Cardapios
+        h2.section-heading.text-left Cardapios 
             br
             small Organize seus cardapios.
         div.row
@@ -41,6 +41,7 @@ block footer
             }
         });
         $("#btnNewCardapio").click(function(){
+            
             var flag = true;
             for(x in cardapios){
                 if(cardapios[x].nome == $("#inputNovoCardapio").val()){
@@ -52,9 +53,26 @@ block footer
             }
             if(flag){
                 $.post("/cardapio/novo",{"nome": $("#inputNovoCardapio").val()}).then(function(data){
-                    cardapios.push(data);
-                    addCardapio(data);
                     $("#inputNovoCardapio").val("");
+                    debugger;
+                    alerta = data.alert;
+                    if (alerta.typeMsg != "null")
+                    {
+                      msg = alerta.msg;
+                      config = {
+                        ele: 'body', // which element to append to
+                        type: alerta.typeMsg, // (null, 'info', 'danger', 'success')
+                        offset: {from: 'top', amount: 20}, // 'top', or 'bottom'
+                        align: 'center', // ('left', 'right', or 'center')
+                        width: 750, // (integer, or 'auto')
+                        delay: 4000, // Time while the message will be displayed. It's not equivalent to the *demo* timeOut!
+                        allow_dismiss: true, // If true then will display a cross to close the popup.
+                        stackup_spacing: 10 // spacing between consecutively stacked growls.
+                      };
+                      $.bootstrapGrowl(msg, config);
+                    }
+                    if (alerta.typeMsg == "success")
+                        addCardapio(data);
                 })
             }
         });

@@ -10,6 +10,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.get('/', function(req, res, next) {
   var idRestaurante = req.hestiasession.restaurante;
   var nome = req.hestiasession.name;
+  var privilegio = req.hestiasession.privilegio;
+  if (privilegio.indexOf("Cardápio") == -1){
+    var alertX = JSON.stringify({"msg": "O Usuário não tem acesso a tela de <b>Cardápio</b>", "typeMsg": "warning"});
+    res.render('home', {user:{ name: nome, restaurante: idRestaurante, privilegio: privilegio}, alert: alertX});
+  }
   var options = {
     host: 'localhost',
     port: 8080,
@@ -27,10 +32,12 @@ app.get('/', function(req, res, next) {
       response.on('data', function (chunk) {
         if(chunk == "Fail"){
           console.log("fail: " + chunk);
-          res.render('cardapio/index', {user:{ name: nome, restaurante: idRestaurante}, error: "erro ao conectar com o BD"});
+          var alertX = JSON.stringify({"msg": "null", "typeMsg": "null"});
+          res.render('cardapio/index', {user:{ name: nome, restaurante: idRestaurante, privilegio: privilegio}, alert: alertX, error: "erro ao conectar com o BD"});
         }else{
           console.log("cardapios: " + JSON.stringify(chunk));
-          res.render('cardapio/index', {user:{ name: nome, restaurante: idRestaurante}, lista_cardapio: chunk});
+          var alertX = JSON.stringify({"msg": "null", "typeMsg": "null"});
+          res.render('cardapio/index', {user:{ name: nome, restaurante: idRestaurante, privilegio: privilegio}, alert: alertX, lista_cardapio: chunk});
         }
       });
   });
@@ -45,6 +52,11 @@ app.get('/editar', function(req, res, next) {
 app.get('/editar/:nome_cardapio', function(req, res, next) {
   var idRestaurante = req.hestiasession.restaurante;
   var nome = req.hestiasession.name;
+  var privilegio = req.hestiasession.privilegio;
+  if (privilegio.indexOf("Cardápio") == -1){
+    var alertX = {"msg": "O Usuário não tem acesso a tela de <b>Cardápio</b>", "typeMsg": "warning"};
+    res.render('home', {user:{ name: nome, restaurante: idRestaurante, privilegio: privilegio}, alert: alertX});
+  }
   if(req.params.nome_cardapio == null || typeof req.params.nome_cardapio == "undefined")
     res.redirect("cardapio/index", {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
   else{
@@ -146,10 +158,12 @@ app.post("/novo", function(req,res,next){
       response.on('data', function (chunk) {
         if(chunk == "Cadastrado"){
           console.log("Cardapio cadastrado");
-          res.send({"nome": nome_restaurante, "categorias": []});
+          var alertX = JSON.stringify({"msg": "<b>Cardápio</b> cadastrado com <b>Sucesso</b>", "typeMsg": "success"});
+          res.send({"nome": nome_restaurante, "categorias": [], "alert": JSON.parse(alertX)});
         }else{
-          console.log("fail: " + chunk);
-          res.redirect("/cadastrar?status=fail");
+          console.log("fail: " + chunk);var alertX = JSON.stringify({"msg": "<b>Erro</b> ao cadastrar <b>Cardápio</b>", "typeMsg": "success"});
+          res.send({"alert": JSON.parse(alertX)});
+
         }
       });
   });

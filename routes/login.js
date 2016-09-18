@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 /* GET Login. */
 app.get('/', function(req, res, next) {
-  res.render('login', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
+  res.render('login', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante, privilegio: req.hestiasession.privilegio}});
 });
 
 /*POST login*/
@@ -42,7 +42,6 @@ app.post("/", function (req, res, next) {
           res.redirect("/login?status=ERROR");
         }else{
           var user = JSON.parse(chunk);
-          console.log("privilegio: " + JSON.stringify(user));
           res.redirect("/autorizado/"+JSON.stringify(user));
         }
       });
