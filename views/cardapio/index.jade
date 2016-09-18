@@ -6,6 +6,19 @@ block title
 
 block content
     section#about
+        div.modal.fade#modalNewCardapio(role="dialog")
+            div.modal-dialog.modal-sm
+                div.modal-content
+                    div.modal-header
+                        button.close(type="button" data-dismiss="modal") &times;
+                        h4.modal-title Clonar cardapio
+                    div.modal-body
+                        form(role="form")
+                            div.form-group
+                                label(for="nome") Nome:
+                                input.form-control(type="text")#txtNovoCardapio
+                                input.form-control.hidden(type="text")#txtCardapioClone
+                            button.btn.btn-default(type="button" data-dismiss="modal" onclick="clonarCardapio()") Clonar
         h2.section-heading.text-left Cardapios
             br
             small Organize seus cardapios.
@@ -33,21 +46,36 @@ block footer
             })
         });
         $(document).on('mouseover', '.panel-hestia', function(e) {
-            $(this).find(".btn-group-cardapio").removeClass('hidden');
+            $(this).find("#btnDuplicar").removeClass('hidden');
         });
         $(document).on('mouseout', '.panel-hestia', function(e) {
-            $(this).find(".btn-group-cardapio").addClass('hidden');  
+            $(this).find("#btnDuplicar").addClass('hidden');  
         });
-        $("#container-cardapio").on('click', '.panel-hestia', function(){
-            location.href="/cardapio/editar/" + $(this).find(".panel-body").text();
+        $("#container-cardapio").on('click', '.panel-hestia', function(e){
+            if(e.target.nodeName != "DIV"){
+                $('#modalNewCardapio').modal({
+                   show: 'true'
+               });
+               $("#txtNovoCardapio").val($(this).find(".panel-body").text()+"2");
+               $("#txtCardapioClone").val($(this).find(".panel-body").text());
+               
+            }else{
+                location.href="/cardapio/editar/" + $(this).find(".panel-body").text();
+            }
         });
+        
+        function clonarCardapio(){
+            $.post("/cardapio/clonar",{"nome_clonar": $("#txtCardapioClone").val(), "novo_cardapio": $("#txtNovoCardapio").val()}).then(function(data){
+                console.log("resp: " + data);
+                addCardapio(data);
+                $("#txtNovoCardapio").val("");
+            });
+        }
+        
         function addCardapio(cardapio){
-            console.log("cardapio: " + JSON.stringify(cardapio));
             var html = "<div class='col-xs-12 col-sm-6 col-md-3 col-lg-3'><div class='panel panel-hestia'>";
             html += "<div class='panel-body'>" + cardapio.nome + "</div>";
-            html += "<div class='panel-footer'>Categorias cadastradas: " + cardapio.categorias.length + "</div>";
-            html += "<div class='btn-group btn-group-cardapio hidden' role='group'>";
-            html += "<button class='btn btn-default' type='button'>Deletar</button>";
-            html += "<button class='btn btn-default' type='button'>Duplicar</button></div></div></div>";
+            html += "<button id='btnDuplicar' class='btn btn-default hidden' type='button'>Duplicar</button>";
+            html += "<div class='panel-footer'>Categorias cadastradas: " + cardapio.categorias.length + "</div></div></div>";
             $("#container-cardapio").append(html);
         }

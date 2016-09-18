@@ -84,6 +84,44 @@ app.get('/editar/:nome_cardapio', function(req, res, next) {
   }
 });
 
+app.post("/clonar", function(req,res,next){
+
+  var nome_clonar = req.body.nome_clonar;
+  var nome_cardapio = req.body.novo_cardapio;
+  var data = querystring.stringify({
+    "restaurante":  req.hestiasession.restaurante,
+    "cardapio": nome_cardapio
+  });
+  var options = {
+    host: 'localhost',
+    port: 8080,
+    path: '/apihestia/cardapio/clonar?restaurante='+req.hestiasession.restaurante+'&novo_cardapio='+encodeURIComponent(nome_cardapio)+'&nome_clonar='+encodeURIComponent(nome_clonar),
+    method: 'POST',
+    params: data,
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(data)
+    }
+  };
+
+  var req = http.request(options, function(response) {
+      response.setEncoding('utf8');
+
+      response.on('data', function (chunk) {
+        if(chunk == "Fail"){
+          console.log("fail: " + chunk);
+          res.redirect("/cadastrar?status=fail");
+        }else{
+          console.log("Cardapio cadastrado");
+          res.send({"nome": nome_cardapio, "categorias": JSON.parse(chunk).categorias});
+        }
+      });
+  });
+  req.write(data);
+  req.end();
+
+});
+
 app.post("/novo", function(req,res,next){
   var nome_restaurante = req.body.nome;
   var data = querystring.stringify({

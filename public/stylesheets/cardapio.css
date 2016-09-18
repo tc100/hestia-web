@@ -72,12 +72,17 @@
   padding-top: 2em;
   border: 1px solid #C84C00 !important;
   font-size: 1.2em;
+  margin-bottom: 0px !important;
 }
 
 .panel-hestia:hover{
   box-shadow: 5px 5px 3px rgba(200, 76, 0, 0.5);
   border: 2px solid #C84C00 !important;
   cursor: pointer;
+  border-bottom-right-radius: 0px !important;
+}
+.panel-hestia:hover .panel-footer{
+  margin-top:0em !important;
 }
 
 .panel-hestia .panel-footer{
@@ -86,8 +91,13 @@
   font-size: 0.8em;
 }
 
-.btn-group-cardapio{
+#btnDuplicar{
+  margin-left: 13.7em !important;
+  margin-top:-12em !important;
+  border-radius: 0 !important;
+}
+/*.btn-group-cardapio{
   position:absolute;
   margin-bottom:-3.3em !important;
   right: -3.3em;
-}
+}*/
