@@ -16,6 +16,7 @@ app.get('/', function(req, res, next) {
 
 /*POST dos dados cadastrais*/
 app.post("/", function (req, res, next) {
+  console.log("teste: " + JSON.stringify(req.body));
   cadastro = {
     "nomerestaurante": req.body.nomeRestaurante,
     "cnpj": req.body.cnpj,
@@ -24,10 +25,14 @@ app.post("/", function (req, res, next) {
     "cep": req.body.cep,
     "endereco": req.body.endereco,
     "cidade": req.body.cidade,
-    "estado": req.body.estado
+    "estado": req.body.estado,
+    "local": {
+      "lat": req.body.lat,
+      "long": req.body.long
+    }
   };
   funcionario = {
-    "nome": req.body.nomeDono,
+    "nome": req.body.nome,
     "login": req.body.login,
     "senha": req.body.senha,
     "restaurante": "placeholder",

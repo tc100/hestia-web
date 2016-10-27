@@ -24,12 +24,12 @@ block content
         hr
         .row
         .row
-          form(method='post')
+          form
             .col-sm-5.col-sm-offset-1
               .col-sm-10.col-sm-offset-1
                 h3.text-center Dados Restaurante
               .form-group.col-sm-12
-                input#nome-restaurante.form-control(type='text', name = 'nomerestaurante', required='', placeholder='Nome do Restaurante', disabled='')
+                input#nome-restaurante.form-control(type='text', name = 'nomerestaurante', required='', placeholder='Nome do Restaurante')
               .form-group.col-sm-5
                 input#cnpj-restaurante.form-control(type='text', name = 'cnpj', pattern = '\\d{14}', title ='Ex.: 00.000.000/0001-00', required='', maxlength="14", placeholder='CNPJ')
               .form-group.col-sm-7
@@ -39,37 +39,13 @@ block content
               .form-group.col-sm-7
                 input#telefone-restaurante.form-control(type="tel", name = 'telefone', pattern="\\([0-9]{2}\\) [0-9]{4,6}-[0-9]{3,4}$", required='', maxlength="15", placeholder='Telefone', title = "Ex: (99) 99999-9999")
               .form-group.col-sm-9
-                input#cidade-restaurante.form-control(type='text', name = 'cidade', required='', placeholder='Cidade')
+                input#cidade-restaurante.form-control(type='text', name = 'cidade', disabled='', placeholder='Cidade')
               .form-group.col-sm-3
-              select#estado-restaurante.form-control(title = "Estado", name = 'estado',)
-               option(value='AL') AL
-               option(value='AP') AP
-               option(value='AM') AM
-               option(value='BA') BA
-               option(value='CE') CE
-               option(value='DF') DF
-               option(value='ES') ES
-               option(value='GO') GO
-               option(value='MA') MA
-               option(value='MT') MT
-               option(value='MS') MS
-               option(value='MG') MG
-               option(value='PA') PA
-               option(value='PB') PB
-               option(value='PR') PR
-               option(value='PE') PE
-               option(value='PI') PI
-               option(value='RJ') RJ
-               option(value='RN') RN
-               option(value='RS') RS
-               option(value='RO') RO
-               option(value='RR') RR
-               option(value='SC') SC
-               option(value='SP') SP
-               option(value='SE') SE
-               option(value='TO') TO     
-              .form-group.col-sm-12
-                input#endereco-restaurante.form-control(type='text', name = 'endereco', required='', placeholder='Endereço Completo')
+                input#estado-restaurante.form-control(title = "Estado", name = 'estado', disabled="", placeholder="Estado")  
+              .form-group.col-sm-9
+                input#endereco-restaurante.form-control(type='text', name = 'endereco', disabled='', placeholder='Endereço')
+              .form-group.col-sm-3
+                input#numero-restaurante.form-control(title = "Numero", name = 'numero', required="true", placeholder="Número") 
               br
               br
             .col-sm-4.col-sm-offset-1
@@ -82,7 +58,7 @@ block content
               .form-group.col-sm-12
                 input#senha-dono.form-control(type='password', required='', pattern= '(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$', placeholder='Senha', title = "A Senha deve conter 3 dos seguintes:\nMaiúsculas, Minúsculas, Números ou Caracteres especiais. \nNo minimo 8 caracteres")
               .col-sm-2.col-sm-offset-4
-                input.btn.btn-default(type='submit', value='Cadastrar')
+                input#btnCadastrar.btn.btn-default(type='submit', value='Cadastrar', onclick="cadastrar()", disabled)
 block footer
   script.
     $('.alert').hide();
@@ -91,3 +67,63 @@ block footer
     {
       $(".alert").show();
     }
+    var cadastro = {};
+    var google_api_url = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+    var cep_api_url = "https://viacep.com.br/ws/";
+    
+    function cadastrar(){
+      
+      cadastro.nomeRestaurante = $("#nome-restaurante").val();
+      cadastro.cnpj = $("#cnpj-restaurante").val();
+      cadastro.email = $("#email-restaurante").val();
+      cadastro.telefone = $("#telefone-restaurante").val();
+      cadastro.cep = $("#cep-restaurante").val();
+      cadastro.endereco = $("#endereco-restaurante").val();
+      cadastro.cidade = $("#cidade-restaurante").val();
+      cadastro.estado = $("#estado-restaurante").val();
+      cadastro.numero = $("#numero-restaurante").val();
+      cadastro.nome = $("#nome-dono").val();
+      cadastro.login = $("#login-dono").val();
+      cadastro.senha = $("#senha-dono").val();
+      
+      $.post("/cadastrar", cadastro)
+      
+      
+    }
+    $(document).ready(function(){
+      
+      $( "#cep-restaurante" ).focusout(function() {
+        console.log("testando");
+        if($("#cep-restaurante").val().trim() != ""){
+          $.get(cep_api_url+$("#cep-restaurante").val()+"/json/", function(data){
+            $("#estado-restaurante").val(data.uf);
+            $("#cidade-restaurante").val(data.localidade);
+            $("#endereco-restaurante").val(data.logradouro);
+          }).fail(function(data, textStatus, xhr) {
+            $("#estado-restaurante").val("");
+            $("#cidade-restaurante").val("");
+            $("#endereco-restaurante").val("");
+            $("#btnCadastrar").attr("disabled",true);
+            
+          })
+        }else{
+          $("#estado-restaurante").val("");
+          $("#cidade-restaurante").val("");
+          $("#endereco-restaurante").val("");
+          $("#btnCadastrar").attr("disabled",true);
+        }
+      });
+      
+      $( "#numero-restaurante" ).focusout(function() {
+        if($("#estado-restaurante").val().trim() != "" && $("#numero-restaurante").val().trim() != ""){
+          $.get(google_api_url+$("#numero-restaurante").val()+" "+$("#endereco-restaurante").val()+", "+$("#cidade-restaurante").val()+", "+$("#estado-restaurante").val()+"&key=AIzaSyDNME65FX2cRsW_Z_Cq9BrKgKS807vV5nQ", function(data){
+            cadastro.lat = data.results[0].geometry.location.lat;
+            cadastro.long = data.results[0].geometry.location.lng;
+            $("#btnCadastrar").attr("disabled",false);
+          }).fail(function(data, textStatus, xhr){
+            console.log("fail");
+            $("#btnCadastrar").attr("disabled",true);
+          });
+        }
+      });
+    });

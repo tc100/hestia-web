@@ -68,7 +68,6 @@ app.get('/getFuncs', function (req,res){
 });
 app.get('/', function(req, res, next) {
   var privilegio = req.hestiasession.privilegio;
-  console.log("teste: " + privilegio);
   if (privilegio.indexOf("Funcionário") == -1){
     var alertX = JSON.stringify({"msg": "O Usuário não tem acesso a tela de <b>Funcionário</b>", "typeMsg": "warning"});
     res.render('home', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante, privilegio: privilegio}, alert: alertX});
