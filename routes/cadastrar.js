@@ -33,6 +33,8 @@ app.post("/", function (req, res, next) {
     "restaurante": "placeholder",
     "privilegio" : ["Administrativo","Cardápio","Funcionário","Cozinha"]
   };
+  console.log("funcionario:" +req.body.nomeDono);
+  console.log("Cadastro:" + JSON.stringify(cadastro));
   console.log(querystring.escape(JSON.stringify(funcionario)));
   var data = querystring.stringify({
     "cadastro": cadastro,
