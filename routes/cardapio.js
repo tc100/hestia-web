@@ -4,6 +4,9 @@ var bodyParser = require('body-parser');
 var http = require('http');
 var querystring = require('querystring');
 
+var API_URL = "localhost";
+var API_PORT = 6001;
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 /* GET Pagina Cadastrar.*/
@@ -16,8 +19,8 @@ app.get('/', function(req, res, next) {
     res.render('home', {user:{ name: nome, restaurante: idRestaurante, privilegio: privilegio}, alert: alertX});
   }
   var options = {
-    host: 'localhost',
-    port: 8080,
+    host: API_URL,
+    port: API_PORT,
     path: '/apihestia/cardapios?restaurante='+idRestaurante,
     method: 'GET',
     headers: {
@@ -67,8 +70,8 @@ app.get('/editar/:nome_cardapio', function(req, res, next) {
     });
 
     var options = {
-      host: 'localhost',
-      port: 8080,
+      host: API_URL,
+      port: API_PORT,
       path: '/apihestia/cardapio?restaurante='+idRestaurante+'&cardapio='+ encodeURIComponent(nome_cardapio),
       method: 'GET',
       params: data,
@@ -105,8 +108,8 @@ app.post("/clonar", function(req,res,next){
     "cardapio": nome_cardapio
   });
   var options = {
-    host: 'localhost',
-    port: 8080,
+    host: API_URL,
+    port: API_PORT,
     path: '/apihestia/cardapio/clonar?restaurante='+req.hestiasession.restaurante+'&novo_cardapio='+encodeURIComponent(nome_cardapio)+'&nome_clonar='+encodeURIComponent(nome_clonar),
     method: 'POST',
     params: data,
@@ -141,8 +144,8 @@ app.post("/novo", function(req,res,next){
     "cardapio": nome_restaurante
   });
   var options = {
-    host: 'localhost',
-    port: 8080,
+    host: API_URL,
+    port: API_PORT,
     path: '/apihestia/cardapio/novo?restaurante='+req.hestiasession.restaurante+'&cardapio='+encodeURIComponent(nome_restaurante),
     method: 'POST',
     params: data,
@@ -180,8 +183,8 @@ app.post("/acompanhamento", function (req, res, next){
   });
   console.log("acompanhamento: " + req.body.acompanhamento);
   var options = {
-    host: 'localhost',
-    port: 8080,
+    host: API_URL,
+    port: API_PORT,
     path: '/apihestia/acompanhamento?restaurante='+req.hestiasession.restaurante+'&cardapio='+encodeURIComponent(nome_cardapio)+'&acompanhamento='+encodeURIComponent(req.body.acompanhamento),
     method: 'POST',
     params: data,
@@ -216,8 +219,8 @@ app.post("/categoria", function (req, res, next){
     "cardapio": nome_cardapio
   });
   var options = {
-    host: 'localhost',
-    port: 8080,
+    host: API_URL,
+    port: API_PORT,
     path: '/apihestia/categoria?restaurante='+req.hestiasession.restaurante+'&cardapio='+encodeURIComponent(nome_cardapio)+'&categoria='+encodeURIComponent(req.body.categoria),
     method: 'POST',
     params: data,
@@ -253,8 +256,8 @@ app.post("/prato", function (req, res, next){
   });
 
   var options = {
-    host: 'localhost',
-    port: 8080,
+    host: API_URL,
+    port: API_PORT,
     path: '/apihestia/prato?restaurante='+req.hestiasession.restaurante+'&cardapio='+encodeURIComponent(nome_cardapio)+'&prato='+encodeURIComponent(req.body.prato)+'&categoria='+encodeURIComponent(req.body.nome_categoria)+"&editar="+encodeURIComponent(req.body.editar_prato),
     method: 'POST',
     params: data,

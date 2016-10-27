@@ -4,6 +4,9 @@ var bodyParser = require('body-parser');
 var http = require('http');
 var querystring = require('querystring');
 
+var API_URL = "localhost";
+var API_PORT = 6001;
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -22,8 +25,8 @@ app.post("/", function (req, res, next) {
   });
 
   var options = {
-    host: 'localhost',
-    port: 8080,
+    host: API_URL,
+    port: API_PORT,
     path: '/apihestia/login?login='+JSON.stringify(login),
     method: 'GET',
     params: data,

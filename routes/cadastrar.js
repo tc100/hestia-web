@@ -4,6 +4,9 @@ var bodyParser = require('body-parser');
 var http = require('http');
 var querystring = require('querystring');
 
+var API_URL = "localhost";
+var API_PORT = 6001;
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 /* GET Pagina Cadastrar.*/
@@ -36,8 +39,8 @@ app.post("/", function (req, res, next) {
     "funcionario": funcionario
   });
   var options = {
-    host: 'localhost',
-    port: 8080,
+    host: API_URL,
+    port: API_PORT,
     path: '/apihestia/estabelecimento?cadastro='+querystring.escape(JSON.stringify(cadastro))+'&funcionario='+querystring.escape(JSON.stringify(funcionario)),
     method: 'POST',
     params: data,

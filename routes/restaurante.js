@@ -4,6 +4,9 @@ var bodyParser = require('body-parser');
 var http = require('http');
 var querystring = require('querystring');
 
+var API_URL = "localhost"
+var API_PORT = 6001;
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -13,8 +16,8 @@ app.get('/', function(req,res){
   var id = req.hestiasession.restaurante;
   var nome = req.hestiasession.name;
   var options = {
-    host: 'localhost',
-    port: 8080,
+    host: API_URL,
+    port: API_PORT,
     path: '/apihestia/getRestaurante?id='+id,
     method: 'GET',
     params: id,
@@ -58,8 +61,8 @@ app.post('/',function(req,res,next){
     "estado": req.body.estado
   };
   var options = {
-    host: 'localhost',
-    port: 8080,
+    host: API_URL,
+    port: API_PORT,
     path: '/apihestia/restaurante/editar?dados='+querystring.escape(JSON.stringify(restaurante)),
     method: 'PUT',
     params: JSON.stringify(restaurante),

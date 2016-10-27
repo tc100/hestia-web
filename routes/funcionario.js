@@ -4,6 +4,9 @@ var bodyParser = require('body-parser');
 var querystring = require("querystring");
 var http = require('http');
 
+var API_URL = "localhost";
+var API_PORT = 6001;
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 /* GET Pagina Cadastrar.*/
@@ -11,8 +14,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.get('/getFuncionario/:id', function(req,res){
   var idFuncionario = req.params.id;
   var options = {
-    host: 'localhost',
-    port: 8080,
+    host: API_URL,
+    port: API_PORT,
     path: '/apihestia/getFuncionario?id='+idFuncionario,
     method: 'GET',
     params: idFuncionario,
@@ -39,8 +42,8 @@ app.get('/getFuncionario/:id', function(req,res){
 app.get('/getFuncs', function (req,res){
   var id = req.hestiasession.restaurante;
   var options = {
-    host: 'localhost',
-    port: 8080,
+    host: API_URL,
+    port: API_PORT,
     path: '/apihestia/getFuncs?id='+id,
     method: 'GET',
     params: req.hestiasession.restaurante,
@@ -65,6 +68,7 @@ app.get('/getFuncs', function (req,res){
 });
 app.get('/', function(req, res, next) {
   var privilegio = req.hestiasession.privilegio;
+  console.log("teste: " + privilegio);
   if (privilegio.indexOf("Funcionário") == -1){
     var alertX = JSON.stringify({"msg": "O Usuário não tem acesso a tela de <b>Funcionário</b>", "typeMsg": "warning"});
     res.render('home', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante, privilegio: privilegio}, alert: alertX});
@@ -98,8 +102,8 @@ app.post('/criar', function(req, res, next) {
   };
  console.log("privilegio: " + req.body.privilegio);
   var options = {
-    host: 'localhost',
-    port: 8080,
+    host: API_URL,
+    port: API_PORT,
     path: '/apihestia/funcionario?dados='+querystring.escape(JSON.stringify(funcionario)),
     method: 'POST',
     params: JSON.stringify(funcionario),
@@ -158,7 +162,7 @@ app.post('/editar',function(req,res,next){
   var idRestaurante = req.hestiasession.restaurante;
   var nome = req.hestiasession.name;
   var privilegio = req.hestiasession.privilegio;
-  console.log("teste2: " + JSON.stringify(req.body));
+
   var funcionario = {
     "id": req.body.idFunc,
     "nome": req.body.nomeFunc,
@@ -167,8 +171,8 @@ app.post('/editar',function(req,res,next){
     "privilegio" : req.body.privilegio
   };
   var options = {
-    host: 'localhost',
-    port: 8080,
+    host: API_URL,
+    port: API_PORT,
     path: '/apihestia/funcionario/editar?dados='+querystring.escape(JSON.stringify(funcionario)),
     method: 'PUT',
     params: JSON.stringify(funcionario),
@@ -203,8 +207,8 @@ app.get('/delete/:id', function(req,res){
   var idFuncionario = req.params.id
   var cnpj = req.hestiasession.restaurante;
   var options = {
-    host: 'localhost',
-    port: 8080,
+    host: API_URL,
+    port: API_PORT,
     path: '/apihestia/funcionario/delete?id='+idFuncionario+'&cnpj='+cnpj,
     method: 'DELETE',
     params: idFuncionario,
