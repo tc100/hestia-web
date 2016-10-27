@@ -52,11 +52,11 @@ block content
               .col-sm-10.col-sm-offset-1
                 h3.text-center Dados de Acesso
               .form-group.col-sm-12
-                input#nome-dono.form-control(type='text', required='', placeholder='Nome do Responsável pelo Restaurante')
+                input#nome-dono.form-control(type='text', name='nomeDono', required='', placeholder='Nome do Responsável pelo Restaurante')
               .form-group.col-sm-12
-                input#login-dono.form-control(type='text', required='', placeholder='Login')
+                input#login-dono.form-control(type='text', name='login', required='', placeholder='Login')
               .form-group.col-sm-12
-                input#senha-dono.form-control(type='password', required='', pattern= '(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$', placeholder='Senha', title = "A Senha deve conter 3 dos seguintes:\nMaiúsculas, Minúsculas, Números ou Caracteres especiais. \nNo minimo 8 caracteres")
+                input#senha-dono.form-control(type='password', name='senha', required='', pattern= '(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$', placeholder='Senha', title = "A Senha deve conter 3 dos seguintes:\nMaiúsculas, Minúsculas, Números ou Caracteres especiais. \nNo minimo 8 caracteres")
               .col-sm-2.col-sm-offset-4
                 input#btnCadastrar.btn.btn-default(type='submit', value='Cadastrar', onclick="cadastrar()", disabled)
 block footer
