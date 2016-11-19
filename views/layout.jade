@@ -28,6 +28,25 @@ html(lang='pt-br')
     //if lt IE 9
     script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
     script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+    script.
+        var alerta = !{alert};
+        debugger;
+        var config = {
+          ele: 'body', // which element to append to
+          type: 'info', // (null, 'info', 'danger', 'success')
+          offset: {from: 'top', amount: 20}, // 'top', or 'bottom'
+          align: 'center', // ('left', 'right', or 'center')
+          width: 750, // (integer, or 'auto')
+          delay: 4000, // Time while the message will be displayed. It's not equivalent to the *demo* timeOut!
+          allow_dismiss: true, // If true then will display a cross to close the popup.
+          stackup_spacing: 10 // spacing between consecutively stacked growls.
+        };
+        if (alerta.typeMsg != "null")
+        {
+          msg = alerta.msg;
+          config.type = alerta.typeMsg;
+          $.bootstrapGrowl(msg, config);
+        }
 
   body#page-top
     div.container-fluid
@@ -102,24 +121,5 @@ html(lang='pt-br')
       // (Optional) Latest compiled and minified JavaScript translation files
       //script(src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.0/js/i18n/defaults-*.min.js')
       script.
-        var url = window.location.href;
+        var url = window.location.href;        
       block footer
-      script.
-        $(document).ready(function(){
-          var alerta = !{alert};
-          if (alerta.typeMsg != "null")
-          {
-            msg = alerta.msg;
-            config = {
-              ele: 'body', // which element to append to
-              type: alerta.typeMsg, // (null, 'info', 'danger', 'success')
-              offset: {from: 'top', amount: 20}, // 'top', or 'bottom'
-              align: 'center', // ('left', 'right', or 'center')
-              width: 750, // (integer, or 'auto')
-              delay: 4000, // Time while the message will be displayed. It's not equivalent to the *demo* timeOut!
-              allow_dismiss: true, // If true then will display a cross to close the popup.
-              stackup_spacing: 10 // spacing between consecutively stacked growls.
-            };
-            $.bootstrapGrowl(msg, config);
-          }
-        });

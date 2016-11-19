@@ -54,21 +54,11 @@ block footer
             if(flag){
                 $.post("/cardapio/novo",{"nome": $("#inputNovoCardapio").val()}).then(function(data){
                     $("#inputNovoCardapio").val("");
-                    debugger;
                     alerta = data.alert;
                     if (alerta.typeMsg != "null")
                     {
                       msg = alerta.msg;
-                      config = {
-                        ele: 'body', // which element to append to
-                        type: alerta.typeMsg, // (null, 'info', 'danger', 'success')
-                        offset: {from: 'top', amount: 20}, // 'top', or 'bottom'
-                        align: 'center', // ('left', 'right', or 'center')
-                        width: 750, // (integer, or 'auto')
-                        delay: 4000, // Time while the message will be displayed. It's not equivalent to the *demo* timeOut!
-                        allow_dismiss: true, // If true then will display a cross to close the popup.
-                        stackup_spacing: 10 // spacing between consecutively stacked growls.
-                      };
+                      config.type= alerta.typeMsg;
                       $.bootstrapGrowl(msg, config);
                     }
                     if (alerta.typeMsg == "success")
@@ -99,17 +89,24 @@ block footer
             var flag = true;
             for(x in cardapios){
                 if(cardapios[x].nome == $("#txtNovoCardapio").val()){
-                    //TROCA PELO ALERT
-                    alert("Nome duplicado !");
+                    //TROCA PELO ALERT                    
+                    config.type = 'warning';
+                    $.bootstrapGrowl("<b>Nome Duplicado</b><br>Escolha outro nome para a copia", config);
                    flag = false;
                    break;
                 }
             }
             if(flag){
                 $.post("/cardapio/clonar",{"nome_clonar": $("#txtCardapioClone").val(), "novo_cardapio": $("#txtNovoCardapio").val()}).then(function(data){
+                  alerta = data.alert;
+                  config.type = alerta.typeMsg;
+                  debugger;
+                  $.bootstrapGrowl(alerta.msg, config);
+                  if(alerta.typeMsg == "success"){
                     cardapios.push(data);
                     addCardapio(data);
                     $("#txtNovoCardapio").val("");
+                  }
                 });
             }
         }

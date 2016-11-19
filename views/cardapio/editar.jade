@@ -147,7 +147,10 @@ block footer
                 var auxCategoria = $('#categorias .active').find('a').text();
                 
                 $.post("/cardapio/prato", {prato: JSON.stringify(prato), nome_categoria: auxCategoria, nome_cardapio: cardapio.nome, editar_prato: editarPrato}).then(function(data){
-                    if(data == "cadastrado"){
+                    alerta = data;
+                    config.type = alerta.typeMsg;
+                    $.bootstrapGrowl(alerta.msg, config);
+                    if(alerta.typeMsg == "success"){
                         resetForm();
                         arrayOfPratos[auxCategoria][0].push(prato);
                         addPrato(prato);
@@ -213,18 +216,24 @@ block footer
             acompanhamento.nome = document.getElementById('novoAcompanhamento').value;
             acompanhamento.preco = $("#novoAcompanhamentoPreco").val();
             $.post("/cardapio/acompanhamento", {acompanhamento: JSON.stringify(acompanhamento), nome_cardapio: cardapio.nome}).then(function(data){
-                if(data == "cadastrado"){
-                    cardapio.acompanhamentos.push(acompanhamento.nome);
-                    $("#novoAcompanhamento").val("");
-                    $("#novoAcompanhamentoPreco").val(0);
-                    addAcompanhamento(acompanhamento);
-                }
+              alerta = data;
+              config.type = alerta.typeMsg;
+              $.bootstrapGrowl(alerta.msg, config);
+              if(alerta.typeMsg == "success"){
+                  cardapio.acompanhamentos.push(acompanhamento.nome);
+                  $("#novoAcompanhamento").val("");
+                  $("#novoAcompanhamentoPreco").val(0);
+                  addAcompanhamento(acompanhamento);
+              }
             });
         });
         function newCategoria(){
             var categoria = $('#txtNovaCategoria').val();
             $.post("/cardapio/categoria", {categoria: categoria, nome_cardapio: cardapio.nome}).then(function(data){
-                if(data == "cadastrado"){
+              alerta = data;
+              config.type = alerta.typeMsg;
+              $.bootstrapGrowl(alerta.msg, config);
+              if(alerta.typeMsg == "success"){
                     cardapio.categorias.push(categoria);
                     addCategoria(categoria);
                     arrayOfPratos[categoria] = [];

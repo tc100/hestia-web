@@ -60,8 +60,10 @@ app.get('/editar/:nome_cardapio', function(req, res, next) {
     var alertX = {"msg": "O Usuário não tem acesso a tela de <b>Cardápio</b>", "typeMsg": "warning"};
     res.render('home', {user:{ name: nome, restaurante: idRestaurante, privilegio: privilegio}, alert: alertX});
   }
-  if(req.params.nome_cardapio == null || typeof req.params.nome_cardapio == "undefined")
-    res.redirect("cardapio/index", {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
+  if(req.params.nome_cardapio == null || typeof req.params.nome_cardapio == "undefined"){
+    var alertX = JSON.stringify({"msg": "null", "typeMsg": "null"});
+    res.redirect("cardapio/index", {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}, alert: alertX});
+  }
   else{
     var nome_cardapio = req.params.nome_cardapio;
     var data = querystring.stringify({
@@ -89,7 +91,8 @@ app.get('/editar/:nome_cardapio', function(req, res, next) {
             console.log("fail: " + chunk);
             res.redirect("/cardapio");
           }else{
-            res.render('cardapio/editar', {user:{ name: nome, restaurante: idRestaurante}, cardapio: chunk});
+            var alertX = JSON.stringify({"msg": "null", "typeMsg": "null"});
+            res.render('cardapio/editar', {user:{ name: nome, restaurante: idRestaurante}, cardapio: chunk, alert: alertX});
           }
         });
     });
@@ -125,10 +128,12 @@ app.post("/clonar", function(req,res,next){
       response.on('data', function (chunk) {
         if(chunk == "Fail"){
           console.log("fail: " + chunk);
-          res.redirect("/cadastrar?status=fail");
+          var alertX = JSON.stringify({"msg": "<b>Erro</b> ao duplicar <b>Cardápio</b>", "typeMsg": "danger"});
+          res.send({"alert": JSON.parse(alertX)});
         }else{
           console.log("Cardapio cadastrado");
-          res.send({"nome": nome_cardapio, "categorias": JSON.parse(chunk).categorias});
+          var alertX = JSON.stringify({"msg": "<b>Cardápio</b> duplicado com <b>Sucesso</b>", "typeMsg": "success"});
+          res.send({"nome": nome_cardapio, "categorias": JSON.parse(chunk).categorias, "alert": JSON.parse(alertX)});
         }
       });
   });
@@ -164,7 +169,7 @@ app.post("/novo", function(req,res,next){
           var alertX = JSON.stringify({"msg": "<b>Cardápio</b> cadastrado com <b>Sucesso</b>", "typeMsg": "success"});
           res.send({"nome": nome_restaurante, "categorias": [], "alert": JSON.parse(alertX)});
         }else{
-          console.log("fail: " + chunk);var alertX = JSON.stringify({"msg": "<b>Erro</b> ao cadastrar <b>Cardápio</b>", "typeMsg": "success"});
+          console.log("fail: " + chunk);var alertX = JSON.stringify({"msg": "<b>Erro</b> ao cadastrar <b>Cardápio</b>", "typeMsg": "danger"});
           res.send({"alert": JSON.parse(alertX)});
 
         }
@@ -200,11 +205,13 @@ app.post("/acompanhamento", function (req, res, next){
 
       response.on('data', function (chunk) {
         if(chunk == "Cadastrado"){
-          console.log("Acompanhamento cadastrado");
-          res.send("cadastrado");
+          var alertX = JSON.stringify({"msg": "<b>Acompanhamento</b> Cadastrado com <b>Sucesso</b>", "typeMsg": "success"});
+          console.log("Acompanhamento cadastrada");
+          res.send(JSON.parse(alertX));
         }else{
           console.log("fail: " + chunk);
-          res.send("fail");
+          var alertX = JSON.stringify({"msg": "<b>Falha</b> ao cadastrar <b>Acompanhamento</b><br>ERRO: "+chunk, "typeMsg": "danger"});
+          res.send(JSON.parse(alertX));
         }
       });
   });
@@ -236,11 +243,13 @@ app.post("/categoria", function (req, res, next){
 
       response.on('data', function (chunk) {
         if(chunk == "Cadastrado"){
+          var alertX = JSON.stringify({"msg": "<b>Categoria</b> Cadastrada com <b>Sucesso</b>", "typeMsg": "success"});
           console.log("Categoria cadastrada");
-          res.send("cadastrado");
+          res.send(JSON.parse(alertX));
         }else{
           console.log("fail: " + chunk);
-          res.send("fail");
+          var alertX = JSON.stringify({"msg": "<b>Falha</b> ao cadastrar <b>Categoria</b><br>ERRO: "+chunk, "typeMsg": "danger"});
+          res.send(JSON.parse(alertX));
         }
       });
   });
@@ -272,11 +281,13 @@ app.post("/prato", function (req, res, next){
 
       response.on('data', function (chunk) {
         if(chunk == "Cadastrado"){
-          console.log("Categoria cadastrada");
-          res.send("cadastrado");
+          var alertX = JSON.stringify({"msg": "<b>Prato</b> Cadastrado com <b>Sucesso</b>", "typeMsg": "success"});
+          console.log("Prato cadastrada");
+          res.send(JSON.parse(alertX));
         }else{
           console.log("fail: " + chunk);
-          res.send("fail");
+          var alertX = JSON.stringify({"msg": "<b>Falha</b> ao cadastrar <b>Prato</b><br>ERRO: "+chunk, "typeMsg": "danger"});
+          res.send(JSON.parse(alertX));
         }
       });
   });
