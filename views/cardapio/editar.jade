@@ -47,7 +47,7 @@ block content
                 li
                     a#btnNewCategoria(data-toggle="modal" data-target="#modalNewCategoria") +
             div.col.col-sm-8#form
-                h2 Adicionar novo
+                h2 Adicionar novo prato
                 form(role="form")
                     div.col.col-sm-6
                         div.form-group
@@ -142,7 +142,11 @@ block footer
                     'acompanhamentos':[]
                 }
                 $("#acompanhamentosDisponiveis option").each(function(aux){
-                    prato.acompanhamentos.push($(this).text());
+                    var auxAcompanhamento = {
+                      "nome": $(this).text().slice(0,$(this).text().indexOf("/")),
+                      "preco": $(this).text().slice($(this).text().indexOf("/")+1,$(this).text().length)
+                    };
+                    prato.acompanhamentos.push(auxAcompanhamento);
                 });
                 var auxCategoria = $('#categorias .active').find('a').text();
                 
@@ -191,7 +195,9 @@ block footer
         //adicionar acompanhamento no prato
         $("#acompanhamentos").on('click','.acompanhamento', function(e){
             var flag = false;
+            
             var auxAcompanhamento = $(this).text();
+            
             if($('.removerInutil').length >0){
                 $("#acompanhamentosDisponiveis").empty();
             }
@@ -279,6 +285,6 @@ block footer
             $('#categorias').append(html);
         }
         function addAcompanhamento(acompanhamento){
-            var html = '<li class="acompanhamento"><a href="#">' + acompanhamento.nome + '</a></li>';
+            var html = '<li class="acompanhamento"><a href="#">' + acompanhamento.nome + '/'+ acompanhamento.preco+'</a></li>';
             $(".sidebar-nav").append(html);
         }
