@@ -51,14 +51,20 @@ app.post('/',function(req,res,next){
   var nome = req.hestiasession.name;
   var restaurante = {
     "id": req.hestiasession.restaurante,
-    "nomerestaurante": req.body.nomerestaurante,
+    "nomerestaurante": req.body.nomeRestaurante,
+    "descricao": req.body.descricao,
     "cnpj": req.body.cnpj,
     "email": req.body.email,
     "telefone": req.body.telefone,
     "cep": req.body.cep,
     "endereco": req.body.endereco,
     "cidade": req.body.cidade,
-    "estado": req.body.estado
+    "estado": req.body.estado,
+    "numero": req.body.numero,
+    "local": {
+      "lat": req.body.lat,
+      "long": req.body.long
+    }
   };
   var options = {
     host: API_URL,

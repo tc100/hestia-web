@@ -16,6 +16,10 @@ block content
             label.col-sm-12 Nome do Restaurante
             .form-group.col-sm-12
               input#nome-restaurante.form-control(type='text', name = 'nomerestaurante', required='', placeholder='Nome do Restaurante', disabled='')
+            label.col-sm-12 Descrição do Restaurante
+            .form-group.col-sm-12
+              input#descricao-restaurante.form-control(type='text', name = 'descricao', required='', placeholder='Descrição do Restaurante', disabled='')
+              
             label.col-sm-5 CNPJ
             label.col-sm-7 Email
             .form-group.col-sm-5
@@ -23,54 +27,39 @@ block content
             .form-group.col-sm-7
               input#email-restaurante.form-control(type='email', name = 'email', required='', placeholder='E-Mail', pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$", title ='Ex.: exemplo@email.com', disabled='')
             label.col-sm-5 CEP
-            label.col-sm-7 telefone
+            label.col-sm-7 Telefone
             .form-group.col-sm-5
               input#cep-restaurante.form-control(type='text', name = 'cep', pattern="\\d{8}", required='', maxlength="9", placeholder='CEP', title = "Ex: 11111-111", disabled='')
             .form-group.col-sm-7
               input#telefone-restaurante.form-control(type='tel', name = 'telefone', pattern="\\([0-9]{2}\\) [0-9]{4,6}-[0-9]{3,4}$", required='', maxlength="15", placeholder='Telefone', title = "Ex: (99) 99999-9999", disabled='')
-            label.col-sm-10 Cidade
-            label.col-sm-2 Estado
-            .form-group.col-sm-10
-              input#cidade-restaurante.form-control(type='text', name = 'cidade', required='', placeholder='cidade', disabled='')
-            .form-group.col-sm-2
-             select#estado-restaurante.form-control(title = "Estado", name = 'estado', disabled='')
-              option(value='AL') AL
-              option(value='AP') AP
-              option(value='AM') AM
-              option(value='BA') BA
-              option(value='CE') CE
-              option(value='DF') DF
-              option(value='ES') ES
-              option(value='GO') GO
-              option(value='MA') MA
-              option(value='MT') MT
-              option(value='MS') MS
-              option(value='MG') MG
-              option(value='PA') PA
-              option(value='PB') PB
-              option(value='PR') PR
-              option(value='PE') PE
-              option(value='PI') PI
-              option(value='RJ') RJ
-              option(value='RN') RN
-              option(value='RS') RS
-              option(value='RO') RO
-              option(value='RR') RR
-              option(value='SC') SC
-              option(value='SP') SP
-              option(value='SE') SE
-              option(value='TO') TO           
-            label.col-sm-12(for='endereco') Endereço
+            label.col-sm-9 Cidade
+            label.col-sm-3 Estado
+            .form-group.col-sm-9
+              input#cidade-restaurante.form-control(type='text', name = 'cidade', disabled='', placeholder='Cidade')
+            .form-group.col-sm-3
+              input#estado-restaurante.form-control(title = "Estado", name = 'estado', disabled="", placeholder="Estado")  
+            label.col-sm-9 Endereço
+            label.col-sm-3 Número
+            .form-group.col-sm-9
+              input#endereco-restaurante.form-control(type='text', name = 'endereco', disabled='', placeholder='Endereço')
+            .form-group.col-sm-3
+              input#numero-restaurante.form-control(title = "Numero", name = 'numero', required="true", placeholder="Número", disabled = '')
             .form-group.col-sm-12
-              input#endereco-restaurante.form-control(type='text', name = 'endereco', required='', placeholder='Endereço Completo', disabled='')
-            p.tpbutton.btn-toolbar.text-center
+              input#lat.form-control(type='hidden', name = 'lat', disabled='')
+            .form-group.col-sm-12
+              input#long.form-control(type='hidden', name = 'long', disabled='')
+          p.tpbutton.btn-toolbar.text-center
               input.btn.btn-default.pull-right(type='submit', value='salvar', disabled='', id='salvar')
               input.btn.btn-default.pull-left(type='button', onClick='editar()', value='editar')
 block footer
     script.
           $(document).ready(function(){
+            
+            var google_api_url = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+            var cep_api_url = "https://viacep.com.br/ws/";
             var restaurante = !{restaurante};
             $("#nome-restaurante").val(restaurante.nomerestaurante);
+            $("#descricao-restaurante").val(restaurante.descricao);
             $("#cnpj-restaurante").val(restaurante.cnpj);
             $("#email-restaurante").val(restaurante.email);
             $("#telefone-restaurante").val(restaurante.telefone);
@@ -78,20 +67,56 @@ block footer
             $("#endereco-restaurante").val(restaurante.endereco);
             $("#cidade-restaurante").val(restaurante.cidade);
             $("#estado-restaurante").val(restaurante.estado);
+            $("#numero-restaurante").val(restaurante.numero);
+            
+            $( "#cep-restaurante" ).focusout(function() {
+              console.log("testando");
+              if($("#cep-restaurante").val().trim() != ""){
+                $.get(cep_api_url+$("#cep-restaurante").val()+"/json/", function(data){
+                  $("#estado-restaurante").val(data.uf);
+                  $("#cidade-restaurante").val(data.localidade);
+                  $("#endereco-restaurante").val(data.logradouro);
+                  $("#numero-restaurante").val("");
+                }).fail(function(data, textStatus, xhr) {
+                  $("#estado-restaurante").val("");
+                  $("#cidade-restaurante").val("");
+                  $("#endereco-restaurante").val("");
+                  $("#btnCadastrar").attr("disabled",true);
+                  
+                })
+              }else{
+                $("#estado-restaurante").val("");
+                $("#cidade-restaurante").val("");
+                $("#endereco-restaurante").val("");
+                $("#btnCadastrar").attr("disabled",true);
+              }
+            });
+            
+            $( "#numero-restaurante" ).focusout(function() {
+              if($("#estado-restaurante").val().trim() != "" && $("#numero-restaurante").val().trim() != ""){
+                $.get(google_api_url+$("#numero-restaurante").val()+" "+$("#endereco-restaurante").val()+", "+$("#cidade-restaurante").val()+", "+$("#estado-restaurante").val()+"&key=AIzaSyDNME65FX2cRsW_Z_Cq9BrKgKS807vV5nQ", function(data){
+                  $("#lat").val(data.results[0].geometry.location.lat);
+                  $("#long").val(data.results[0].geometry.location.lng);
+                  $("#salvar").removeAttr('disabled');
+                }).fail(function(data, textStatus, xhr){
+                  console.log("fail");
+                  $("#salvar").attr("disabled",true);
+                });
+              }
+            });
           });
                   
           function editar(){
             if ($("#nome-restaurante").attr('disabled')) {
               
                 $("#nome-restaurante").removeAttr('disabled');
+                $("#descricao-restaurante").removeAttr('disabled');
                 $("#cnpj-restaurante").removeAttr('disabled');
                 $("#email-restaurante").removeAttr('disabled');
                 $("#telefone-restaurante").removeAttr('disabled');
                 $("#cep-restaurante").removeAttr('disabled');
-                $("#endereco-restaurante").removeAttr('disabled');
-                $("#cidade-restaurante").removeAttr('disabled');
-                $("#estado-restaurante").removeAttr('disabled');
-                $("#salvar").removeAttr('disabled');
+                $("#numero-restaurante").removeAttr('disabled');
+                $("#numero-restaurante").removeAttr('disabled');
               }
           }
             

@@ -19,6 +19,7 @@ app.post("/", function (req, res, next) {
   console.log("teste: " + JSON.stringify(req.body));
   cadastro = {
     "nomerestaurante": req.body.nomeRestaurante,
+    "descricao": req.body.descricao,
     "cnpj": req.body.cnpj,
     "email": req.body.email,
     "telefone": req.body.telefone,
@@ -26,6 +27,7 @@ app.post("/", function (req, res, next) {
     "endereco": req.body.endereco,
     "cidade": req.body.cidade,
     "estado": req.body.estado,
+    "numero": req.body.numero,
     "local": {
       "lat": req.body.lat,
       "long": req.body.long

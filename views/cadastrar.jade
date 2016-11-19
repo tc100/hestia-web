@@ -30,6 +30,9 @@ block content
                 h3.text-center Dados Restaurante
               .form-group.col-sm-12
                 input#nome-restaurante.form-control(type='text', name = 'nomerestaurante', required='', placeholder='Nome do Restaurante')
+              .form-group.col-sm-12
+                input#descricao-restaurante.form-control(type='text', name = 'descricao', required='', placeholder='Descrição do Restaurante')
+                
               .form-group.col-sm-5
                 input#cnpj-restaurante.form-control(type='text', name = 'cnpj', pattern = '\\d{14}', title ='Ex.: 00.000.000/0001-00', required='', maxlength="14", placeholder='CNPJ')
               .form-group.col-sm-7
@@ -74,6 +77,7 @@ block footer
     function cadastrar(){
       
       cadastro.nomeRestaurante = $("#nome-restaurante").val();
+      cadastro.descricao = $("#descricao-restaurante").val();
       cadastro.cnpj = $("#cnpj-restaurante").val();
       cadastro.email = $("#email-restaurante").val();
       cadastro.telefone = $("#telefone-restaurante").val();
