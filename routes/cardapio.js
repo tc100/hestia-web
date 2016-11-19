@@ -254,7 +254,6 @@ app.post("/prato", function (req, res, next){
     "restaurante":  req.hestiasession.restaurante,
     "cardapio": nome_cardapio
   });
-
   var options = {
     host: API_URL,
     port: API_PORT,

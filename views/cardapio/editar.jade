@@ -52,7 +52,7 @@ block content
                             input.form-control(type="text" required)#txtNome
                         div.form-group
                             label(for="Preco") Preço:
-                            input.form-control(type="text" required)#txtPreco
+                            input.form-control.currency(type="number" value = "0" min="0" step="0.01" data-number-to-fixed="2" data-number-stepfactor="100" required)#txtPreco
                         div.form-group
                             label(for="descricao") Breve descrição:
                             textarea.form-control(rows="3")#txtDescricao
