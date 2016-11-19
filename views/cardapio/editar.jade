@@ -29,6 +29,9 @@ block content
                         div.form-group
                             label(for="nome") Nome:
                             input.form-control(type="text")#novoAcompanhamento
+                        div.form-group
+                            label(for="preco") Preço:
+                            input.form-control.currency(type="number" value = "0" min="0" step="0.01" data-number-to-fixed="2" data-number-stepfactor="100" required)#novoAcompanhamentoPreco
                         button.btn.btn-default#addNovoAcompanhamento(type="button" data-dismiss="modal") Adicionar
         
     div.row#wrapper
@@ -205,10 +208,15 @@ block footer
         
         //adicionar no db novo acompanhamento
         $("#addNovoAcompanhamento").click(function(){
-            var acompanhamento = document.getElementById('novoAcompanhamento').value;
-            $.post("/cardapio/acompanhamento", {acompanhamento: acompanhamento, nome_cardapio: cardapio.nome}).then(function(data){
+            var acompanhamento = {};
+            debugger;
+            acompanhamento.nome = document.getElementById('novoAcompanhamento').value;
+            acompanhamento.preco = $("#novoAcompanhamentoPreco").val();
+            $.post("/cardapio/acompanhamento", {acompanhamento: JSON.stringify(acompanhamento), nome_cardapio: cardapio.nome}).then(function(data){
                 if(data == "cadastrado"){
-                    cardapio.acompanhamentos.push(acompanhamento);
+                    cardapio.acompanhamentos.push(acompanhamento.nome);
+                    $("#novoAcompanhamento").val("");
+                    $("#novoAcompanhamentoPreco").val(0);
                     addAcompanhamento(acompanhamento);
                 }
             });
@@ -262,6 +270,6 @@ block footer
             $('#categorias').append(html);
         }
         function addAcompanhamento(acompanhamento){
-            var html = '<li class="acompanhamento"><a href="#">' + acompanhamento + '</a></li>';
+            var html = '<li class="acompanhamento"><a href="#">' + acompanhamento.nome + '</a></li>';
             $(".sidebar-nav").append(html);
         }

@@ -181,6 +181,7 @@ app.post("/acompanhamento", function (req, res, next){
     "restaurante":  req.hestiasession.restaurante,
     "cardapio": nome_cardapio
   });
+  console.log (JSON.stringify(req.body.acompanhamento));
   console.log("acompanhamento: " + req.body.acompanhamento);
   var options = {
     host: API_URL,
