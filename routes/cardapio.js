@@ -296,6 +296,44 @@ app.post("/categoria", function (req, res, next){
 
 });
 
+app.post("/deleteCategoria", function (req, res, next){
+  var nome_cardapio = req.body.nome_cardapio;
+  var data = querystring.stringify({
+    "restaurante":  req.hestiasession.restaurante,
+    "cardapio": nome_cardapio
+  });
+  var options = {
+    host: API_URL,
+    port: API_PORT,
+    path: '/apihestia/deleteCategoria?restaurante='+req.hestiasession.restaurante+'&cardapio='+encodeURIComponent(nome_cardapio)+'&categoria='+encodeURIComponent(req.body.categoria),
+    method: 'POST',
+    params: data,
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(data)
+    }
+  };
+
+  var req = http.request(options, function(response) {
+      response.setEncoding('utf8');
+
+      response.on('data', function (chunk) {
+        if(chunk == "Deletado"){
+          var alertX = JSON.stringify({"msg": "<b>Categoria</b> Deletada com <b>Sucesso</b>", "typeMsg": "success"});
+          console.log("Categoria deletada");
+          res.send(JSON.parse(alertX));
+        }else{
+          console.log("fail: " + chunk);
+          var alertX = JSON.stringify({"msg": "<b>Falha</b> ao cadastrar <b>Categoria</b><br>ERRO: "+chunk, "typeMsg": "danger"});
+          res.send(JSON.parse(alertX));
+        }
+      });
+  });
+  req.write(data);
+  req.end();
+
+});
+
 app.post("/prato", function (req, res, next){
   var nome_cardapio = req.body.nome_cardapio;
   var data = querystring.stringify({

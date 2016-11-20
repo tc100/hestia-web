@@ -130,3 +130,24 @@
 .acompanhamento{
   margin-bottom: -2.9em !important;
 }
+
+.deletar-categoria{
+  position: relative;
+  left: 90%;
+  height: 1em;
+  width: 1em;
+  background-color: grey;
+  border: none;
+  color: black;
+  top: -2.7em;
+  vertical-align: top;
+}
+.deletar-categoria p{
+  position:absolute;
+  top:-0.4em;
+  left: 2px;
+}
+
+.categoria{
+  margin-bottom: -2em !important;
+}
