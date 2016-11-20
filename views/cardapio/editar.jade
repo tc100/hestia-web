@@ -35,7 +35,7 @@ block content
                         button.btn.btn-default#addNovoAcompanhamento(type="button" data-dismiss="modal") Adicionar
         
     div.row#wrapper
-        div.col-sm-12.col-md-3.col-lg-3#sidebar-wrapper
+        div.col-sm-12.col-md-3.col-lg-3#sidebar-wrapper.sideAcompanhamentos
           ul.sidebar-nav#acompanhamentos
             li.sidebar-brand(text-align="center")
                 a(href='#') ACOMPANHAMENTOS
@@ -82,6 +82,9 @@ block content
       
 block footer
     script.
+        if(screen.width > 720){
+          $(".sideAcompanhamentos").css("width", "21%");
+        }
         var arrayOfPratos=[];
         var cardapio = {};
         $(document).ready(function(){
@@ -197,7 +200,7 @@ block footer
         $("#acompanhamentos").on('click','.acompanhamento', function(e){
             var flag = false;
             
-            var auxAcompanhamento = $(this).text();
+            var auxAcompanhamento = $(this).find("a").text();
             
             if($('.removerInutil').length >0){
                 $("#acompanhamentosDisponiveis").empty();
@@ -302,6 +305,28 @@ block footer
             $('#categorias').append(html);
         }
         function addAcompanhamento(acompanhamento){
-            var html = '<li class="acompanhamento"><a href="#">' + acompanhamento.nome + '/'+ acompanhamento.preco+'</a></li>';
+            var html = '<li class="acompanhamento"><span class="hidden name">'+acompanhamento.nome+'</span><a href="#">' + acompanhamento.nome + '/'+ acompanhamento.preco+'</a><button class="delete-acompanhamento" onclick="deleteAcompanhamento('+ "'"+acompanhamento.nome+"'" +')">x</button></li>';
             $(".sidebar-nav").append(html);
+        }
+        
+
+        function deleteAcompanhamento(acompanhamento){
+          var auxCategoria = $('#categorias .active').find('a').text();
+
+          $.post("/cardapio/deleteAcompanhamento", {acompanhamento: acompanhamento, nome_cardapio: cardapio.nome}).then(function(data){
+            alerta = data;
+            config.type = alerta.typeMsg;
+            $.bootstrapGrowl(alerta.msg, config);
+            if(alerta.typeMsg == "success"){
+                $("#novoAcompanhamento").val("");
+                $("#novoAcompanhamentoPreco").val(0);
+                $(".acompanhamento").each(function(i){
+                    if($(this).find(".name").text() == acompanhamento){
+                        $(this).remove();
+                    }
+                });
+                resetForm();
+            }
+          });
+          
         }

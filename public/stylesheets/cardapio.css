@@ -102,6 +102,16 @@
   right: -3.3em;
 }*/
 
+.delete-acompanhamento{
+  position: relative;
+  left: 93%;
+  background-color: red;
+  border: none;
+  height: 2.5em;
+  color: white;
+  top: -2.7em;
+  margin-bottom: 0.7em;
+}
 .delete-prato{
   width:0.5em !important;
   height:0.5em !important;
@@ -116,4 +126,7 @@
 }
 .pratoOnList{
   margin-bottom:-1.7em !important;
+}
+.acompanhamento{
+  margin-bottom: -2.9em !important;
 }

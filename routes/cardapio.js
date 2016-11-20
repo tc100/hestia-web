@@ -220,6 +220,44 @@ app.post("/acompanhamento", function (req, res, next){
 
 });
 
+app.post("/deleteAcompanhamento", function (req, res, next){
+  var nome_cardapio = req.body.nome_cardapio;
+  var data = querystring.stringify({
+    "restaurante":  req.hestiasession.restaurante,
+    "cardapio": nome_cardapio
+  });
+  var options = {
+    host: API_URL,
+    port: API_PORT,
+    path: '/apihestia/deleteAcompanhamento?restaurante='+req.hestiasession.restaurante+'&cardapio='+encodeURIComponent(nome_cardapio)+'&acompanhamento='+encodeURIComponent(req.body.acompanhamento),
+    method: 'POST',
+    params: data,
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(data)
+    }
+  };
+
+  var req = http.request(options, function(response) {
+      response.setEncoding('utf8');
+
+      response.on('data', function (chunk) {
+        if(chunk == "Deletado"){
+          var alertX = JSON.stringify({"msg": "<b>Acompanhamento</b> Deletado com <b>Sucesso</b>", "typeMsg": "success"});
+          console.log("Acompanhamento deletado");
+          res.send(JSON.parse(alertX));
+        }else{
+          console.log("fail: " + chunk);
+          var alertX = JSON.stringify({"msg": "<b>Falha</b> ao cadastrar <b>Acompanhamento</b><br>ERRO: "+chunk, "typeMsg": "danger"});
+          res.send(JSON.parse(alertX));
+        }
+      });
+  });
+  req.write(data);
+  req.end();
+
+});
+
 app.post("/categoria", function (req, res, next){
   var nome_cardapio = req.body.nome_cardapio;
   var data = querystring.stringify({
