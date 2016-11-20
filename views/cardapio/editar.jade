@@ -152,6 +152,7 @@ block footer
                         prato.acompanhamentos.push(auxAcompanhamento);
                     });
                     var auxCategoria = $('#categorias .active').find('a').text();
+                    console.log("prato: " + JSON.stringify(prato));
                     $.post("/cardapio/prato", {prato: JSON.stringify(prato), nome_categoria: auxCategoria, nome_cardapio: cardapio.nome, editar_prato: editarPrato}).then(function(data){
                         alerta = data;
                         config.type = alerta.typeMsg;
@@ -258,7 +259,8 @@ block footer
             $("#acompanhamentosDisponiveis").empty();
             if(prato.acompanhamentos.length > 0){
                 for(x in prato.acompanhamentos){
-                    $("#acompanhamentosDisponiveis").append("<option class='acompanhamento'>"+ prato.acompanhamentos[x] +"</option>");
+                    var acompanhamento = JSON.parse(JSON.stringify(prato.acompanhamentos[x]));
+                    $("#acompanhamentosDisponiveis").append("<option class='acompanhamento-disponivel'>"+ acompanhamento.nome+"/"+acompanhamento.preco +"</option>");
                 }
             }else{
                 $("#acompanhamentosDisponiveis").append("<option class='removerInutil'>Clique nos acompanhamentos</option>");
@@ -269,6 +271,10 @@ block footer
             $("#btnLimpar").text("Cancelar");
             $("#txtNome").append("<span class='hidden'>"+prato.nome+"</span>");
             
+        });
+        
+        $("#acompanhamentosDisponiveis").on("click",".acompanhamento-disponivel",function(e){
+          $(this).detach();
         });
         
         
