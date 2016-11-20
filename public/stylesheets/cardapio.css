@@ -101,3 +101,19 @@
   margin-bottom:-3.3em !important;
   right: -3.3em;
 }*/
+
+.delete-prato{
+  width:0.5em !important;
+  height:0.5em !important;
+  background-color: red;
+  color: white;
+  position: relative;
+  top:1.7em;
+  right:1.4em;
+  border: none !important;
+  padding-bottom: 1.5em !important;
+  padding-right: 1em !important;
+}
+.pratoOnList{
+  margin-bottom:-1.7em !important;
+}

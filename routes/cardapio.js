@@ -282,7 +282,7 @@ app.post("/prato", function (req, res, next){
       response.on('data', function (chunk) {
         if(chunk == "Cadastrado"){
           var alertX = JSON.stringify({"msg": "<b>Prato</b> Cadastrado com <b>Sucesso</b>", "typeMsg": "success"});
-          console.log("Prato cadastrada");
+          console.log("Prato cadastrado");
           res.send(JSON.parse(alertX));
         }else{
           console.log("fail: " + chunk);
@@ -291,7 +291,46 @@ app.post("/prato", function (req, res, next){
         }
       });
   });
-  req.write(data);
+  //req.write(data);
+  req.end();
+
+});
+
+
+app.post("/deletePrato", function (req, res, next){
+  var nome_cardapio = req.body.nome_cardapio;
+  var data = querystring.stringify({
+    "restaurante":  req.hestiasession.restaurante,
+    "cardapio": nome_cardapio
+  });
+  var options = {
+    host: API_URL,
+    port: API_PORT,
+    path: '/apihestia/deletePrato?restaurante='+req.hestiasession.restaurante+'&cardapio='+encodeURIComponent(nome_cardapio)+'&prato='+encodeURIComponent(req.body.prato)+'&categoria='+encodeURIComponent(req.body.nome_categoria),
+    method: 'POST',
+    params: data,
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(data)
+    }
+  };
+
+  var req = http.request(options, function(response) {
+      response.setEncoding('utf8');
+
+      response.on('data', function (chunk) {
+        if(chunk == "Deletado"){
+          var alertX = JSON.stringify({"msg": "<b>Prato</b> Deletado com <b>Sucesso</b>", "typeMsg": "success"});
+          console.log("Prato deletado");
+          res.send(JSON.parse(alertX));
+        }else{
+          console.log("fail: " + chunk);
+          var alertX = JSON.stringify({"msg": "<b>Falha</b> ao deletar <b>Prato</b><br>ERRO: "+chunk, "typeMsg": "danger"});
+          res.send(JSON.parse(alertX));
+        }
+      });
+  });
+  //req.write(data);
   req.end();
 
 });

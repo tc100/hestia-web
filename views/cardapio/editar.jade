@@ -74,7 +74,7 @@ block content
                             label(for="numeroDeAcompanhamentos") Acompanhamentos Disponiveis:
                             select.form-control#acompanhamentosDisponiveis(multiple="true" size="7")
                             p
-                     button.btn.btn-default#btnSalvarPrato(type="submit") Adicionar
+                     button.btn.btn-default#btnSalvarPrato Adicionar
                      button.btn.btn-default#btnLimpar(onclick="resetForm()") Limpar
             div.col.col-sm-4
                 h2#visualizar
@@ -110,60 +110,61 @@ block footer
             for(x in arrayOfPratos[$('#categorias .active').find('a').text()][0]){
                 addPrato(arrayOfPratos[$('#categorias .active').find('a').text()][0][x]);
             }
-        });
-        //add pratos
-        $('#btnSalvarPrato').click(function(){
-            if($('#txtNome').val() == '' || $('#txtPreco').val() ==''){
-                console.log("Missing parameters");
-            }else{
-                var editarPrato = "";
-                if($("#btnSalvarPrato").text() == "Salvar"){
-                    editarPrato = $("#txtNome").find("span").text();
-                    for(x in arrayOfPratos[$("#visualizar").text()]){
-                        if(arrayOfPratos[$("#visualizar").text()][x].nome == editarPrato){
-                            arrayOfPratos[$("#visualizar").text()].splice(x,1);
+            
+            //add pratos
+            $('#btnSalvarPrato').click(function(){
+                if($('#txtNome').val() == '' || $('#txtPreco').val() ==''){
+                    //TODO Adicionar alerta 
+                    console.log("Missing parameters");
+                }else{
+                    var editarPrato = "";
+                    if($("#btnSalvarPrato").text() == "Salvar"){
+                        editarPrato = $("#txtNome").find("span").text();
+                        for(x in arrayOfPratos[$("#visualizar").text()]){
+                            if(arrayOfPratos[$("#visualizar").text()][x].nome == editarPrato){
+                                arrayOfPratos[$("#visualizar").text()].splice(x,1);
+                            }
                         }
+                        $(".pratoOnList").each(function(i){
+                            if($(this).find(".name").text() == editarPrato){
+                                $(this).remove();
+                            }
+                        })
                     }
-                    $(".pratoOnList").each(function(i){
-                        if($(this).find(".name").text() == editarPrato){
-                            console.log("Text: " + $(this).text());
-                            $(this).remove();
+                    if($('.removerInutil').length >0){
+                        $("#acompanhamentosDisponiveis").empty();
+                    }
+                    var prato = {
+                        'nome': $('#txtNome').val(),
+                        'preco': $('#txtPreco').val(),
+                        'descricao': $('#txtDescricao').val(),
+                        'numeroDeAcompanhamentos': $('#numeroDeAcompanhamentos').val(),
+                        'acompanhamentos':[]
+                    }
+                    $("#acompanhamentosDisponiveis option").each(function(aux){
+                        var auxAcompanhamento = {
+                          "nome": $(this).text().slice(0,$(this).text().indexOf("/")),
+                          "preco": $(this).text().slice($(this).text().indexOf("/")+1,$(this).text().length)
+                        };
+                        prato.acompanhamentos.push(auxAcompanhamento);
+                    });
+                    var auxCategoria = $('#categorias .active').find('a').text();
+                    $.post("/cardapio/prato", {prato: JSON.stringify(prato), nome_categoria: auxCategoria, nome_cardapio: cardapio.nome, editar_prato: editarPrato}).then(function(data){
+                        alerta = data;
+                        config.type = alerta.typeMsg;
+                        $.bootstrapGrowl(alerta.msg, config);
+                        if(alerta.typeMsg == "success"){
+                            resetForm();
+                            arrayOfPratos[auxCategoria].push(prato);
+                            addPrato(prato);
+                        }else{
+                            //apontar erro
                         }
-                    })
+                    });
                 }
-                if($('.removerInutil').length >0){
-                    $("#acompanhamentosDisponiveis").empty();
-                }
-                var prato = {
-                    'nome': $('#txtNome').val(),
-                    'preco': $('#txtPreco').val(),
-                    'descricao': $('#txtDescricao').val(),
-                    'numeroDeAcompanhamentos': $('#numeroDeAcompanhamentos').val(),
-                    'acompanhamentos':[]
-                }
-                $("#acompanhamentosDisponiveis option").each(function(aux){
-                    var auxAcompanhamento = {
-                      "nome": $(this).text().slice(0,$(this).text().indexOf("/")),
-                      "preco": $(this).text().slice($(this).text().indexOf("/")+1,$(this).text().length)
-                    };
-                    prato.acompanhamentos.push(auxAcompanhamento);
-                });
-                var auxCategoria = $('#categorias .active').find('a').text();
-                
-                $.post("/cardapio/prato", {prato: JSON.stringify(prato), nome_categoria: auxCategoria, nome_cardapio: cardapio.nome, editar_prato: editarPrato}).then(function(data){
-                    alerta = data;
-                    config.type = alerta.typeMsg;
-                    $.bootstrapGrowl(alerta.msg, config);
-                    if(alerta.typeMsg == "success"){
-                        resetForm();
-                        arrayOfPratos[auxCategoria][0].push(prato);
-                        addPrato(prato);
-                    }else{
-                        //apontar erro
-                    }
-                });
-            }
+            });
         });
+        
         
         function resetForm(){
             if($("#btnSalvarPrato").text() != "Adicionar"){
@@ -214,11 +215,9 @@ block footer
         
         $("#wrapper").height( $(window).height() - 50); 
         $("#principal").width( $("#principal").width() + 16.5);
-        
         //adicionar no db novo acompanhamento
         $("#addNovoAcompanhamento").click(function(){
             var acompanhamento = {};
-            debugger;
             acompanhamento.nome = document.getElementById('novoAcompanhamento').value;
             acompanhamento.preco = $("#novoAcompanhamentoPreco").val();
             $.post("/cardapio/acompanhamento", {acompanhamento: JSON.stringify(acompanhamento), nome_cardapio: cardapio.nome}).then(function(data){
@@ -269,12 +268,30 @@ block footer
             
         });
         
+        
         //to add in UI
         function addPrato(prato){
-            var html = '<button type="button" class="list-group-item pratoOnList"><span class="hidden">'+JSON.stringify(prato)+'</span><tspan class="name hidden">'+prato.nome+'</tspan>'+prato.nome+' / R$'+ prato.preco +'</button>';
-            $("#lista-pratos").append(html);
-            
+          var html = '<button class="delete-prato" onclick="deletePrato('+ "'"+prato.nome+"'" +')">x</button><button type="button" class="list-group-item pratoOnList"><span class="obj hidden">'+JSON.stringify(prato)+'</span><tspan class="name hidden">'+prato.nome+'</tspan>'+prato.nome+' / R$'+ prato.preco +'</button>';
+          $("#lista-pratos").append(html);
         }
+        
+        
+        function deletePrato(prato){
+          var auxCategoria = $('#categorias .active').find('a').text();
+          var pratoAux;
+          $(".pratoOnList").each(function(i){
+              if($(this).find(".name").text() == prato){
+                  pratoAux = $(this).find(".obj").text();
+                  $(this).remove();
+              }
+          })
+          $.post("/cardapio/deletePrato", {prato: pratoAux, nome_categoria: auxCategoria, nome_cardapio: cardapio.nome}).then(function(data){
+              alerta = data;
+              config.type = alerta.typeMsg;
+              $.bootstrapGrowl(alerta.msg, config);
+          });
+        };
+        
         function addCategoria(categoria){
             var html = '';
             if($('#categorias li').length == 1){
