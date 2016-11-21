@@ -1,0 +1,113 @@
+extends layout
+block title
+  title Hestia - Gerenciar Mesas
+  link(rel='stylesheet', href='/stylesheets/mesas.css', type='text/css')
+
+block content
+  div.row.not-print(style="margin-top:4em;")
+    h1 Gerar QR Code das mesas
+    div.col.col-md-5
+      form.form-inline
+        h4 Selecione o tamnho do QRCode:
+        div.row
+        div.col.col-sm-12
+          label(for="tamanho") Quadrado de tamanho:
+          input.form-control#tamanho(type="text" value="100" style="text-align:center;")
+      button.btn.btn-default.pull-right(style="margin-right:25%;margin-top:1em;width:20em" onclick="gerarPreview()") Mostrar preview 
+
+      form.form-inline
+        h4(style="margin-top:5em;") Adicionar Conjunto de Mesas:
+        div.row
+          div.col.col-md-6
+            label(for="numeroMinimo") Gerar mesa do número :
+          div.col.col-md-6
+            input.form-control#numeroMinimo(type="text" placeholder="Ex: 1, 10, 100")
+        div.row
+          div.col.col-sm-6
+            label(for="numeroMaximo") até o número :
+          div.col.col-sm-6
+            input.form-control#numeroMaximo(type="text" placeholder="Ex: 9, 19, 119")
+      button.btn.btn-default.pull-right(style="margin-right:25%;margin-top:1em;width:20em" onclick="gerarConjunto()") Gerar Conjunto
+      
+      form.form-inline
+        h4(style="margin-top:4em;") Adicionar Mesa:
+        div.row
+          div.col.col-md-6
+            label(for="numeroMesa") Número da mesa:
+          div.col.col-md-6
+            input.form-control#numeroMesa(type="text" placeholder="Ex: 1, 10, 100")
+      button.btn.btn-default.pull-right(style="margin-right:25%;margin-top:1em;width:20em" onclick="gerarMesa()") Gerar Mesa
+      button.btn.btn-default#printbtn(style="margin-top:1em;width:93%" onclick="imprimir()") Imprimir QRCodes
+
+    div.col.col-md-7
+      div.row
+        div.col.col-md-4
+          h4 Preview Tamanho:
+        div.col.col-md-8
+          img#previewQR
+      div.row
+        div.col.col-md-4
+          h4 Mesas:
+      div.row#mesas
+  div.row
+    div.col.col-md-12
+      div#printable
+      
+      
+block footer
+  script.
+    $(document).ready(function(){
+      document.getElementById('previewQR').src = "https://api.qrserver.com/v1/create-qr-code/?data=Hestia&size=100x100";
+    })
+    function gerarPreview() {
+      var tamanho = parseInt($("#tamanho").val());
+      if(tamanho > 0){
+        document.getElementById('previewQR').src = "https://api.qrserver.com/v1/create-qr-code/?data=Hestia&size="+tamanho+"x"+tamanho;
+      }
+    }
+    
+    function gerarConjunto(){
+      var numeroMinimo = parseInt($("#numeroMinimo").val());
+      var numeroMaximo = parseInt($("#numeroMaximo").val());
+      if(numeroMinimo>=0 && numeroMaximo>numeroMinimo){
+        for(var i=numeroMinimo; i<=numeroMaximo; i++){
+          addMesa(i);
+        }
+        $("#numeroMaximo").val("");
+        $("#numeroMinimo").val("");
+      }
+    }
+    
+    function gerarMesa(){
+      var numeroMesa = parseInt($("#numeroMesa").val());
+      if(numeroMesa>0){
+        addMesa(numeroMesa);
+        $("#numeroMesa").val("");
+      }
+    }
+    
+    function addMesa(numero){
+      var html = "<div class='col col-md-2 mesas'>Mesa "+numero+"<span class='glyphicon glyphicon-remove pull-right deleteMesa' style='padding-top:2px'></span></div>"
+      $("#mesas").append(html);
+    }
+    
+    $("#mesas").on("click",".deleteMesa", function(e){
+      $(this).parent().remove();
+    });
+    
+    function imprimir(){
+      $("#printbtn").text("Carregando..");
+      $("#printable").empty();
+      $("#mesas .mesas").each(function(i){
+        var numeroMesa = $(this).text().replace("Mesa ","");
+        var html = "<div class='qrcode'><h3 style='text-align:center'>Mesa "+ numeroMesa+"</h3>";
+        var aux = {
+          "id": "!{user.restaurante}",
+          "mesa": numeroMesa
+        }
+        html = html + "<img src='https://api.qrserver.com/v1/create-qr-code/?data="+JSON.stringify(aux)+"&size="+$("#tamanho").val()+"x"+$("#tamanho").val()+"'/>";
+        $("#printable").append(html);
+      });
+      setTimeout(function(){ window.print(); $("#printbtn").text("Imprimir QRCodes");}, 5000);
+      
+    }

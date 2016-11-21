@@ -1,0 +1,39 @@
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .not-print * {
+    display: none;
+  }
+
+  #printable, #printable * {
+    visibility: visible;
+  }
+
+  #printable {
+    display: block !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: auto;
+    height: 99%;
+  }
+}
+
+.mesas{
+  background-color: grey;
+  padding: 0 !important;
+  color: white;
+  margin-right: 0.5em;
+  margin-top: 0.5em;
+}
+.mesas span{
+  cursor: pointer;
+}
+
+.qrcode{
+  position:relative;
+  float:left;
+  margin-right: 2em;
+}

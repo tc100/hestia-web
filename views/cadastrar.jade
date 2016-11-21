@@ -97,7 +97,6 @@ block footer
     $(document).ready(function(){
       
       $( "#cep-restaurante" ).focusout(function() {
-        console.log("testando");
         if($("#cep-restaurante").val().trim() != ""){
           $.get(cep_api_url+$("#cep-restaurante").val()+"/json/", function(data){
             $("#estado-restaurante").val(data.uf);
