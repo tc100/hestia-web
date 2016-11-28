@@ -1,0 +1,28 @@
+.box-pedido{
+  border:1px solid black;
+  min-height: 15em !important;
+  padding: 0 !important;
+  margin-right: 1em;
+  margin-bottom: 1em;
+}
+
+.prato{
+  margin-bottom: 0 !important;
+}
+
+.acompanhamento{
+  margin-left:1em;
+  margin-bottom: 0 !important;
+}
+
+.box-fechar{
+  width:100%;
+  height:1em;
+  margin-bottom:1em;
+}
+
+.btn-fechar{
+  position:absolute;
+  bottom:0.5em;
+  left:8em;
+}

@@ -1,0 +1,54 @@
+extends layout
+block title
+  link(rel='stylesheet', href='/stylesheets/pedidos.css', type='text/css')
+  
+  title Hestia - Cadastrar Estabelecimento
+
+block content
+    section#pedidos-area
+
+
+block footer
+  script(src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js")
+  script.
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyAlftK6644EOW2tmNz4lZq8TWvIGThMA2w",
+      authDomain: "hestia-e5357.firebaseapp.com",
+      databaseURL: "https://hestia-e5357.firebaseio.com",
+      storageBucket: "hestia-e5357.appspot.com",
+      messagingSenderId: "360916467136"
+    };
+    firebase.initializeApp(config);
+    var pedidosRef = firebase.database().ref('restaurantes/!{user.restaurante}/contas');
+    pedidosRef.on('child_added', function(data) {
+      var conta = data.val();
+      if(conta.aberto){
+        addPedido(conta);
+      }
+    });
+    
+    function fecharPedido(){
+      console.log("fechando pedido");
+    }
+    
+    function addPedido(conta){
+      var html = "<div class='col col-md-3 col-xs-6 box-pedido'>";
+      for(x in conta.pedidos){
+        if(conta.pedidos[x].ativo){
+          for(y in conta.pedidos[x].prato){
+            html += "<p class='prato'>" + conta.pedidos[x].prato[y].nome;
+            html += "<span class='pull-right'>"+conta.pedidos[x].prato[y].preco+"</span></p>";
+            for(z in conta.pedidos[x].prato[y].acompanhamento){
+              html += "<p class='acompanhamento'>" + conta.pedidos[x].prato[y].acompanhamento[z].nome; //TODO:add acompanhemnto
+              html += "<span class='pull-right'>"+conta.pedidos[x].prato[y].acompanhamento[z].preco +"</span></p>" //TODO:ADD PRECO acompanhamento
+            }
+          }
+        }
+      }
+      //botao
+      html += "<div class='box-fechar'></div>";
+      html += "<button class='btn btn-danger btn-fechar' onclick='fecharPedido()'>Fechar</button></div>";
+      
+      $("#pedidos-area").append(html);
+    }
