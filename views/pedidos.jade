@@ -22,20 +22,29 @@ block footer
     firebase.initializeApp(config);
     var pedidosRef = firebase.database().ref('restaurantes/!{user.restaurante}/contas');
     pedidosRef.on('child_added', function(data) {
-      var conta = data.val();
-      if(conta.aberto){
-        addPedido(conta);
+      if(data.val().aberto){
+        addPedido(data.val(), data.key);
       }
     });
     
-    function fecharPedido(){
-      console.log("fechando pedido");
+    pedidosRef.on('child_changed', function(data) {
+      if(data.val().aberto){
+        addPedido(data.val(),data.key);
+      }
+    });
+    
+    function fecharPedido(keyConta,keyPedido){
+      var fecharRef = firebase.database().ref('restaurantes/!{user.restaurante}/contas/'+keyConta+'/pedidos/'+keyPedido);
+      fecharRef.update({"ativo":false});
+      $("#"+keyPedido).remove();
     }
     
-    function addPedido(conta){
-      var html = "<div class='col col-md-3 col-xs-6 box-pedido'>";
+    function addPedido(conta,key){
       for(x in conta.pedidos){
-        if(conta.pedidos[x].ativo){
+        if(conta.pedidos[x].ativo && $("#pedidos-area").find("#"+x).length == 0 && Object.keys(conta.pedidos[x].prato).length > 0){
+          var html = "<div class='col col-md-3 col-xs-6 box-pedido' id='"+x+"'>";
+          //TODO: TROCAR MESA
+          html += "<div style='width:100%; border-bottom: 1px solid black; text-align: center;'> Mesa " + conta.pedidos[x].mesa+ "</div>";
           for(y in conta.pedidos[x].prato){
             html += "<p class='prato'>" + conta.pedidos[x].prato[y].nome;
             html += "<span class='pull-right'>"+conta.pedidos[x].prato[y].preco+"</span></p>";
@@ -44,11 +53,11 @@ block footer
               html += "<span class='pull-right'>"+conta.pedidos[x].prato[y].acompanhamento[z].preco +"</span></p>" //TODO:ADD PRECO acompanhamento
             }
           }
+          //botao
+          html += "<div class='box-fechar'></div>";
+          html += "<button class='btn btn-danger btn-fechar' onclick='fecharPedido(" + '"' +key+ '"' + "," + '"' + x + '"' +")'>Fechar</button></div>";
+          $("#pedidos-area").append(html);
         }
       }
-      //botao
-      html += "<div class='box-fechar'></div>";
-      html += "<button class='btn btn-danger btn-fechar' onclick='fecharPedido()'>Fechar</button></div>";
       
-      $("#pedidos-area").append(html);
     }
