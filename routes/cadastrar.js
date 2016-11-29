@@ -64,11 +64,10 @@ app.post("/", function (req, res, next) {
 
       response.on('data', function (chunk) {
         if(chunk == "Cadastrado"){
-          console.log("Cadastrado");
-          res.redirect("/login?status=cadastrado");
+          res.send("cadastrado");
         }else{
           console.log("fail: " + chunk);
-          res.redirect("/cadastrar?status=fail");
+          res.send("fail");
         }
       });
   });
