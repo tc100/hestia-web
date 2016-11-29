@@ -1,0 +1,77 @@
+extends layout
+block title
+    title Hestia - Financeiro
+
+block content
+    section#financeiro-area(style="padding-top: 40px")
+      div.row
+        div.col-md-6(style="margin-bottom:-2em;")
+          h3 Financeiro
+      div.row(style="height: 95%; margin-right:2em; margin-left:2em;")
+        div.col-md-5.col-sm-12(style="height: 100%;margin-top:2.5em;")
+          h4 Vendas
+            span.pull-right#total
+          div#vendas.list-group(style="border:1px solid black;height: 100%; overflow:auto;")
+        div.col-md-5.col-sm-12(style="height: 100%; float: right; margin-top:2.5em;")
+          h4 Contas em aberto
+            span.pull-right
+          div#abertos.list-group(style="border:1px solid green; height: 100%;overflow:auto;")
+    
+
+
+block footer
+    script(src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js")
+    script.
+      var total = 0;
+      var arrayVendas = [];
+      var arrayAbertos = [];
+      $("#financeiro-area").height(window.screen.height -280);
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAlftK6644EOW2tmNz4lZq8TWvIGThMA2w",
+        authDomain: "hestia-e5357.firebaseapp.com",
+        databaseURL: "https://hestia-e5357.firebaseio.com",
+        storageBucket: "hestia-e5357.appspot.com",
+        messagingSenderId: "360916467136"
+      };
+      firebase.initializeApp(config);
+      firebase.database().ref('restaurantes/!{user.restaurante}/contas').once('value').then(function(data) {
+        var conta = data.val();
+        for(x in conta){
+          if(conta[x].aberto){
+            arrayAbertos.push(conta[x]);
+          }else{
+            arrayVendas.push(conta[x]);
+          }
+        }
+        arrayAbertos.sort(function(a, b){return b.data - a.data});
+        addAberto(arrayAbertos);
+        arrayVendas.sort(function(a, b){return b.data - a.data});
+        addVenda(arrayVendas);
+      });
+      
+      function addVenda(conta){
+        for(x in conta){
+          var html = '<a href="#" class="list-group-item">';
+          var time = new Date(conta[x].data);
+          html += time.getDate()+"/"+ time.getMonth() +" - " + time.getHours()+":"+time.getMinutes();
+          html += "<span class='pull-right'>R$"+ conta[x].total.toFixed(2) +"</span></a>";
+          refreshTotal(conta[x].total);
+          $("#vendas").append(html);
+        }
+      }
+      function refreshTotal(cash){
+        total = total + cash;
+        $("#total").text("R$"+ total.toFixed(2));
+      }
+      function addAberto(conta){
+        for(x in conta){
+          var html = '<a href="#" class="list-group-item">';
+          var time = new Date(conta[x].data);
+          html += time.getDate()+"/"+ time.getMonth() +" - " + time.getHours()+":"+time.getMinutes();
+          html += "<span class='pull-right'>R$"+ conta[x].total.toFixed(2) +"</span></a>";
+          $("#abertos").append(html);
+        }
+      }
+      
+      

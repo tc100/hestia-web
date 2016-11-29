@@ -19,6 +19,7 @@ var restaurante = require('./routes/restaurante');
 var home = require('./routes/home');
 var mesas = require('./routes/mesas');
 var pedidos = require('./routes/pedidos');
+var financeiro = require('./routes/financeiro');
 
 var app = express();
 
@@ -50,6 +51,7 @@ app.use('/cardapio', userValidation,cardapio);
 app.use('/restaurante', userValidation, restaurante);
 app.use('/mesas', userValidation, mesas);
 app.use('/pedidos',userValidation, pedidos);
+app.use('/financeiro',userValidation, financeiro);
 app.use('/autorizado/:user', function(req,res){
   console.log("redirecionado..");
   var user = JSON.parse(req.params.user);
