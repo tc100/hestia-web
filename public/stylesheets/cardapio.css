@@ -119,14 +119,15 @@
   margin-bottom: 0.7em;
 }
 .delete-prato{
+  position: relative;
   width:0.5em !important;
   height:0.5em !important;
   background-color: transparent;
-  color: black;
-  position: relative;
-  top:1.75em;
-  right:1.4em;
-  border: 1px solid rgba(175,175,175,0.5) !important;
+  color: red;
+  top:1.2em;
+  right:0.2em;
+  z-index: 2;
+  border: none !important;
   padding-bottom: 1.5em !important;
   padding-right: 1em !important;
 }
@@ -138,14 +139,14 @@
 }
 
 .deletar-categoria{
-  position: relative;
-  left: 90%;
+  position: absolute;
+  right: 0 !important;
+  top:0 !important;
   height: 1em;
   width: 1em;
   background-color: transparent;
   border: none;
-  color: black;
-  top: -2.7em;
+  color: red;
   vertical-align: top;
 }
 .deletar-categoria p{
