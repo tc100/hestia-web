@@ -92,8 +92,14 @@
 }
 
 #btnDuplicar{
-  margin-left: 13.7em !important;
-  margin-top:-12em !important;
+  position:relative;
+  bottom: 6em;
+  border-radius: 0 !important;
+}
+
+#btnVisualizar{
+  position:relative;
+  bottom: 6em;
   border-radius: 0 !important;
 }
 /*.btn-group-cardapio{
@@ -105,22 +111,22 @@
 .delete-acompanhamento{
   position: relative;
   left: 93%;
-  background-color: red;
+  background-color: transparent;
   border: none;
   height: 2.5em;
   color: white;
-  top: -2.7em;
+  top: -3em;
   margin-bottom: 0.7em;
 }
 .delete-prato{
   width:0.5em !important;
   height:0.5em !important;
-  background-color: red;
-  color: white;
+  background-color: transparent;
+  color: black;
   position: relative;
-  top:1.7em;
+  top:1.75em;
   right:1.4em;
-  border: none !important;
+  border: 1px solid rgba(175,175,175,0.5) !important;
   padding-bottom: 1.5em !important;
   padding-right: 1em !important;
 }
@@ -136,7 +142,7 @@
   left: 90%;
   height: 1em;
   width: 1em;
-  background-color: grey;
+  background-color: transparent;
   border: none;
   color: black;
   top: -2.7em;
