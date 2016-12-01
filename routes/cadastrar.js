@@ -40,9 +40,7 @@ app.post("/", function (req, res, next) {
     "restaurante": "placeholder",
     "privilegio" : ["Administrativo","Cardápio","Funcionário","Cozinha"]
   };
-  console.log("funcionario:" +req.body.nomeDono);
-  console.log("Cadastro:" + JSON.stringify(cadastro));
-  console.log(querystring.escape(JSON.stringify(funcionario)));
+
   var data = querystring.stringify({
     "cadastro": cadastro,
     "funcionario": funcionario
@@ -74,5 +72,59 @@ app.post("/", function (req, res, next) {
   req.write(data);
   req.end();
 });
+
+
+app.get("/verificarLogin", function(req,res,next){
+    var login = req.body.login;
+    var options = {
+    host: API_URL,
+    port: API_PORT,
+    path: '/apihestia/verificarLogin?login='+login,
+    method: 'GET',
+    params: login,
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(login)
+    }
+  };
+  var request = http.request(options, function(response) {
+      response.setEncoding('utf8');
+      response.on('data', function (chunk) {
+        if(chunk == "NAOEXISTE"){
+          res.send(true);
+        }else{
+          res.send(false);
+        }
+      });
+  });
+  request.end();
+})
+
+app.get("/verificarCnpj", function(req,res,next){
+    var cnpj = req.body.cnpj;
+    var options = {
+    host: API_URL,
+    port: API_PORT,
+    path: '/apihestia/verificarLogin?cnpj='+cnpj,
+    method: 'GET',
+    params: cnpj,
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(cnpj)
+    }
+  };
+  var request = http.request(options, function(response) {
+      response.setEncoding('utf8');
+      response.on('data', function (chunk) {
+        if(chunk == "NAOEXISTE"){
+          res.send(true);
+        }else{
+          res.send(false);
+        }
+      });
+  });
+  request.end();
+})
+
 
 module.exports = app;

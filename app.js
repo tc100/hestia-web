@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 var ejs = require('ejs');
 var http = require('http');
 var session = require('client-sessions');
+var cfenv = require('cfenv');
+
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -22,6 +24,7 @@ var pedidos = require('./routes/pedidos');
 var financeiro = require('./routes/financeiro');
 
 var app = express();
+var appEnv = cfenv.getAppEnv();
 
 // view engine setup
 app.set('views', path.join(__dirname, '/views'));
@@ -81,32 +84,8 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// error handlers
-
-// development error handler
-// will print stacktrace
-/*
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
+var server = app.listen(appEnv.port, '0.0.0.0', function() {
+  console.log("server starting on " + appEnv.url);
 });
-
-*/
-
 
 module.exports = app;

@@ -14,6 +14,16 @@ block content
           span(aria-hidden='true') ×
         strong Cadastro
         |  foi realizado ! Redirecionando para Login.
+      .alert.alert-warning.alert-dismissible.fade.in#loginFail(role='alert')
+        button.close(type='button', data-dismiss='alert', aria-label='Close')
+          span(aria-hidden='true') ×
+        strong Login
+        |  já cadastrado, por favor tentar outro.
+      .alert.alert-warning.alert-dismissible.fade.in#cnpjFail(role='alert')
+        button.close(type='button', data-dismiss='alert', aria-label='Close')
+          span(aria-hidden='true') ×
+        strong CNPJ
+        |  já cadastrado. Favor entrar em contato conosco.
 
       .container
         div.alert.alert-warning.fade.in.hidden(role='alert')
@@ -71,6 +81,8 @@ block footer
   script.
     $('#falhou').hide();
     $('#sucesso').hide();
+    $('#loginFail').hide();
+    $('#cnpjFail').hide();
     var url = window.location.href;
     if(url.indexOf("?status=fail") != -1){
       $("#falhou").show();
@@ -97,24 +109,39 @@ block footer
       $.get(google_api_url+cadastro.numero+" "+cadastro.endereco+", "+cadastro.cidade+", "+cadastro.estado+"&key=AIzaSyDNME65FX2cRsW_Z_Cq9BrKgKS807vV5nQ", function(data){
         cadastro.lat = data.results[0].geometry.location.lat;
         cadastro.long = data.results[0].geometry.location.lng;
-        $.post("/cadastrar", cadastro).then(function(data){
-          if(data == "cadastrado"){
-            $("#sucesso").show();
-            setTimeout(function(){
-                window.location = "http://localhost:3000/login";
-            }, 5000);
+        $.get("/cadastrar/verificarLogin", {'login': cadastro.login}).then(function(data){
+          if(data){
+            //TODO: NAO TA FUNCIONANDO
+            $.get("/cadastrar/verificarCnpj", {'cnpj': cadastro.cnpj}).then(function(data2){
+              if(data2){
+                $.post("/cadastrar", cadastro).then(function(data3){
+                  if(data3 == "cadastrado"){
+                    $("#sucesso").show();
+                    setTimeout(function(){
+                        window.location = "/login";
+                    }, 5000);
+                  }else{
+                    $("#falhou").show();
+                  }
+                }, function(error){
+                  console.log("error");
+                  $("#falhou").show();
+                })
+              }else{
+                $('#cnpjFail').hide();
+              }
+            })
           }else{
-            $("#falhou").show();
+            $('#loginFail').show();
           }
-        }, function(error){
-          console.log("error");
-          $("#falhou").show();
         })
+        
       }).fail(function(data, textStatus, xhr){
         $("#falhou").show();
         console.log("error");
       });
     }
+    
     $(document).ready(function(){
       
       $( "#cep-restaurante" ).focusout(function() {
@@ -127,14 +154,12 @@ block footer
             $("#estado-restaurante").val("");
             $("#cidade-restaurante").val("");
             $("#endereco-restaurante").val("");
-            $("#btnCadastrar").attr("disabled",true);
 
           })
         }else{
           $("#estado-restaurante").val("");
           $("#cidade-restaurante").val("");
           $("#endereco-restaurante").val("");
-          $("#btnCadastrar").attr("disabled",true);
         }
       });
       

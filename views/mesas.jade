@@ -103,7 +103,8 @@ block footer
         var html = "<div class='qrcode'><h3 style='text-align:center'>Mesa "+ numeroMesa+"</h3>";
         var aux = {
           "id": "!{user.restaurante}",
-          "mesa": numeroMesa
+          "mesa": numeroMesa,
+          "nomerestaurante": "!{user.nomerestaurante}"
         }
         html = html + "<img src='https://api.qrserver.com/v1/create-qr-code/?data="+JSON.stringify(aux)+"&size="+$("#tamanho").val()+"x"+$("#tamanho").val()+"'/>";
         $("#printable").append(html);
