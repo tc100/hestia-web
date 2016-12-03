@@ -158,3 +158,10 @@
 .categoria{
   margin-bottom: -2em !important;
 }
+
+.ativar-cardapio{
+  color: white;
+  font-size: 1.3em;
+  padding-left: 1em;
+  padding-top: 0.5em;
+}

@@ -220,6 +220,50 @@ app.post("/acompanhamento", function (req, res, next){
 
 });
 
+
+
+app.post("/editarAtivoCardapio", function (req, res, next){
+  var nome_cardapio = req.body.nome_cardapio;
+  var data = querystring.stringify({
+    "restaurante":  req.hestiasession.restaurante,
+    "cardapio": nome_cardapio
+  });
+  var options = {
+    host: API_URL,
+    port: API_PORT,
+    path: '/apihestia/editarAtivoCardapio?restaurante='+req.hestiasession.restaurante+'&cardapio='+encodeURIComponent(nome_cardapio)+'&ativo='+encodeURIComponent(req.body.ativo),
+    method: 'POST',
+    params: data,
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(data)
+    }
+  };
+
+  var request = http.request(options, function(response) {
+      response.setEncoding('utf8');
+
+      response.on('data', function (chunk) {
+        if(chunk == "Alterado"){
+          if(req.body.ativo == "true"){
+            var alertX = JSON.stringify({"msg": "Cardapio <b>ativado</b> com <b>Sucesso</b>", "typeMsg": "success"});
+            res.send(JSON.parse(alertX));
+          }else{
+            var alertX = JSON.stringify({"msg": "Cardapio <b>desativado</b> com <b>Sucesso</b>", "typeMsg": "success"});
+            res.send(JSON.parse(alertX));
+          }
+        }else{
+          console.log("fail: " + chunk);
+          var alertX = JSON.stringify({"msg": "<b>Falha</b> ao ativar/desativar cardapio<br>ERRO: "+chunk, "typeMsg": "danger"});
+          res.send(JSON.parse(alertX));
+        }
+      });
+  });
+  request.write(data);
+  request.end();
+
+});
+
 app.post("/deleteAcompanhamento", function (req, res, next){
   var nome_cardapio = req.body.nome_cardapio;
   var data = querystring.stringify({

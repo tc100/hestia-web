@@ -37,6 +37,9 @@ block content
     div.row#wrapper
         div.col-sm-12.col-md-3.col-lg-3#sidebar-wrapper.sideAcompanhamentos
           ul.sidebar-nav#acompanhamentos
+            li.ativar-cardapio
+                input#ativar-input(type="checkbox" value="true")
+                label Ativar Cardapio
             li.sidebar-brand(text-align="center")
                 a(href='#') ACOMPANHAMENTOS
             li
@@ -92,8 +95,10 @@ block footer
             for(x in cardapio.acompanhamentos){
                 addAcompanhamento(cardapio.acompanhamentos[x]);
             }
-            //<button type="button" class="list-group-item">Cras justo odio</button>
-
+            if(cardapio.ativo == "true"){
+                $("#ativar-input").attr('checked', cardapio.ativo);
+            }
+            
             for(x in cardapio.categorias){
                 addCategoria(cardapio.categorias[x].nome);
                 var auxArray = []
@@ -128,6 +133,11 @@ block footer
                                 arrayOfPratos[$("#visualizar").text()].splice(x,1);
                             }
                         }
+                        $(".delete-prato").each(function(e){
+                            if($(this).find(".name").text() == editarPrato){
+                                $(this).remove();
+                            }
+                        })
                         $(".pratoOnList").each(function(i){
                             if($(this).find(".name").text() == editarPrato){
                                 $(this).remove();
@@ -279,7 +289,7 @@ block footer
         
         //to add in UI
         function addPrato(prato){
-          var html = '<button class="delete-prato" onclick="deletePrato('+ "'"+prato.nome+"'" +')">x</button><button type="button" class="list-group-item pratoOnList"><span class="obj hidden">'+JSON.stringify(prato)+'</span><tspan class="name hidden">'+prato.nome+'</tspan>'+prato.nome+' / R$'+ prato.preco +'</button>';
+          var html = '<button class="delete-prato" onclick="deletePrato('+ "'"+prato.nome+"'" +')"><tspan class="name hidden">'+prato.nome+'</tspan>x</button><button type="button" class="list-group-item pratoOnList"><span class="obj hidden">'+JSON.stringify(prato)+'</span><tspan class="name hidden">'+prato.nome+'</tspan>'+prato.nome+' / R$'+ prato.preco +'</button>';
           $("#lista-pratos").append(html);
         }
         
@@ -287,6 +297,11 @@ block footer
         function deletePrato(prato){
           var auxCategoria = $('#categorias .active').find('a').text();
           var pratoAux;
+          $(".delete-prato").each(function(e){
+              if($(this).find(".name").text() == prato){
+                  $(this).remove();
+              }
+          })
           $(".pratoOnList").each(function(i){
               if($(this).find(".name").text() == prato){
                   pratoAux = $(this).find(".obj").text();
@@ -329,6 +344,14 @@ block footer
             var html = '<li class="acompanhamento"><span class="hidden name">'+acompanhamento.nome+'</span><a href="#">' + acompanhamento.nome + '/'+ acompanhamento.preco+'</a><button class="delete-acompanhamento" onclick="deleteAcompanhamento('+ "'"+acompanhamento.nome+"'" +')">x</button></li>';
             $(".sidebar-nav").append(html);
         }
+        
+        $("#ativar-input").click(function(e){
+            $.post("/cardapio/editarAtivoCardapio", {nome_cardapio: cardapio.nome, ativo: $("#ativar-input").is(':checked')}).then(function(data){
+              alerta = data;
+              config.type = alerta.typeMsg;
+              $.bootstrapGrowl(alerta.msg, config);
+            });
+        })
         
 
         function deleteAcompanhamento(acompanhamento){
