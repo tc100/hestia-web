@@ -204,11 +204,11 @@ app.post('/editar',function(req,res,next){
 
 app.get('/delete/:id', function(req,res){
   var idFuncionario = req.params.id
-  var cnpj = req.hestiasession.restaurante;
+  var idRestaurante = req.hestiasession.restaurante;
   var options = {
     host: API_URL,
     port: API_PORT,
-    path: '/apihestia/funcionario/delete?id='+idFuncionario+'&cnpj='+cnpj,
+    path: '/apihestia/funcionario/delete?id='+idFuncionario+'&idRestaurante='+idRestaurante,
     method: 'DELETE',
     params: idFuncionario,
     headers: {

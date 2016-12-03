@@ -32,7 +32,7 @@ html(lang='pt-br')
         
   script.
       //alert (id);
-      $.get('http://localhost:3000/funcionario/getFuncionario/'+id,function(response){
+      $.get('/funcionario/getFuncionario/'+id,function(response){
         var html = '<tr><th>NOME:</th><td>'+response.nome+'</td></tr>'+
                     '<tr><th>LOGIN:</th><td>'+response.login+'</td></tr>';
         $("#funcionario").append(html);

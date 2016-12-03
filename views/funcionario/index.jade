@@ -31,7 +31,6 @@ block content
             //    i.fa.fa-list(aria-hidden='true')
 block footer
     script.
-      msg = "Testando";
       config = {
                       ele: 'body', // which element to append to
                       type: 'danger', // (null, 'info', 'danger', 'success')
@@ -42,11 +41,11 @@ block footer
                       allow_dismiss: true, // If true then will display a cross to close the popup.
                       stackup_spacing: 10 // spacing between consecutively stacked growls.
                     };
-        $.get('http://localhost:3000/funcionario/getFuncs',function(response){
+        $.get('/funcionario/getFuncs',function(response){
             for( x in response.funcionarios){
               var ativo = response.funcionarios[x].ativo;
               if(ativo == undefined|| ativo){
-                var html = '<tr><td>'+response.funcionarios[x].nome+'</td>'+
+                var html = '<tr id="'+response.funcionarios[x].id+'"><td>'+response.funcionarios[x].nome+'</td>'+
                             '<td>'+
                               '<a class="btn btn-default" href="/funcionario/editar?id='+ response.funcionarios[x].id+'"><i class="fa fa-pencil" aria-hidden="true"></i></a>'+
                               '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-id="'+ response.funcionarios[x].id+'"><i class="fa fa-list" aria-hidden="true"></i></button>'+
@@ -73,7 +72,10 @@ block footer
             alert("The paragraph was clicked.");
         });
         function deletar(idUsuario){
-          $.get('http://localhost:3000/funcionario/delete/'+idUsuario,function(response){
+          $.get('/funcionario/delete/'+idUsuario,function(response){
+              if(response == "desativado"){
+                  $("#"+idUsuario).remove();
+              }
           });
         }
         

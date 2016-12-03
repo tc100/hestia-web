@@ -55,7 +55,7 @@ block footer
       var senhaFunc = $("#senha-funcionario").val(response.senha);    
     }
     if(urlParams('id') != false){
-      $.get('http://localhost:3000/funcionario/getFuncionario/'+urlParams('id'),function(response){
+      $.get('/funcionario/getFuncionario/'+urlParams('id'),function(response){
         $('#id-funcionario').val(urlParams('id'));
         $("#nome-funcionario").val(response.nome);
         $("#login-funcionario").val(response.login);
