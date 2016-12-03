@@ -3,9 +3,10 @@ var app = express();
 var bodyParser = require('body-parser');
 var querystring = require("querystring");
 var http = require('http');
+var request = require('request');
 
-var API_URL = "localhost";
-var API_PORT = 6001;
+var API_URL = "https://hestia-api2.mybluemix.net";
+//var API_URL = "localhost:6001";
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -13,59 +14,36 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/getFuncionario/:id', function(req,res){
   var idFuncionario = req.params.id;
-  var options = {
-    host: API_URL,
-    port: API_PORT,
-    path: '/apihestia/getFuncionario?id='+idFuncionario,
-    method: 'GET',
-    params: idFuncionario,
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Content-Length': Buffer.byteLength(idFuncionario)
+
+  request.get(API_URL + '/apihestia/getFuncionario?id='+idFuncionario, function (error, response, body) {
+    if(!error){
+      if(body == "ERROR"){
+        res.send("ERROR");
+      }else{
+        var funcionario = JSON.parse(body);
+        res.send(funcionario);
+      }
+    }else{
+      res.send("ERROR");
     }
-  };
-  var request = http.request(options, function(response) {
-      response.setEncoding('utf8');
-      response.on('data', function (chunk) {
-        if(chunk == "ERROR"){
-          res.send("ERROR");
-        }else{
-          console.log("teste: " + chunk);
-          var funcionario = JSON.parse(chunk);
-          res.send(funcionario);
-        }
-      });
   });
-  request.write(idFuncionario);
-  request.end();
 });
 app.get('/getFuncs', function (req,res){
   var id = req.hestiasession.restaurante;
-  var options = {
-    host: API_URL,
-    port: API_PORT,
-    path: '/apihestia/getFuncs?id='+id,
-    method: 'GET',
-    params: req.hestiasession.restaurante,
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Content-Length': Buffer.byteLength(id)
+  request.get(API_URL + '/apihestia/getFuncs?id='+ id, function (error, response, body) {
+    if(!error){
+      if(body == "ERROR"){
+        res.send("ERROR");
+      }else{
+        var funcionarios = JSON.parse(body);
+        res.send(funcionarios);
+      }
+    }else{
+      res.send("ERROR");
     }
-  };
-  var request = http.request(options, function(response) {
-      response.setEncoding('utf8');
-      response.on('data', function (chunk) {
-        if(chunk == "ERROR"){
-          res.send("ERROR");
-        }else{
-          var funcionarios = JSON.parse(chunk);
-          res.send(funcionarios);
-        }
-      });
   });
-  request.write(id);
-  request.end();
 });
+
 app.get('/', function(req, res, next) {
   var privilegio = req.hestiasession.privilegio;
   if (privilegio.indexOf("Funcionário") == -1){
@@ -74,8 +52,8 @@ app.get('/', function(req, res, next) {
   }
   var alertX = JSON.stringify({"msg": "null", "typeMsg": "null"});
   res.render('funcionario/index', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante, privilegio: privilegio}, alert: alertX});
-  // res.render('funcionario/index', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
 });
+
 /* GET Pagina Cadastrar.*/
 app.get('/criar', function(req, res, next) {
   var privilegio = req.hestiasession.privilegio;
@@ -85,7 +63,6 @@ app.get('/criar', function(req, res, next) {
   }
   var alertX = JSON.stringify({"msg": "null", "typeMsg": "null"});
   res.render('funcionario/criar', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante, privilegio: privilegio}, alert: alertX});
-  // res.render('funcionario/criar', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
 });
 
 app.post('/criar', function(req, res, next) {
@@ -99,42 +76,24 @@ app.post('/criar', function(req, res, next) {
     "restaurante": req.hestiasession.restaurante,
     "privilegio" : req.body.privilegio
   };
- console.log("privilegio: " + req.body.privilegio);
-  var options = {
-    host: API_URL,
-    port: API_PORT,
-    path: '/apihestia/funcionario?dados='+querystring.escape(JSON.stringify(funcionario)),
-    method: 'POST',
-    params: JSON.stringify(funcionario),
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Content-Length': Buffer.byteLength(JSON.stringify(funcionario))
+  request.post(API_URL + '/apihestia/funcionario?dados='+querystring.escape(JSON.stringify(funcionario)), function (error, response, body) {
+    if(!error){
+      if(body == "Cadastrado"){
+        console.log("Cadastrado");
+        var alertX = JSON.stringify({"msg": "<b>Funcionário</b> cadastrado com <b>Sucesso</b>", "typeMsg": "success"});
+        res.render('funcionario/index', {user:{ name: nome, restaurante: idRestaurante, privilegio: privilegio}, alert: alertX});
+      }else{
+        console.log("fail: " + body);
+          var alertX = JSON.stringify({"msg": "<b>Erro</b> ao cadastrar o <b>Funcionário</b>", "typeMsg": "danger"});
+          res.render('funcionario/criar', {user:{ name: nome, restaurante: idRestaurante, privilegio: privilegio}, alert: alertX, funcionario: funcionario});
+      }
+    }else{
+      res.send("ERROR");
     }
-  };
-
-  var req = http.request(options, function(response) {
-      response.setEncoding('utf8');
-
-      response.on('data', function (chunk) {
-        if(chunk == "Cadastrado"){
-          console.log("Cadastrado");
-          // res.redirect("/funcionario?status=editado");
-          var alertX = JSON.stringify({"msg": "<b>Funcionário</b> cadastrado com <b>Sucesso</b>", "typeMsg": "success"});
-          res.render('funcionario/index', {user:{ name: nome, restaurante: idRestaurante, privilegio: privilegio}, alert: alertX});
-        }else{
-          console.log("fail: " + chunk);
-            var alertX = JSON.stringify({"msg": "<b>Erro</b> ao cadastrar o <b>Funcionário</b>", "typeMsg": "danger"});
-            res.render('funcionario/criar', {user:{ name: nome, restaurante: idRestaurante, privilegio: privilegio}, alert: alertX, funcionario: funcionario2});
-          // res.redirect("/funcionario/editar?id="+req.body.idFunc+"&status=fail");
-        }
-      });
   });
-  req.write(JSON.stringify(funcionario));
-  req.end();
-
 });
 
-/* GET Pagina Cadastrar.*/
+/* GET Pagina detalhes.*/
 app.get('/detalhes', function(req, res, next) {
   var privilegio = req.hestiasession.privilegio;
   if (privilegio.indexOf("Funcionário") == -1){
@@ -143,9 +102,9 @@ app.get('/detalhes', function(req, res, next) {
   }
   var alertX = JSON.stringify({"msg": "null", "typeMsg": "null"});
   res.render('funcionario/detalhes', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante, privilegio: req.hestiasession.privilegio}, alert: alertX});
-  // res.render('funcionario/detalhes',{user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
 });
-/* GET Pagina Cadastrar.*/
+
+/* GET Pagina editar.*/
 app.get('/editar', function(req, res, next) {
   var privilegio = req.hestiasession.privilegio;
   if (privilegio.indexOf("Funcionário") == -1){
@@ -154,7 +113,6 @@ app.get('/editar', function(req, res, next) {
   }
   var alertX = JSON.stringify({"msg": "null", "typeMsg": "null"});
   res.render('funcionario/editar', {user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante, privilegio: req.hestiasession.privilegio}, alert: alertX});
-  // res.render('funcionario/editar',{user:{ name: req.hestiasession.name, restaurante: req.hestiasession.restaurante}});
 });
 
 app.post('/editar',function(req,res,next){
@@ -169,65 +127,39 @@ app.post('/editar',function(req,res,next){
     "senha":  req.body.senha,
     "privilegio" : req.body.privilegio
   };
-  var options = {
-    host: API_URL,
-    port: API_PORT,
-    path: '/apihestia/funcionario/editar?dados='+querystring.escape(JSON.stringify(funcionario)),
-    method: 'PUT',
-    params: JSON.stringify(funcionario),
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Content-Length': Buffer.byteLength(JSON.stringify(funcionario))
-    }
-  };
 
-  var req = http.request(options, function(response) {
-      response.setEncoding('utf8');
-
-      response.on('data', function (chunk) {
-        if(chunk == "Alterado"){
+  request.put(API_URL + '/apihestia/funcionario/editar?dados='+querystring.escape(JSON.stringify(funcionario)), function (error, response, body) {
+    if(!error){
+        if(body == "Alterado"){
           console.log("Alterado");
-          // res.redirect("/funcionario?status=editado");
           var alertX = JSON.stringify({"msg": "<b>Funcionário</b> alterado com <b>Sucesso</b>", "typeMsg": "success"});
           res.render('funcionario/index', {user:{ name: nome, restaurante: idRestaurante, privilegio: privilegio}, alert: alertX});
         }else{
-          console.log("fail: " + chunk);
+          console.log("fail: " + body);
             var alertX = JSON.stringify({"msg": "<b>Erro</b> ao alterar o <b>Funcionário</b>", "typeMsg": "danger"});
             res.render('funcionario/editar', {user:{ name: nome, restaurante: idRestaurante, privilegio: privilegio}, alert: alertX});
-          // res.redirect("/funcionario/editar?id="+req.body.idFunc+"&status=fail");
         }
-      });
+    }else{
+      res.send("ERROR");
+    }
   });
-  req.write(JSON.stringify(funcionario));
-  req.end();
 });
 
 app.get('/delete/:id', function(req,res){
   var idFuncionario = req.params.id
   var idRestaurante = req.hestiasession.restaurante;
-  var options = {
-    host: API_URL,
-    port: API_PORT,
-    path: '/apihestia/funcionario/delete?id='+idFuncionario+'&idRestaurante='+idRestaurante,
-    method: 'DELETE',
-    params: idFuncionario,
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Content-Length': Buffer.byteLength(idFuncionario)
+
+  request.delete(API_URL + '/apihestia/funcionario/delete?id='+idFuncionario+'&idRestaurante='+idRestaurante, function (error, response, body) {
+    if(!error){
+      if(body == "ERROR"){
+        res.send("ERROR");
+      }else{
+        res.send("desativado");
+      }
+    }else{
+      res.send("ERROR");
     }
-  };
-  var request = http.request(options, function(response) {
-      response.setEncoding('utf8');
-      response.on('data', function (chunk) {
-        if(chunk == "ERROR"){
-          res.send("ERROR");
-        }else{
-          res.send("desativado");
-        }
-      });
   });
-  request.write(idFuncionario);
-  request.end();
 });
 
 /*POST dos dados cadastrais*/

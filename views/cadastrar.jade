@@ -109,10 +109,9 @@ block footer
       $.get(google_api_url+cadastro.numero+" "+cadastro.endereco+", "+cadastro.cidade+", "+cadastro.estado+"&key=AIzaSyDNME65FX2cRsW_Z_Cq9BrKgKS807vV5nQ", function(data){
         cadastro.lat = data.results[0].geometry.location.lat;
         cadastro.long = data.results[0].geometry.location.lng;
-        $.get("/cadastrar/verificarLogin", {'login': cadastro.login}).then(function(data){
+        $.get("/cadastrar/verificarLogin?login="+ cadastro.login).then(function(data){
           if(data){
-            //TODO: NAO TA FUNCIONANDO
-            $.get("/cadastrar/verificarCnpj", {'cnpj': cadastro.cnpj}).then(function(data2){
+            $.get("/cadastrar/verificarCnpj?cnpj="+ cadastro.cnpj).then(function(data2){
               if(data2){
                 $.post("/cadastrar", cadastro).then(function(data3){
                   if(data3 == "cadastrado"){

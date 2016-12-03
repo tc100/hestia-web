@@ -2,10 +2,11 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var http = require('http');
-var querystring = require('querystring');
+var request = require("request");
 
-var API_URL = "localhost";
-var API_PORT = 6001;
+
+var API_URL = "https://hestia-api2.mybluemix.net";
+//var API_URL = "localhost:6001";
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,40 +18,25 @@ app.get('/', function(req, res, next) {
 
 /*POST login*/
 app.post("/", function (req, res, next) {
-
-  login = req.body;
-
-  var data = querystring.stringify({
-    "login": login
-  });
-
-  var options = {
-    host: API_URL,
-    port: API_PORT,
-    path: '/apihestia/login?login='+JSON.stringify(login),
-    method: 'GET',
-    params: data,
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Content-Length': Buffer.byteLength(data)
-    }
+  var login = {
+    "login":req.body.login,
+    "senha": req.body.senha
   };
-
-  var req = http.request(options, function(response) {
-      response.setEncoding('utf8');
-      response.on('data', function (chunk) {
-        if(chunk == "NOTAUTHORIZED"){
-          res.redirect("/login?status=NOTAUTHORIZED");
-        }else if(chunk == "ERROR"){
-          res.redirect("/login?status=ERROR");
-        }else{
-          var user = JSON.parse(chunk);
-          res.redirect("/autorizado/"+JSON.stringify(user));
-        }
-      });
+  request.get(API_URL + '/apihestia/login?login='+ encodeURIComponent(JSON.stringify(login)), function (error, response, body) {
+    if(!error){
+      if(body == "NOTAUTHORIZED"){
+        res.redirect("/login?status=NOTAUTHORIZED");
+      }else if(response == "ERROR"){
+        res.redirect("/login?status=ERROR");
+      }else{
+        var user = JSON.parse(body);
+        res.redirect("/autorizado/"+JSON.stringify(user));
+      }
+    }else{
+      console.log("error: " + error);
+      res.redirect("/login?status=ERROR");
+    }
   });
-  req.write(data);
-  req.end();
 });
 
 module.exports = app  ;
